@@ -1,0 +1,6 @@
+CAUNEFA/settings.py
+*/migrations
+*.pyc
+*/__pycache__
+package-lock.json
+
