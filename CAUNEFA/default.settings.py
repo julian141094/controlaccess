@@ -41,7 +41,7 @@ DJANGO_APPS = [
 ]
 
 PROJECT_APPS = [
-
+    'employer'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
