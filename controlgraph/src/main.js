@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import './plugins/vuetify'
+import './plugins/axiosDeclared.js'
+import './plugins/formValidation.js'
 import App from './App.vue'
 import router from './router'
 import store from './store'

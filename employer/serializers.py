@@ -11,7 +11,7 @@ class InstitutionalUserDataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = InstitutionalUserData
-        fields = ('dateIn', 'condition', 'category')
+        fields = ('dateIn', 'condition', 'category', 'appointment', 'positionOPSU')
 
 class StudyUserDataSerializer(serializers.ModelSerializer):
 

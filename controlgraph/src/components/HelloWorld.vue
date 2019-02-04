@@ -42,6 +42,23 @@
           </a>
         </v-layout>
       </v-flex>
+      <v-flex
+        mb-5
+        xs12
+      >
+        <h2 class="headline font-weight-bold mb-3">Vistas de Julian</h2>
+
+        <v-layout justify-center>
+          <a
+            v-for="(next, i) in linksJulian"
+            :key="i"
+            :href="next.href"
+            class="subheading mx-3"
+          >
+            {{ next.text }}
+          </a>
+        </v-layout>
+      </v-flex>
 
       <v-flex
         xs12
@@ -136,7 +153,12 @@
           text: 'Frequently Asked Questions',
           href: 'https://vuetifyjs.com/getting-started/frequently-asked-questions'
         }
-
+      ],
+      linksJulian: [
+        {
+          text: 'Registro de un empliado',
+          href: '/#/registeremployer'
+        }
       ]
     })
   }
