@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import RegisterEmployer from './components/employers/registerEmployer.vue'
+import Employers from './components/employers/Employers.vue'
 
 Vue.use(Router)
 
@@ -24,6 +25,11 @@ export default new Router({
       path: '/registeremployer',
       name: 'registerEmployer',
       component: RegisterEmployer
+    },
+    {
+      path: '/employers',
+      name: 'Employers',
+      component: Employers
     }
   ]
 })

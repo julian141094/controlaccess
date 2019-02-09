@@ -1,8 +1,65 @@
 <template>
     <v-container grid-list-xs>
         <v-layout row wrap>
-            <v-flex xs12>
+            <v-flex xs12 pa-5>
                 <v-form>
+                    <v-layout row wrap >
+                        <v-flex lg3 md6 xs12 pr-4>
+                            <v-text-field
+                                v-model="userData.identification"
+                                name="identification"
+                                :error-messages="errors.collect('identification')"
+                                label="Cédula de Identidad"
+                                class=""
+                                data-vv-as="Cédula"
+                                v-validate="'required'"
+                                key="identification-input"
+                            ></v-text-field>
+                        </v-flex>        
+                        <v-flex lg3 md6 xs12 pr-4>
+                            <v-text-field
+                                v-model="userData.fName"
+                                name="fName"
+                                :error-messages="errors.collect('fName')"
+                                label="Primer Nombre"
+                                class=""
+                                data-vv-as="Primer Nombre"
+                                v-validate="'required'"
+                                key="fName-input"
+                            ></v-text-field>
+                        </v-flex>
+                        <v-flex lg3 md6 xs12 pr-4>
+                            <v-text-field
+                                v-model="userData.fSurname"
+                                name="fSurname"
+                                :error-messages="errors.collect('fSurname')"
+                                label="Primer Apellido"
+                                class=""
+                                data-vv-as="Primer Apellido"
+                                v-validate="'required'"
+                                key="fSurname-input"
+                            ></v-text-field>
+                        </v-flex>
+                        <v-flex lg3 md6 xs12 pr-4>
+                            <v-select
+                                :items="conditionInt"
+                                v-model="userData.institutional.condition"
+                                label="Tipo de Trabajador"
+                                key="condition-input"
+                                v-validate="'required'"
+                            ></v-select>
+                            <!-- <v-text-field
+                                v-model="userData.institutional.condition"
+                                name="condition"
+                                :error-messages="errors.collect('condition')"
+                                label="Condición o Tipo de Trabajador"
+                                class=""
+                                data-vv-as="Condición o Tipo de Trabajador"
+                                v-validate="'required'"
+                                key="condition-input"
+                            ></v-text-field> -->
+                        </v-flex>
+                    </v-layout>
                     <v-tabs
                     centered
                     color="cyan"
@@ -34,7 +91,7 @@
                         value="tab-1"
                         key="1"
                         >
-                            <v-card flat>
+                            <v-card >
                                 <v-card-text>
                                     <v-layout row wrap>
                                         <v-flex lg3 md6 xs12 pr-4>
@@ -50,55 +107,6 @@
                                             ></v-text-field>
                                         </v-flex>        
                                         <v-flex lg3 md6 xs12 pr-4>
-                                            <v-text-field
-                                                v-model="userData.fName"
-                                                name="fName"
-                                                :error-messages="errors.collect('fName')"
-                                                label="Primer Nombre"
-                                                class=""
-                                                data-vv-as="Primer Nombre"
-                                                v-validate="'required'"
-                                                key="fName-input"
-                                            ></v-text-field>
-                                        </v-flex>
-                                        <v-spacer></v-spacer>
-                                        <v-flex lg3 md6 xs12 pr-4>
-                                            <v-text-field
-                                                v-model="userData.sName"
-                                                name="sName"
-                                                :error-messages="errors.collect('sName')"
-                                                label="Segundo Nombre"
-                                                class=""
-                                                data-vv-as="Segundo Nombre"
-                                                v-validate="'required'"
-                                                key="sName-input"
-                                            ></v-text-field>
-                                        </v-flex>           
-                                        <v-flex lg3 md6 xs12 pr-4>
-                                            <v-text-field
-                                                v-model="userData.fSurname"
-                                                name="fSurname"
-                                                :error-messages="errors.collect('fSurname')"
-                                                label="Primer Apellido"
-                                                class=""
-                                                data-vv-as="Primer Apellido"
-                                                v-validate="'required'"
-                                                key="fSurname-input"
-                                            ></v-text-field>
-                                        </v-flex>
-                                        <v-flex lg4 md6 xs12 pr-4>
-                                            <v-text-field
-                                                v-model="userData.sSurname"
-                                                name="sSurname"
-                                                :error-messages="errors.collect('sSurname')"
-                                                label="Segundo Apellido"
-                                                class=""
-                                                data-vv-as="Segundo Apellido"
-                                                v-validate="'required'"
-                                                key="sSurname-input"
-                                            ></v-text-field>
-                                        </v-flex>
-                                        <v-flex lg4 md6 xs12 pr-4>
                                             <v-dialog
                                                 ref="dialog"
                                                 v-model="modalDate "
@@ -137,30 +145,6 @@
                                                 key="birthDate-input"
                                             ></v-text-field> -->
                                         </v-flex>
-                                        <v-flex lg4 md6 xs12 pr-4>
-                                            <v-text-field
-                                                v-model="userData.email"
-                                                name="email"
-                                                :error-messages="errors.collect('email')"
-                                                label="Correo Electronico"
-                                                class=""
-                                                data-vv-as="Correo Electronico"
-                                                v-validate="'required'"
-                                                key="email-input"
-                                            ></v-text-field>
-                                        </v-flex>
-                                        <v-flex lg6 md6 xs12 pr-4>
-                                            <v-text-field
-                                                v-model="userData.address"
-                                                name="address"
-                                                :error-messages="errors.collect('address')"
-                                                label="Direcciòn de Habitaciòn"
-                                                class=""
-                                                data-vv-as="Direcciòn de Habitaciòn"
-                                                v-validate="'required'"
-                                                key="address-input"
-                                            ></v-text-field>
-                                        </v-flex>
                                         <v-flex lg3 md6 xs12 pr-4>
                                             <v-text-field
                                                 v-model="userData.phone"
@@ -192,7 +176,78 @@
                                                 key="license-input"
                                             ></v-text-field> -->
                                         </v-flex>
-
+                                        <v-flex lg6 md6 xs12 pr-4>
+                                            <v-text-field
+                                                v-model="userData.fName"
+                                                name="fName"
+                                                :error-messages="errors.collect('fName')"
+                                                label="Primer Nombre"
+                                                class=""
+                                                data-vv-as="Primer Nombre"
+                                                v-validate="'required'"
+                                                key="fName-input"
+                                            ></v-text-field>
+                                        </v-flex>
+                                        <v-flex lg6 md6 xs12 pr-4>
+                                            <v-text-field
+                                                v-model="userData.sName"
+                                                name="sName"
+                                                :error-messages="errors.collect('sName')"
+                                                label="Segundo Nombre"
+                                                class=""
+                                                data-vv-as="Segundo Nombre"
+                                                v-validate="'required'"
+                                                key="sName-input"
+                                            ></v-text-field>
+                                        </v-flex>           
+                                        <v-flex lg6 md6 xs12 pr-4>
+                                            <v-text-field
+                                                v-model="userData.fSurname"
+                                                name="fSurname"
+                                                :error-messages="errors.collect('fSurname')"
+                                                label="Primer Apellido"
+                                                class=""
+                                                data-vv-as="Primer Apellido"
+                                                v-validate="'required'"
+                                                key="fSurname-input"
+                                            ></v-text-field>
+                                        </v-flex>
+                                        <v-flex lg6 md6 xs12 pr-4>
+                                            <v-text-field
+                                                v-model="userData.sSurname"
+                                                name="sSurname"
+                                                :error-messages="errors.collect('sSurname')"
+                                                label="Segundo Apellido"
+                                                class=""
+                                                data-vv-as="Segundo Apellido"
+                                                v-validate="'required'"
+                                                key="sSurname-input"
+                                            ></v-text-field>
+                                        </v-flex>
+                                        <v-flex lg6 md6 xs12 pr-4>
+                                            <v-text-field
+                                                v-model="userData.email"
+                                                name="email"
+                                                :error-messages="errors.collect('email')"
+                                                label="Correo Electronico"
+                                                class=""
+                                                data-vv-as="Correo Electronico"
+                                                v-validate="'required'"
+                                                key="email-input"
+                                            ></v-text-field>
+                                        </v-flex>
+                                        <v-flex lg6 md6 xs12 pr-4>
+                                            <v-text-field
+                                                v-model="userData.address"
+                                                name="address"
+                                                :error-messages="errors.collect('address')"
+                                                label="Direcciòn de Habitaciòn"
+                                                class=""
+                                                data-vv-as="Direcciòn de Habitaciòn"
+                                                v-validate="'required'"
+                                                key="address-input"
+                                            ></v-text-field>
+                                        </v-flex>
                                     </v-layout>                                                      
                                 </v-card-text>
                             </v-card>
@@ -201,7 +256,7 @@
                         value="tab-2"
                         key="2"
                         >
-                            <v-card flat>
+                            <v-card >
                                 <v-card-text>
                                     <v-layout row wrap>
                                         <v-flex lg6 md6 xs12 pr-4>
@@ -322,7 +377,7 @@
                         value="tab-3"
                         key="3"
                         >
-                            <v-card flat>
+                            <v-card >
                                 <v-card-text>
                                     <v-layout row wrap>
                                         <v-flex lg6 md6 xs12 pr-4>
@@ -423,16 +478,7 @@
                                                     <v-btn flat color="primary" @click="$refs.dialog.save(modalBirthDate)">OK</v-btn>
                                                 </v-date-picker>
                                             </v-dialog>
-                                            <v-text-field
-                                                v-model="userData.teaching.endDate"
-                                                name="endDate"
-                                                :error-messages="errors.collect('endDate')"
-                                                label="Fecha de Finalización del Componente Docente"
-                                                class=""
-                                                data-vv-as="Fecha de Finalización del Componente Docente"
-                                                v-validate="'required'"
-                                                key="endDate-input"
-                                            ></v-text-field>
+                                            
                                         </v-flex>
                                         <v-flex lg6 md6 xs12 pr-4>
                                             <v-text-field
@@ -455,7 +501,7 @@
                         value="tab-4"
                         key="4"
                         >
-                            <v-card flat>
+                            <v-card >
                                 <v-card-text>
                                     <v-layout row wrap>
                                         <v-flex lg6 md6 xs12 pr-4>
@@ -543,7 +589,7 @@
                         value="tab-5"
                         key="5"
                         >
-                        <v-card flat>
+                        <v-card>
                             <v-card-text>
                                 <v-layout row wrap>
                                     <v-flex lg6 md6 xs12 pr-4>
