@@ -1,7 +1,7 @@
 <template>
     <v-container grid-list-xs>
         <v-layout row wrap>
-            <v-flex xs12 pa-5>
+            <v-flex xs12 >
                 <v-form>
                     <v-layout row wrap >
                         <v-flex lg3 md6 xs12 pr-4>
@@ -579,7 +579,16 @@
                                                 key="positionOPSU-input"
                                             ></v-text-field>
                                         </v-flex>
-
+                                        <v-flex lg6 md6 xs12 pr-4>
+                                                <!-- items="departments" -->
+                                            <v-select
+                                                v-model="userData.institutional.department"
+                                                label="Departamento donde Labora el Trabajador"
+                                                key="category-input"
+                                                v-validate="'required'"
+                                            >
+                                            </v-select>
+                                        </v-flex>
                                     </v-layout>
                                         
                                 </v-card-text>

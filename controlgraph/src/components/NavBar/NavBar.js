@@ -2,12 +2,19 @@ export default {
     data(){
         return{
             drawer: null,
-            miniVariant: false,
             fab:false,
             tooltip:true,
             items: [
-                { title: 'Home', icon: 'dashboard' },
-                { title: 'About', icon: 'question_answer' }
+                { 
+                    title: 'Home', 
+                    icon: 'dashboard',
+                    url: '/home'
+                },
+                { 
+                    title: 'Trabajadores', 
+                    icon: 'question_answer',
+                    url: ''
+                }
               ],
               right: null
         }

@@ -45,9 +45,9 @@
         <v-btn icon @click.stop="drawer = !drawer">
           <v-icon>menu</v-icon>
         </v-btn>
-        <v-btn icon @click.stop="miniVariant = !miniVariant" v-if="$vuetify.breakpoint.name === 'xs' ? false : true">
+        <!-- <v-btn icon @click.stop="miniVariant = !miniVariant" v-if="$vuetify.breakpoint.name === 'xs' ? false : true">
           <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
-        </v-btn>
+        </v-btn> -->
       </div>
       <!-- <login v-else></login> -->
 
@@ -73,7 +73,7 @@
      <!-- End - Toolbar -->
 
     <!-- Floating Action Button -->
-    <v-speed-dial v-model="fab" bottom right fixed direction="top" transition="slide-y-reverse-transition" class="hidden-sm-and-up">
+    <!-- <v-speed-dial v-model="fab" bottom right fixed direction="top" transition="slide-y-reverse-transition" class="hidden-sm-and-up">
       <v-btn slot="activator" v-model="fab" color="blue darken-2" dark fab small>
         <v-icon>account_circle</v-icon>
         <v-icon>close</v-icon>
@@ -81,16 +81,16 @@
       <v-tooltip left color="blue-grey darken-4 py-0" v-model="tooltip">
         <v-btn slot="activator" fab dark small color="green">
           <v-icon>contact_mail</v-icon>
-        </v-btn>
+        </v-btn> -->
         <!-- <span>{{ $t('home.information.contact.title') }}</span> -->
-      </v-tooltip>
+      <!-- </v-tooltip>
       <v-tooltip left color="blue-grey darken-4 py-0" v-model="tooltip">
         <v-btn slot="activator" fab dark small color="indigo">
           <v-icon>check_circle</v-icon>
-        </v-btn>
+        </v-btn> -->
         <!-- <span class="caption">{{ $t('home.participate') }}</span> -->
-      </v-tooltip>
-    </v-speed-dial>
+      <!-- </v-tooltip>
+    </v-speed-dial> -->
     <!-- End Floating Action Button -->
   </v-layout>
 </template>

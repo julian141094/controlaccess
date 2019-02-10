@@ -1,6 +1,13 @@
+import FormEmployers from "./registerEmployer.vue"
+
+
 export default {
+    components: {
+      formemployers: FormEmployers
+    },
     data () {
       return {
+        dialog: false,
         search: '',
         headers: [
         //   {
@@ -20,7 +27,7 @@ export default {
           { text: 'Tipo', value: 'carbs' },
           { text: 'Cartegoria', value: 'protein' },
           { text: 'Departamento', value: 'iron' },
-          { text: 'Ultima Fecha', value: 'iron' }
+          { text: 'Acción', value: 'iron' }
         ],
         desserts: [
           {
