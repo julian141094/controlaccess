@@ -5,3 +5,9 @@ class UserDataModelView(viewsets.ModelViewSet):
     
     queryset                    = UserData.objects.all()
     serializer_class            = UserDataSerializer
+
+
+class DepartmentsModelView(viewsets.ModelViewSet):
+    
+    queryset                    = Departments.objects.all()
+    serializer_class            = DepartmentsSerializer

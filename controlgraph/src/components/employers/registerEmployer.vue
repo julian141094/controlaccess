@@ -580,8 +580,10 @@
                                             ></v-text-field>
                                         </v-flex>
                                         <v-flex lg6 md6 xs12 pr-4>
-                                                <!-- items="departments" -->
                                             <v-select
+                                                :items="departments"
+                                                item-value="pk"
+                                                item-text="name"
                                                 v-model="userData.institutional.department"
                                                 label="Departamento donde Labora el Trabajador"
                                                 key="category-input"

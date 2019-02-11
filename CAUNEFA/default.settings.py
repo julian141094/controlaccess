@@ -37,7 +37,8 @@ DJANGO_APPS = [
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
 	'django.contrib.postgres',
-	'rest_framework'
+	'rest_framework',
+    'corsheaders'
 ]
 
 PROJECT_APPS = [
@@ -47,6 +48,7 @@ PROJECT_APPS = [
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -150,3 +152,6 @@ REST_FRAMEWORK = {
     'UNICODE_JSON': True,
     'DEFAULT_FILTER_BACKENDS':('django_filters.rest_framework.DjangoFilterBackend',),
 }
+
+
+CORS_ORIGIN_ALLOW_ALL=True

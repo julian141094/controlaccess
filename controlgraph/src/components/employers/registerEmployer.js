@@ -2,6 +2,7 @@ export default {
     data(){
         return {
             mode: 0,
+            departments: [],
             typeSt: ['PREGRADO', 'POSTGRADO', 'OTRO'],
             typeCmp: ['VIRTUAL', 'PRESENCIAL'],
             conditionInt: ['ADMINISTRATIVO', 'OBRERO', 'DOCENTE'],
@@ -52,6 +53,14 @@ export default {
         }
     },
     methods:{
-        
+        getDepartments(){
+            axios.get(this.$store.getters.getDepartment()).then(response=>{
+                // console.log(response.data);
+                this.departments = response.data.results
+            })
+        },
+    },
+    mounted(){
+        this.getDepartments();
     }
 }
