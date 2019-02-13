@@ -37,7 +37,7 @@ class Departments(models.Model):
 
 class InstitutionalUserData(models.Model):
 
-    userData = models.ForeignKey(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='institutional')
+    userData = models.OneToOneField(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='institutional')
     dateIn = models.DateField(verbose_name='Fecha de Entrada a la Institución',blank=True, null=True)
     condition = models.CharField(verbose_name="Tipo de Trabajador",max_length=32,choices=EmployerCondition)
     category = models.CharField(verbose_name="Categoria del Trabajador", max_length=32,choices=EmployerCategory)
@@ -56,7 +56,7 @@ class StudyUserData(models.Model):
 
 class TeachingComponentUserData(models.Model):
 
-    userData = models.ForeignKey(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='teaching')
+    userData = models.OneToOneField(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='teaching')
     typeComponent = models.CharField(verbose_name="Tipo: Virtual o Presencial", max_length=12, blank=True, null=True, choices=EmployerComponent)
     universityOrigin = models.CharField(verbose_name="Universidad de Origen", max_length=60, blank=True, null=True)
     startDate = models.DateField(verbose_name='Fecha de inicio', blank=True, null=True)
@@ -69,7 +69,7 @@ Modelo para el Modulo de Permisos
 
 class PermissionsEmployer(models.Model):
 
-    userData = models.ForeignKey(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='permissions')
+    userData = models.OneToOneField(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='permissions')
     inDate = models.DateField(verbose_name='Fecha de Solicitud', blank=True, null=True)
     startDate = models.DateField(verbose_name='Fecha de Inicio', blank=True, null=True)
     endDate = models.DateField(verbose_name='Fecha de Culminacion',blank=True, null=True)
@@ -85,7 +85,7 @@ Modelo para el Modulo de Reposos
 
 class MedicalRestEmployer(models.Model):
 
-    userData = models.ForeignKey(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='medicalrest')
+    userData = models.OneToOneField(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='medicalrest')
     approvedBoss = models.BooleanField(verbose_name="Aprobado por el Jefe Inmediato")
     reportDate = models.DateField(verbose_name='Fecha de Reporte', blank=True, null=True)
     startDate = models.DateField(verbose_name='Fecha de Inicio', blank=True, null=True)
@@ -99,7 +99,7 @@ Modelo para la Comisión de Servicios
 
 class ServicesCommissionEmployer(models.Model):
 
-    userData = models.ForeignKey(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='servicescomission')
+    userData = models.OneToOneField(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='servicescomission')
     reportDate = models.DateField(verbose_name='Fecha de Reporte', blank=True, null=True)
     startDate = models.DateField(verbose_name='Fecha de Inicio', blank=True, null=True)
     endDate = models.DateField(verbose_name='Fecha de Culminacion',blank=True, null=True)

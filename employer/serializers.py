@@ -57,9 +57,9 @@ class ServicesCommissionEmployerSerializer(serializers.ModelSerializer):
 class UserDataSerializer(serializers.ModelSerializer):
     
     extra = ExtraUserDataSerializer(many=False)
-    # institutional = InstitutionalUserDataSerializer(many=False, read_only=True)
-    # study = StudyUserDataSerializer(many=False, read_only=True)
-    # teaching = TeachingComponentUserDataSerializer(many=False, read_only=True)
+    institutional = InstitutionalUserDataSerializer(many=False)
+    study = StudyUserDataSerializer(many=True)
+    teaching = TeachingComponentUserDataSerializer(many=False)
     # permissions = PermissionsEmployerSerializer(many=False,read_only=True) #El read Only es para que este serializer no sea obligatorio mandarlo en los post
     # medicalrest = MedicalRestEmployerSerializer(many=False,read_only=True)
     # servicescomission = ServicesCommissionEmployerSerializer(many=False,read_only=True)
@@ -68,13 +68,44 @@ class UserDataSerializer(serializers.ModelSerializer):
         model = UserData
         fields = ('identification','fName','sName','fSurname',
         'sSurname','birthDate','email','address','phone','license','extra',
-        # 'institutional','study','teaching',#, 'permissions', 'medicalrest', 'servicescomission'
+         'institutional','study','teaching',#, 'permissions', 'medicalrest', 'servicescomission'
         )
+        depth = 1 
 
     def create(self, validated_data):
+        print(validated_data, 'Aqui VAAAAAAAAAAAAAAAAA')
+        institutional = validated_data.pop('institutional')
         extra = validated_data.pop('extra')
+        study = validated_data.pop('study')
+        teaching = validated_data.pop('teaching')
         user = UserData.objects.create(**validated_data)
+        #Asignacion del usuario a los modelos
         extra['userData'] = user
-        extraObj = ExtraUserData.objects.create(**extra)
-        print(user,'extr',extra,'obj',extraObj)
+        institutional['userData'] = user
+        for study_obj in study:
+            study_obj['userData'] = user
+            StudyUserData.objects.create(**study_obj)
+        teaching['userData'] = user
+        ExtraUserData.objects.create(**extra)
+        InstitutionalUserData.objects.create(**institutional)
+        TeachingComponentUserData.objects.create(**teaching)
+        
+        
+        #user.study.create(**study)
+        #user.teaching.create(**teaching)
+        #user.extra.create(**extra)
+        #user.institutional.create(**institutional)
+        #print(user,'extr',extra,'obj',extraObj)
         return user
+
+    #El self es la instancia
+    def update(self, instance, validated_data):
+        institutional = validated_data.pop('institutional')
+        extra = validated_data.pop('extra')
+        study = validated_data.pop('study')
+        teaching = validated_data.pop('teaching')
+        instance = super().update(instance,validated_data)
+        InstitutionalUserDataSerializer().update(instance.institutional,institutional)
+        StudyUserDataSerializer().update(instance.study,study)
+        TeachingComponentUserDataSerializer().update(instance.teaching,teaching)
+        return instance

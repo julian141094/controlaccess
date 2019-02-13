@@ -16,13 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from employer.views import UserDataModelView
-from employer.views import DepartmentsModelView
+from employer.views import (UserDataModelView,
+    DepartmentsModelView,InstitutionalModelView
+)
 
 rout = routers.DefaultRouter()
 rout.register(r'UserData',UserDataModelView)
 #Aqui registro todas las rutas que necesito para interacciones con el backend
 rout.register(r'Departments',DepartmentsModelView)
+rout.register(r'Institutional',InstitutionalModelView)
 
 
 urlpatterns = [
