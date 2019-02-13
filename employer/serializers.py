@@ -57,9 +57,9 @@ class ServicesCommissionEmployerSerializer(serializers.ModelSerializer):
 class UserDataSerializer(serializers.ModelSerializer):
     
     extra = ExtraUserDataSerializer(many=False)
-    institutional = InstitutionalUserDataSerializer(many=False)
-    study = StudyUserDataSerializer(many=False)
-    teaching = TeachingComponentUserDataSerializer(many=False)
+    # institutional = InstitutionalUserDataSerializer(many=False, read_only=True)
+    # study = StudyUserDataSerializer(many=False, read_only=True)
+    # teaching = TeachingComponentUserDataSerializer(many=False, read_only=True)
     # permissions = PermissionsEmployerSerializer(many=False,read_only=True) #El read Only es para que este serializer no sea obligatorio mandarlo en los post
     # medicalrest = MedicalRestEmployerSerializer(many=False,read_only=True)
     # servicescomission = ServicesCommissionEmployerSerializer(many=False,read_only=True)
@@ -68,5 +68,13 @@ class UserDataSerializer(serializers.ModelSerializer):
         model = UserData
         fields = ('identification','fName','sName','fSurname',
         'sSurname','birthDate','email','address','phone','license','extra',
-        'institutional','study','teaching'#, 'permissions', 'medicalrest', 'servicescomission'
+        # 'institutional','study','teaching',#, 'permissions', 'medicalrest', 'servicescomission'
         )
+
+    def create(self, validated_data):
+        extra = validated_data.pop('extra')
+        user = UserData.objects.create(**validated_data)
+        extra['userData'] = user
+        extraObj = ExtraUserData.objects.create(**extra)
+        print(user,'extr',extra,'obj',extraObj)
+        return user

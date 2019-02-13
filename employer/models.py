@@ -21,7 +21,7 @@ class UserData(models.Model):
 
 class ExtraUserData(models.Model):
     
-    userData = models.ForeignKey(UserData, verbose_name="Empleado", on_delete=models.CASCADE,related_name='extra')
+    userData = models.OneToOneField(UserData, verbose_name="Empleado", on_delete=models.CASCADE,related_name='extra')
     codCPatria = models.IntegerField("Codigo del carnet",null=True,blank=True)
     serCPatria = models.IntegerField("Serial del carnet",null=True,blank=True)
     whatsapp = models.CharField(verbose_name="Whatsapp",max_length=14,null=True,blank=True)
@@ -38,7 +38,7 @@ class Departments(models.Model):
 class InstitutionalUserData(models.Model):
 
     userData = models.ForeignKey(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='institutional')
-    dateIn = models.DateField(verbose_name='Fecha de Entrada a la Institución')
+    dateIn = models.DateField(verbose_name='Fecha de Entrada a la Institución',blank=True, null=True)
     condition = models.CharField(verbose_name="Tipo de Trabajador",max_length=32,choices=EmployerCondition)
     category = models.CharField(verbose_name="Categoria del Trabajador", max_length=32,choices=EmployerCategory)
     appointment = models.CharField(verbose_name="Nombramiento UNEFANB",max_length=120,null=True,blank=True)

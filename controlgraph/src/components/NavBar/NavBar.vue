@@ -36,6 +36,7 @@
                 </v-list-tile-content>
                 </v-list-tile>
             </v-list>
+            <menu_item/>
     </v-navigation-drawer>
 
     <!-- Toolbar -->
