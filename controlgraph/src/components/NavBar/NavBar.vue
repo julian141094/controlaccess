@@ -12,8 +12,8 @@
             <v-toolbar flat>
                 <v-list>
                     <v-list-tile>
-                        <v-list-tile-title class="title">
-                        Application
+                        <v-list-tile-title class="title text-md-center">
+                        UNEFA
                         </v-list-tile-title>
                     </v-list-tile>
                 </v-list>
@@ -21,12 +21,11 @@
 
             <v-divider></v-divider>
 
-            <v-list dense class="pt-0">
+            <!-- <v-list dense class="pt-0">
                 <v-list-tile
                 v-for="item in items"
                 :key="item.title"
                 >
-                <!-- @click="" -->
                 <v-list-tile-action>
                     <v-icon>{{ item.icon }}</v-icon>
                 </v-list-tile-action>
@@ -35,8 +34,8 @@
                     <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                 </v-list-tile-content>
                 </v-list-tile>
-            </v-list>
-            <menu_item/>
+            </v-list> -->
+            <itemsmenu/>
     </v-navigation-drawer>
 
     <!-- Toolbar -->

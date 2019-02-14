@@ -36,12 +36,12 @@ export default {
                     positionOPSU: "",
                     department: ""
                 },
-                study: {
+                study: [{
                     typeStudy: "", //Este campo debe ser un SELECT
                     startDate: "", //Este campo debe ser DATE y debe ser diferenciado en el key del input
                     endDate: "", //Este campo debe ser DATE y debe ser diferenciado en el key del input
                     study: ""
-                },
+                }],
                 teaching: {
                     typeComponent: "", //Este campo debe ser un SELECT
                     universityOrigin: "",

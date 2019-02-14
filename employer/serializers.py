@@ -35,19 +35,19 @@ class PermissionsEmployerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PermissionsEmployer
-        fields = ('inDate', 'startDate', 'endDate', 'description', 'approvedBoss', 'commentBoss', 'approvedFinished', 'commentFinished')
+        fields = ('userData', 'inDate', 'startDate', 'endDate', 'description', 'approvedBoss', 'commentBoss', 'approvedFinished', 'commentFinished')
 
 class MedicalRestEmployerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = MedicalRestEmployer
-        fields = ('approvedBoss', 'reportDate', 'startDate', 'endDate', 'description', 'observation')
+        fields = ('userData', 'approvedBoss', 'reportDate', 'startDate', 'endDate', 'description', 'observation')
 
 class ServicesCommissionEmployerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ServicesCommissionEmployer
-        fields = ('reportDate', 'startDate', 'endDate', 'description', 'approved', 'observation')
+        fields = ('userData', 'reportDate', 'startDate', 'endDate', 'description', 'approved', 'observation')
 
 """
     Este serialicer esta de ultimo porque todos los otros concluyen dentro de este y debe conocerlos.
@@ -89,8 +89,6 @@ class UserDataSerializer(serializers.ModelSerializer):
         ExtraUserData.objects.create(**extra)
         InstitutionalUserData.objects.create(**institutional)
         TeachingComponentUserData.objects.create(**teaching)
-        
-        
         #user.study.create(**study)
         #user.teaching.create(**teaching)
         #user.extra.create(**extra)
