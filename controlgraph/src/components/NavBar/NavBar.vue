@@ -12,8 +12,8 @@
             <v-toolbar flat>
                 <v-list>
                     <v-list-tile>
-                        <v-list-tile-title class="title">
-                        Application
+                        <v-list-tile-title class="title text-md-center">
+                        UNEFA
                         </v-list-tile-title>
                     </v-list-tile>
                 </v-list>

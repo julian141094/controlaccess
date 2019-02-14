@@ -1,23 +1,51 @@
 <template>
-  <v-list>
-    <v-list-tile
-      v-for="item in items"
-      :key="item.title"
-    > 
+<v-list class="menu-iprint">
+<div v-for="item in items" :key="item.title" 
+  :class="item.title === 'logout' ? 'logout' : false">
+  <!-- Item menu -->
+  <v-list-tile v-if="!item.sub" :class="$route.fullPath === item.url ? 'active-list' : false" >
       <v-list-tile-content>
-        <router-link :to="item.link">
-          <v-list-tile-title>{{ $t(item.title) }}</v-list-tile-title>
-        </router-link>
+          <v-list-tile-title v-on="item.click != undefined ? {'click':item.click} : {}">
+              <router-link :to="item.url">
+                  <v-list-tile-title>
+                      {{ item.title }}
+                  </v-list-tile-title>
+              </router-link>
+          </v-list-tile-title>
       </v-list-tile-content>
-      <v-list-tile-action :class="{
-        'pr-2':!$parent.mini
-      }">
-        <router-link :to="item.link">
-          <v-icon>{{ item.icon }}</v-icon>
-        </router-link>
+      <v-list-tile-action  v-on="item.click != undefined ? {'click':item.click} : {}">
+          <router-link :to="item.url">
+              <v-icon :size="item.size">{{ item.icon }}</v-icon>
+          </router-link>
+      </v-list-tile-action>
+  </v-list-tile>
+  <!-- Sub-item menu-->
+    <!-- :value="item.sub.find(o=>o.url === $route.fullPath) !== undefined" -->
+  <v-list-group
+    :prepend-icon="item.icon"
+    append-icon="fa-chevron-down"
+    v-if="item.sub">
+    <v-list-tile slot="activator">
+      <v-list-tile-title >{{ item.title }} </v-list-tile-title>
+    </v-list-tile>
+    <v-list-tile
+      v-for="sub in item.sub" :key="sub.title"
+      v-on="sub.click != undefined ? {'click':sub.click} : {}"
+      :to="sub.url"
+      :class="{
+        'pl-0': $vuetify.breakpoint.xsOnly || $parent.miniVariant,
+        'pl-4': $vuetify.breakpoint.smAndUp && !$parent.miniVariant,
+        'active-list': $route.fullPath === sub.url ? true : false
+      }"
+    >
+      <v-list-tile-title>{{ sub.title }}</v-list-tile-title>
+      <v-list-tile-action>
+        <v-icon>{{sub.icon}}</v-icon>
       </v-list-tile-action>
     </v-list-tile>
-  </v-list>
+  </v-list-group>
+</div>
+</v-list>
 </template>
 
 <script>
@@ -40,8 +68,6 @@
 *   ]
 * }
 */
-import Route from '../../plugins/backroutes.js'
-
 export default {
   data () {
     return {
@@ -52,27 +78,18 @@ export default {
         { 
           title: 'Tablero', 
           icon: 'fa-dashboard', 
-          link: '/home'
+          url: '/home'
         },
         { 
           title: 'Trabajadores', 
-          icon: 'fa-users', 
-          link: '/employers'
-        },
-        { 
-          title: 'Account',
-          icon: 'fa-window-maximize',
-          link: '#'
-        },
-        { 
-          title: 'Register Subdomain',
-          icon: 'fa-globe',
-          link: '/subdomain/register'
-        },
-        { 
-          title: 'Subdomain List',
-          icon: 'fa-globe',
-          link: '/subdomain'
+          icon: 'fa-users',
+          sub:[
+            { 
+              title: 'Lista de empleados', 
+              icon: 'fa-dashboard', 
+              url: '/employers'
+            },  
+          ]
         }
       ],
     }
