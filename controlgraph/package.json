@@ -39,7 +39,21 @@
       "plugin:vue/essential",
       "eslint:recommended"
     ],
-    "rules": {},
+    "globals": {
+      "axios": true
+    },
+    "rules": {
+      "no-console": "off",
+      "no-unused-vars": [
+        0,
+        {
+          "varsIgnorePattern": [
+            "axios"
+          ],
+          "args": "none"
+        }
+      ]
+    },
     "parserOptions": {
       "parser": "babel-eslint"
     }
