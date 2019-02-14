@@ -17,15 +17,16 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from employer.views import (UserDataModelView,
-    DepartmentsModelView,InstitutionalModelView
+    DepartmentsModelView,PermissionsEmployerModelView,MedicalRestEmployerModelView,ServicesCommissionEmployerModelView
 )
 
 rout = routers.DefaultRouter()
 rout.register(r'UserData',UserDataModelView)
 #Aqui registro todas las rutas que necesito para interacciones con el backend
 rout.register(r'Departments',DepartmentsModelView)
-rout.register(r'Institutional',InstitutionalModelView)
-
+rout.register(r'Permisions',PermissionsEmployerModelView)
+rout.register(r'MedicalRest',MedicalRestEmployerModelView)
+rout.register(r'ServicesCommission',ServicesCommissionEmployerModelView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

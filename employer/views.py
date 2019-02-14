@@ -6,13 +6,22 @@ class UserDataModelView(viewsets.ModelViewSet):
     queryset                    = UserData.objects.all()
     serializer_class            = UserDataSerializer
 
-
 class DepartmentsModelView(viewsets.ModelViewSet):
     
     queryset                    = Departments.objects.all()
     serializer_class            = DepartmentsSerializer
 
-class InstitutionalModelView(viewsets.ModelViewSet):
+class PermissionsEmployerModelView(viewsets.ModelViewSet):
     
-    queryset                    = InstitutionalUserData.objects.all()
-    serializer_class            = InstitutionalUserDataSerializer
+    queryset                    = PermissionsEmployer.objects.all()
+    serializer_class            = PermissionsEmployerSerializer
+
+class MedicalRestEmployerModelView(viewsets.ModelViewSet):
+    
+    queryset                    = MedicalRestEmployer.objects.all()
+    serializer_class            = MedicalRestEmployerSerializer
+
+class ServicesCommissionEmployerModelView(viewsets.ModelViewSet):
+    
+    queryset                    = ServicesCommissionEmployer.objects.all()
+    serializer_class            = ServicesCommissionEmployerSerializer

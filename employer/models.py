@@ -69,7 +69,7 @@ Modelo para el Modulo de Permisos
 
 class PermissionsEmployer(models.Model):
 
-    userData = models.OneToOneField(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='permissions')
+    userData = models.ForeignKey(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='permissions')
     inDate = models.DateField(verbose_name='Fecha de Solicitud', blank=True, null=True)
     startDate = models.DateField(verbose_name='Fecha de Inicio', blank=True, null=True)
     endDate = models.DateField(verbose_name='Fecha de Culminacion',blank=True, null=True)
@@ -85,7 +85,7 @@ Modelo para el Modulo de Reposos
 
 class MedicalRestEmployer(models.Model):
 
-    userData = models.OneToOneField(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='medicalrest')
+    userData = models.ForeignKey(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='medicalrest')
     approvedBoss = models.BooleanField(verbose_name="Aprobado por el Jefe Inmediato")
     reportDate = models.DateField(verbose_name='Fecha de Reporte', blank=True, null=True)
     startDate = models.DateField(verbose_name='Fecha de Inicio', blank=True, null=True)
@@ -99,7 +99,7 @@ Modelo para la Comisión de Servicios
 
 class ServicesCommissionEmployer(models.Model):
 
-    userData = models.OneToOneField(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='servicescomission')
+    userData = models.ForeignKey(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='servicescomission')
     reportDate = models.DateField(verbose_name='Fecha de Reporte', blank=True, null=True)
     startDate = models.DateField(verbose_name='Fecha de Inicio', blank=True, null=True)
     endDate = models.DateField(verbose_name='Fecha de Culminacion',blank=True, null=True)

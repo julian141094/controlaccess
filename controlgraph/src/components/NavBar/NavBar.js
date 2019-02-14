@@ -1,6 +1,11 @@
+import itemsMenu from "./ItemsMenu.vue"
+
 export default {
-    data(){
-        return{
+    components: {
+        itemsmenu : itemsMenu
+    },
+    data () {
+        return {
             drawer: null,
             fab:false,
             tooltip:true,
