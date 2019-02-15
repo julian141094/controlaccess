@@ -28,7 +28,7 @@ export default {
         },
         onInit (promise) {
             promise.then(() => {
-            console.log('Successfully initilized! Ready for scanning now!')
+            // console.log('Successfully initilized! Ready for scanning now!')
             })
             .catch(error => {
             if (error.name === 'NotAllowedError') {
@@ -48,6 +48,6 @@ export default {
         }
     },
     mounted() {
-        console.log('hola')
+        // console.log('hola')
     },
 }

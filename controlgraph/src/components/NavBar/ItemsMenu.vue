@@ -82,15 +82,71 @@ export default {
         },
         { 
           title: 'Trabajadores', 
-          icon: 'fa-users',
+          icon: 'fa-poll-people',
           sub:[
             { 
               title: 'Lista de empleados', 
-              icon: 'fa-dashboard', 
+              icon: 'fa-people', 
               url: '/employers'
+            },
+            { 
+              title: 'Departamentos', 
+              icon: 'fa-dashboard', 
+              url: '/departments'
+            },   
+            { 
+              title: 'Permisos Laborales', 
+              icon: 'fa-dashboard', 
+              url: '/permisions'
             },  
+            { 
+              title: 'Reposos Medicos', 
+              icon: 'fa-dashboard', 
+              url: '/medicalrest'
+            },  
+            { 
+              title: 'Comisión de Servicios', 
+              icon: 'fa-dashboard', 
+              url: '/servicescommission'
+            }, 
           ]
-        }
+        },
+        { 
+          title: 'Entrada y Salida', 
+          icon: 'fa-poll-people',
+          sub:[
+            { 
+              title: 'Control E&S', 
+              icon: 'fa-people', 
+              url: '/employers'
+            },
+            // { 
+            //   title: 'Departamentos', 
+            //   icon: 'fa-dashboard', 
+            //   url: '/departments'
+            // },   
+            // { 
+            //   title: 'Permisos Laborales', 
+            //   icon: 'fa-dashboard', 
+            //   url: '/permisions'
+            // },  
+            // { 
+            //   title: 'Reposos Medicos', 
+            //   icon: 'fa-dashboard', 
+            //   url: '/medicalrest'
+            // },  
+            // { 
+            //   title: 'Comisión de Servicios', 
+            //   icon: 'fa-dashboard', 
+            //   url: '/servicescommission'
+            // }, 
+          ]
+        },
+        { 
+          title: 'Usuarios', 
+          icon: 'fa-dashboard', 
+          url: '/home'
+        },
       ],
     }
   },

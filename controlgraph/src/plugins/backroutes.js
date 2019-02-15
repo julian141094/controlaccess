@@ -11,6 +11,26 @@ export default {
             return pk != undefined ?
                 base + "Departments/" + pk + "/" :
                 base + "Departments/"
+        },
+        getEmployers:(state) =>(pk) => {
+            return pk != undefined ?
+                base + "UserData/" + pk + "/" :
+                base + "UserData/"
+        },
+        getMedicalRest:(state) =>(pk) => {
+            return pk != undefined ?
+                base + "MedicalRest/" + pk + "/" :
+                base + "MedicalRest/"
+        },
+        getPermisions:(state) =>(pk) => {
+            return pk != undefined ?
+                base + "Permisions/" + pk + "/" :
+                base + "Permisions/"
+        },
+        getServicesCommission:(state) =>(pk) => {
+            return pk != undefined ?
+                base + "ServicesCommission/" + pk + "/" :
+                base + "ServicesCommission/"
         }
     }
 }
