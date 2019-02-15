@@ -34,7 +34,7 @@ export default {
                     category: "",  //Este campo debe ser un SELECT
                     appointment: "",
                     positionOPSU: "",
-                    department: ""
+                    department_id: ""
                 },
                 study: [{
                     typeStudy: "", //Este campo debe ser un SELECT

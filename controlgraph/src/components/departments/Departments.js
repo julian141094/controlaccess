@@ -4,7 +4,7 @@ export default {
     data: () => ({
       dialog: false,
       search: '',
-      departments: {},
+      departments: [],
       headers: [
         {
           text: 'Nombre Del Departamento',
@@ -58,6 +58,7 @@ export default {
             Axios.get(this.$store.getters.getDepartment()).then(response=>{
                 console.log(response.data)
                 this.departments = response.data.results
+                console.log(this.departments)
             })
         },
       initialize () {

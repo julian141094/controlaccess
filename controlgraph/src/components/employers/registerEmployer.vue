@@ -584,7 +584,7 @@
                                                 :items="departments"
                                                 item-value="pk"
                                                 item-text="name"
-                                                v-model="userData.institutional.department"
+                                                v-model="userData.institutional.department_id"
                                                 label="Departamento donde Labora el Trabajador"
                                                 key="category-input"
                                                 v-validate="'required'"

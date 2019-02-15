@@ -49,7 +49,7 @@
                 </v-toolbar>
                 <v-data-table
                 :headers="headers"
-                :items="desserts"
+                :items="departments"
                 :search="search"
                 class="elevation-1"
                 >

@@ -14,10 +14,13 @@ class DepartmentsSerializer(serializers.ModelSerializer):
         fields = ('name', 'description')
 
 class InstitutionalUserDataSerializer(serializers.ModelSerializer):
+    department_id = serializers.IntegerField()
+    department = DepartmentsSerializer(many=False,read_only=True)
 
     class Meta:
         model = InstitutionalUserData
-        fields = ('dateIn', 'condition', 'category', 'appointment', 'positionOPSU', 'department')
+        fields = ('dateIn', 'condition', 'category', 'appointment', 'positionOPSU', 'department',"department_id")
+        depth = 1
 
 class StudyUserDataSerializer(serializers.ModelSerializer):
 

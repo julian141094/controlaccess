@@ -9,7 +9,7 @@ export default {
       return {
         dialog: false,
         search: '',
-        employers: {},
+        employers: [],
         headers: [
         //   {
         //     text: 'Cedula de Identidad',
@@ -21,13 +21,13 @@ export default {
             text: 'Cédula',
             align: 'left',
             sortable: true,
-            value: 'name'
+            value: 'identification'
           },
-          { text: '1er Nombre', value: 'calories' },
-          { text: '1er Apellido', value: 'fat' },
-          { text: 'Tipo', value: 'carbs' },
-          { text: 'Cartegoria', value: 'protein' },
-          { text: 'Departamento', value: 'iron' },
+          { text: '1er Nombre', value: 'fName' },
+          { text: '1er Apellido', value: 'fSurname' },
+          { text: 'Tipo', value: 'institutional.condition' },
+          { text: 'Cartegoria', value: 'institutional.category' },
+          { text: 'Departamento', value: 'department.name' },
           { text: 'Acción', value: 'iron' }
         ],
         desserts: [

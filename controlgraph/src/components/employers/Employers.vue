@@ -39,12 +39,15 @@
                     <template slot="no-data">
                     </template>
                     <template slot="items" slot-scope="props">
-                        <td>{{ props.item.name }}</td>
-                        <td class="text-xs-right">{{ props.item.calories }}</td>
-                        <td class="text-xs-right">{{ props.item.fat }}</td>
-                        <td class="text-xs-right">{{ props.item.carbs }}</td>
-                        <td class="text-xs-right">{{ props.item.protein }}</td>
-                        <td class="text-xs-right">{{ props.item.iron }}</td>
+                        <td>{{ props.item.identification }}</td>
+                        <td class="text-xs-right">{{ props.item.fName }}</td>
+                        <td class="text-xs-right">{{ props.item.fSurname }}</td>
+                        <td class="text-xs-right">{{ props.item.institutional.condition }}</td>
+                        <td class="text-xs-right">{{ props.item.institutional.category }}</td>
+                        <td class="text-xs-right">
+                            {{ props.item.institutional.department != null ? 
+                            props.item.institutional.department.name: '---' }}
+                        </td>
                         <td class="justify-center layout px-0">
                             <v-icon
                                 small
