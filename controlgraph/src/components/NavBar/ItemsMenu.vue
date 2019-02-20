@@ -85,7 +85,7 @@ export default {
           icon: 'fa-poll-people',
           sub:[
             { 
-              title: 'Lista de empleados', 
+              title: 'Empleados', 
               icon: 'fa-people', 
               url: '/employers'
             },

@@ -4,7 +4,13 @@ export default {
     data: () => ({
       dialog: false,
       search: '',
+      load: false,
       departments: [],
+      departmentsUNEFANB: {
+        pk:'',
+        name: "",
+        description: "",
+      },
       headers: [
         {
           text: 'Nombre Del Departamento',
@@ -18,6 +24,12 @@ export default {
             sortable: false,
             value: 'description' 
         },
+        { 
+          text: 'Acción', 
+          align: 'center',
+          sortable: false,
+          value: 'action' 
+      },
       ],
       desserts: [],
       editedIndex: -1,
@@ -50,40 +62,44 @@ export default {
     },
 
     created () {
-      this.initialize()
+      // this.initialize()
     },
 
     methods: {
         getDepartments(){
             Axios.get(this.$store.getters.getDepartment()).then(response=>{
-                console.log(response.data)
+                // console.log(response.data)
                 this.departments = response.data.results
                 console.log(this.departments)
             })
         },
-      initialize () {
-        this.desserts = [
-          {
-            name: 'Frozen Yogurt',
-            description: 159,
-          },
-          {
-            name: 'Ice cream sandwich',
-            description: 237,
-          },
-          
-        ]
-      },
-
       editItem (item) {
+        console.log(this.editedIndex);
+        
+        this.editedIndex == 1
+
         this.editedIndex = this.desserts.indexOf(item)
-        this.editedItem = Object.assign({}, item)
+        
+        this.departmentsUNEFANB = Object.assign({}, item)
+        console.log('Los datos del Departamento que se va a editar son: ', this.departmentsUNEFANB);
         this.dialog = true
       },
 
       deleteItem (item) {
-        const index = this.desserts.indexOf(item)
-        confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+        // const index = this.desserts.indexOf(item)
+        // confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
+
+        console.log('Esto es lo que llega para Eliminar', item);
+        console.log('lo que quiero eliminar tiene este pk', item.pk);
+        axios.delete(this.$store.getters.getDepartment(item.pk))
+        .then(response =>{
+          // this.alert.type = "success"
+          // this.alert.text = `${this.$tc("level",1)} ${this.$tc("removed",1)}`
+          // this.alert.active = true
+          console.log('Debio Eliminar');
+          this.getDepartments();
+        })
+        console.log('Debio Ejecutar la Actualizacion');
       },
 
       close () {
@@ -94,13 +110,68 @@ export default {
         }, 300)
       },
 
-      save () {
-        if (this.editedIndex > -1) {
-          Object.assign(this.desserts[this.editedIndex], this.editedItem)
-        } else {
-          this.desserts.push(this.editedItem)
+      saveOrUpdate (mode, departmentsUNEFANB) {
+        if(mode == 2 && departmentsUNEFANB.pk != undefined){
+          console.log('Esta seria la parte de editar, y e objeto que llega es: ', departmentsUNEFANB);
+          // this.editedIndex = this.desserts.indexOf(departmentsUNEFANB)
+          this.departmentsUNEFANB = Object.assign({}, departmentsUNEFANB)
+          // console.log('Los datos del Departamento que se va a editar son: ', this.departmentsUNEFANB);
+          this.dialog = true
+          
         }
-        this.close()
+        else{
+          console.log('guardar Nuevo');
+          this.$validator.validateAll()
+          .then(()=>{
+            this.load = true
+            if(!this.errors.any()){
+              if(this.departmentsUNEFANB.pk == ''){
+                axios.post(this.$store.getters.getDepartment(),this.departmentsUNEFANB)
+                .then(response =>{
+                  this.load = false
+                  this.$validator.reset()
+                  this.$emit('show_message',{
+                    type : "success",
+                    text : "Esta Registrado",
+                    active : true
+                  })
+                  // console.log('Esto es lo que va en el response: ',response);
+                  this.close(),
+                  this.getDepartments();
+                  this.$emit('registered')
+                })
+                .catch(err=>{
+                  this.load = false
+                  
+                  this.$emit('show_message',{
+                    type : "error",
+                    text : err.response.data.non_field_errors[0],
+                    active : true
+                  })
+                })
+              }
+              else{
+                axios.put(this.$store.getters.getDepartment(this.departmentsUNEFANB.pk),
+                      this.departmentsUNEFANB)
+                      .then(response =>{
+                          this.getDepartments()
+                          this.departmentsUNEFANB.pk = ""
+                          this.departmentsUNEFANB.name = ""
+                          this.departmentsUNEFANB.description = ""
+                          this.load = false
+                          this.dialog = false
+                          this.$validator.reset()
+                          this.alert.type = "success"
+                          // this.alert.text = `${this.$tc("level",1)} ${this.$tc("edited",1)}`
+                          this.alert.active = true
+                      })
+              }
+            }
+            else{
+              this.load = false
+            }
+          })
+        }
       }
     },
     mounted(){

@@ -11,7 +11,7 @@ class DepartmentsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Departments
-        fields = ('name', 'description')
+        fields = ('pk','name', 'description')
 
 class InstitutionalUserDataSerializer(serializers.ModelSerializer):
     department_id = serializers.IntegerField()
@@ -40,11 +40,6 @@ class PermissionsEmployerSerializer(serializers.ModelSerializer):
         model = PermissionsEmployer
         fields = ('userData', 'inDate', 'startDate', 'endDate', 'description', 'approvedBoss', 'commentBoss', 'approvedFinished', 'commentFinished')
 
-class MedicalRestEmployerSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = MedicalRestEmployer
-        fields = ('userData', 'approvedBoss', 'reportDate', 'startDate', 'endDate', 'description', 'observation')
 
 class ServicesCommissionEmployerSerializer(serializers.ModelSerializer):
 
@@ -69,7 +64,7 @@ class UserDataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserData
-        fields = ('identification','fName','sName','fSurname',
+        fields = ('pk','identification','fName','sName','fSurname',
         'sSurname','birthDate','email','address','phone','license','extra',
          'institutional','study','teaching',#, 'permissions', 'medicalrest', 'servicescomission'
         )
@@ -110,3 +105,20 @@ class UserDataSerializer(serializers.ModelSerializer):
         StudyUserDataSerializer().update(instance.study,study)
         TeachingComponentUserDataSerializer().update(instance.teaching,teaching)
         return instance
+
+class MedicalRestEmployerSerializer(serializers.ModelSerializer):
+    # Con este par de lineas, buscamos el pk del serialicer y nos traemos los datos con la relacion 
+    userData_id = serializers.IntegerField()
+    userData = UserDataSerializer(many=False,read_only=True)
+
+    class Meta:
+        model = MedicalRestEmployer
+        fields = ('pk','userData', 'approvedBoss', 'reportDate', 'startDate', 'endDate', 'description', 'observation', 'userData_id')
+
+    # userData_id = serializers.IntegerField(read_only=True)
+    # userData = UserDataSerializer(many=False,read_only=True)
+
+    # class Meta:
+    #     model = MedicalRestEmployer
+    #     fields = ('pk','userData', 'approvedBoss', 'reportDate', 'startDate', 'endDate', 'description', 'observation', 'userData_id')
+    #     read_only_fields = ('userData',)

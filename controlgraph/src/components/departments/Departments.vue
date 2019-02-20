@@ -30,10 +30,10 @@
                             <v-container grid-list-xs>
                             <v-layout wrap>
                                 <v-flex xs12 sm6 md4 pr-3>
-                                <v-text-field v-model="editedItem.name" label="Nombre"></v-text-field>
+                                <v-text-field v-model="departmentsUNEFANB.name" label="Nombre"></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm6 md4>
-                                <v-text-field v-model="editedItem.description" label="Descripción"></v-text-field>
+                                <v-text-field v-model="departmentsUNEFANB.description" label="Descripción"></v-text-field>
                                 </v-flex>
                             </v-layout>
                             </v-container>
@@ -42,7 +42,7 @@
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="blue darken-1" flat @click="close">Cancelar</v-btn>
-                            <v-btn color="blue darken-1" flat @click="save">Guardar</v-btn>
+                            <v-btn color="blue darken-1" flat @click="saveOrUpdate(1)">Guardar</v-btn>
                         </v-card-actions>
                         </v-card>
                     </v-dialog>
@@ -60,7 +60,7 @@
                         <v-icon
                             small
                             class="mr-2"
-                            @click="editItem(props.item)"
+                            @click="saveOrUpdate(2, props.item)"
                         >
                             edit
                         </v-icon>
@@ -72,9 +72,9 @@
                         </v-icon>
                         </td>
                     </template>
-                    <template slot="no-data">
-                        <v-btn color="primary" @click="initialize">Reset</v-btn>
-                    </template>
+                    <!-- <template slot="no-data">
+                        <v-btn color="primary" @click="initialize">Reasdasdset</v-btn>
+                    </template> -->
                 </v-data-table>
             </v-flex>
         </v-layout>

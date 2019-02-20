@@ -55,7 +55,7 @@ export default {
     methods:{
         getDepartments(){
             axios.get(this.$store.getters.getDepartment()).then(response=>{
-                // console.log(response.data);
+                console.log(response.data);
                 this.departments = response.data.results
             })
         },
