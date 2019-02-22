@@ -19,7 +19,7 @@
                         ></v-text-field>
                         <v-spacer></v-spacer>
                     <v-dialog v-model="dialog" max-width="100%px">
-                        <v-btn slot="activator" color="primary" dark class="mb-2" >Nuevo</v-btn>
+                        <v-btn slot="activator" color="primary" dark class="mb-2" @click="add">Nuevo</v-btn>
                         <v-card>
                         <v-card-title>
                             <span class="headline">{{ formTitle }}</span>
