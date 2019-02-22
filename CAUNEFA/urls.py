@@ -19,6 +19,7 @@ from rest_framework import routers
 from employer.views import (UserDataModelView,
     DepartmentsModelView,PermissionsEmployerModelView,MedicalRestEmployerModelView,ServicesCommissionEmployerModelView
 )
+from control.views import (InAndOutModelView,InAndOutApiView)
 
 rout = routers.DefaultRouter()
 rout.register(r'UserData',UserDataModelView)
@@ -27,8 +28,10 @@ rout.register(r'Departments',DepartmentsModelView)
 rout.register(r'Permisions',PermissionsEmployerModelView)
 rout.register(r'MedicalRest',MedicalRestEmployerModelView)
 rout.register(r'ServicesCommission',ServicesCommissionEmployerModelView)
+rout.register(r'Access',InAndOutModelView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/',include(rout.urls))
+    path('api/',include(rout.urls)),
+    path('api/inandout',InAndOutApiView.as_view())
 ]

@@ -1,6 +1,6 @@
-from rest_framework import viewsets,views
+from rest_framework import viewsets,views,filters,status
 from .serializers import *
-from rest_framework import filters
+from rest_framework.response import Response
 
 class InAndOutModelView(viewsets.ModelViewSet):
     
@@ -12,3 +12,6 @@ class InAndOutApiView(views.APIView):
     serializer_class = InAndOutSerializer
 
     def post(self, request, format=None):
+        data = request.data
+        last_visit = Inandout.objects.get(userData__identification__iexact = data['identification'])
+        # if(request[mode] == 'cam'):
