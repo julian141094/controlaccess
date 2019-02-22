@@ -13,7 +13,7 @@
                 <v-list>
                     <v-list-tile>
                         <v-list-tile-title class="title text-md-center">
-                        UNEFA
+                        UNEFANB
                         </v-list-tile-title>
                     </v-list-tile>
                 </v-list>
