@@ -66,7 +66,7 @@ class UserDataSerializer(serializers.ModelSerializer):
         model = UserData
         fields = ('pk','identification','fName','sName','fSurname',
         'sSurname','birthDate','email','address','phone','license','extra',
-         'institutional','study','teaching',#, 'permissions', 'medicalrest', 'servicescomission'
+         'institutional','study','teaching','active',#, 'permissions', 'medicalrest', 'servicescomission'
         )
         depth = 1 
 

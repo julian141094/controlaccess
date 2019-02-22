@@ -18,6 +18,7 @@ class UserData(models.Model):
     address = models.CharField(verbose_name="Direccion",max_length=128)
     phone = models.CharField(verbose_name="Celular",max_length=12)
     license = models.BooleanField(verbose_name="Carnet")
+    active = models.BooleanField(verbose_name="Activo")
 
 class ExtraUserData(models.Model):
     
