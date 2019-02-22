@@ -96,6 +96,21 @@ export default {
     },
     
     methods: {
+      add(){
+        this.MedicalRest={
+            pk: "",
+            userData_id: "",
+            approvedBoss: "",
+            reportDate: "",
+            startDate: "",
+            endDate: "",
+            description: "",
+            observation: ""
+        }
+        this.MedicalRest.reportDate
+        this.MedicalRest.startDate
+        this.MedicalRest.endDate
+      },
       //Esto es para que formatee las fehas que llegan AÑO-MES-DIA a DIA-MES-AÑO
       dateFormat(mode, date_orig){
         //Formatted date for show in format dd-mm-yy
@@ -225,19 +240,21 @@ export default {
               }
               else{
               console.log('En caso de que falle el registro entra a editar')
-                axios.put(this.$store.getters.getMedicalRest(this.departmentsUNEFANB.pk),
-                      this.departmentsUNEFANB)
+                axios.put(this.$store.getters.getMedicalRest(this.MedicalRest.pk),
+                      this.MedicalRest)
                       .then(response =>{
-                          this.getDepartments()
-                          this.departmentsUNEFANB.pk = ""
-                          this.departmentsUNEFANB.name = ""
-                          this.departmentsUNEFANB.description = ""
+                          this.getMedicalRest()
+                          this.MedicalRest.pk = ""
+                          this.MedicalRest.approvedBoss = ""
+                          this.MedicalRest.reportDate = ""
+                          this.MedicalRest.startDate = ""
+                          this.MedicalRest.endDate = ""
+                          this.MedicalRest.description = ""
+                          this.MedicalRest.observation = ""
+                          // userData_id: "",
                           this.load = false
                           this.dialog = false
                           this.$validator.reset()
-                          this.alert.type = "success"
-                          // this.alert.text = `${this.$tc("level",1)} ${this.$tc("edited",1)}`
-                          this.alert.active = true
                       })
               }
             }
