@@ -31,64 +31,34 @@ export default {
           value: 'action' 
       },
       ],
-      desserts: [],
       editedIndex: -1,
-      editedItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0
-      },
-      defaultItem: {
-        name: '',
-        calories: 0,
-        fat: 0,
-        carbs: 0,
-        protein: 0
-      }
     }),
-
     computed: {
       formTitle () {
         return this.editedIndex === -1 ? 'Nuevo Departamento' : 'Editar Departamento'
       }
     },
-    
     watch: {
       dialog (val) {
         val || this.close()
       }
     },
-
-    created () {
-      // this.initialize()
-    },
-
     methods: {
-        getDepartments(){
-            Axios.get(this.$store.getters.getDepartment()).then(response=>{
-                // console.log(response.data)
-                this.departments = response.data.results
-                console.log(this.departments)
-            })
-        },
-      editItem (item) {
-        console.log(this.editedIndex);
-        
-        this.editedIndex == 1
-
-        this.editedIndex = this.desserts.indexOf(item)
-        
-        this.departmentsUNEFANB = Object.assign({}, item)
-        console.log('Los datos del Departamento que se va a editar son: ', this.departmentsUNEFANB);
-        this.dialog = true
+      clearFields(){
+        this.departmentsUNEFANB= {
+          pk:'',
+          name: "",
+          description: ""
+        }
       },
-
+      getDepartments(){
+          Axios.get(this.$store.getters.getDepartment()).then(response=>{
+              // console.log(response.data)
+              this.departments = response.data.results
+              console.log(this.departments)
+          })
+      },
       deleteItem (item) {
-        // const index = this.desserts.indexOf(item)
-        // confirm('Are you sure you want to delete this item?') && this.desserts.splice(index, 1)
-
         console.log('Esto es lo que llega para Eliminar', item);
         console.log('lo que quiero eliminar tiene este pk', item.pk);
         axios.delete(this.$store.getters.getDepartment(item.pk))
@@ -101,7 +71,6 @@ export default {
         })
         console.log('Debio Ejecutar la Actualizacion');
       },
-
       close () {
         this.dialog = false
         setTimeout(() => {
@@ -109,7 +78,6 @@ export default {
           this.editedIndex = -1
         }, 300)
       },
-
       saveOrUpdate (mode, departmentsUNEFANB) {
         if(mode == 2 && departmentsUNEFANB.pk != undefined){
           console.log('Esta seria la parte de editar, y e objeto que llega es: ', departmentsUNEFANB);
@@ -117,7 +85,6 @@ export default {
           this.departmentsUNEFANB = Object.assign({}, departmentsUNEFANB)
           // console.log('Los datos del Departamento que se va a editar son: ', this.departmentsUNEFANB);
           this.dialog = true
-          
         }
         else{
           console.log('guardar Nuevo');
@@ -161,9 +128,6 @@ export default {
                           this.load = false
                           this.dialog = false
                           this.$validator.reset()
-                          this.alert.type = "success"
-                          // this.alert.text = `${this.$tc("level",1)} ${this.$tc("edited",1)}`
-                          this.alert.active = true
                       })
               }
             }
