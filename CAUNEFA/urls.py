@@ -33,5 +33,5 @@ rout.register(r'Access',InAndOutModelView)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include(rout.urls)),
-    path('api/inandout',InAndOutApiView.as_view())
+    path('api/inandout/',InAndOutApiView.as_view())
 ]

@@ -1,4 +1,5 @@
 import { QrcodeStream, QrcodeCapture } from 'vue-qrcode-reader'
+import Axios from 'axios';
 
 export default {
     components:{
@@ -9,13 +10,22 @@ export default {
         return {
             code:"",
             errorMessage:"",
-            paused:true
+            paused:true,
+            message:""
         }
     },
     methods: {
         onCode(decodedString){
             this.paused = true
             this.code = decodedString.split(' ')[0]
+            axios.post(this.$store.getters.access,{
+                'mode':'cam',
+                'identification':this.code
+            })
+            .then(response => {
+                console.log(response.data)
+                this.message = response.data.detail
+            })
         },
         activeCamera(){
             if(this.paused){

@@ -34,11 +34,6 @@ class TeachingComponentUserDataSerializer(serializers.ModelSerializer):
         model = TeachingComponentUserData
         fields = ('typeComponent', 'universityOrigin', 'startDate', 'endDate', 'observation')
 
-class PermissionsEmployerSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = PermissionsEmployer
-        fields = ('userData', 'inDate', 'startDate', 'endDate', 'description', 'approvedBoss', 'commentBoss', 'approvedFinished', 'commentFinished')
 
 
 class ServicesCommissionEmployerSerializer(serializers.ModelSerializer):
@@ -122,3 +117,12 @@ class MedicalRestEmployerSerializer(serializers.ModelSerializer):
     #     model = MedicalRestEmployer
     #     fields = ('pk','userData', 'approvedBoss', 'reportDate', 'startDate', 'endDate', 'description', 'observation', 'userData_id')
     #     read_only_fields = ('userData',)
+
+class PermissionsEmployerSerializer(serializers.ModelSerializer):
+    # Con este par de lineas, buscamos el pk del serialicer y nos traemos los datos con la relacion 
+    userData_id = serializers.IntegerField()
+    userData = UserDataSerializer(many=False,read_only=True)
+
+    class Meta:
+        model = PermissionsEmployer
+        fields = ('pk','userData', 'inDate', 'startDate', 'endDate', 'description', 'approvedBoss', 'commentBoss', 'approvedFinished', 'commentFinished', 'userData_id')

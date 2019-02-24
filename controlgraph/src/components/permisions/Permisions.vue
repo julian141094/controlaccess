@@ -29,7 +29,7 @@
                             <v-layout row wrap>
                                 <v-flex xs12 >
                                     <v-autocomplete
-                                    v-model="MedicalRest.userData_id"
+                                    v-model="PermissionsEmployer.userData_id"
                                     name="fName"
                                     :error-messages="errors.collect('fName')"
                                     data-vv-as="Primer Nombre"
@@ -50,8 +50,6 @@
                                         slot="item" slot-scope="data">
                                         <v-list-tile-content>
                                         <v-list-tile-title v-html="data.item.fName+' '+data.item.sName+' '+data.item.fSurname+' '+data.item.sSurname"></v-list-tile-title>
-                                        <!-- <v-list-tile-sub-title v-html="data.item.institutional.condition"></v-list-tile-sub-title> -->
-                                        <!-- <v-list-tile-sub-title v-html="data.item.measure.name"></v-list-tile-sub-title> -->
                                         </v-list-tile-content>
                                     </template>
                                     <template slot="selection" slot-scope="data">
@@ -59,20 +57,48 @@
                                     </template>
                                     </v-autocomplete>
                                 </v-flex>
-                                <v-flex lg3 md6 xs12 pr-4>
+                                <v-flex lg4 md6 xs12 pr-4>
                                     <v-checkbox
-                                        v-model="MedicalRest.approvedBoss"
+                                        v-model="PermissionsEmployer.approvedBoss"
                                         v-validate="'required'"
                                         label="Firmado por Jefe Inmediato"
                                         required
                                         key="license-input"
                                     ></v-checkbox>
                                 </v-flex>
-                                <v-flex lg3 md6 xs12 pr-4>
+                                <v-flex lg8 md6 xs12 pr-4>
+                                    <v-textarea
+                                    v-model="PermissionsEmployer.description" 
+                                    name="Comentario Jefe Inmediato"
+                                    label="Comentario Jefe Inmediato"
+                                    value=""
+                                    hint=""
+                                    ></v-textarea>
+                                </v-flex>
+                                  
+                                <v-flex lg4 md6 xs12 pr-4>
+                                    <v-checkbox
+                                        v-model="PermissionsEmployer.approvedFinished"
+                                        v-validate="'required'"
+                                        label="Aprobado por Decanato"
+                                        required
+                                        key="aprovedFinished-input"
+                                    ></v-checkbox>
+                                </v-flex>
+                                <v-flex lg8 md6 xs12 pr-4>
+                                    <v-textarea
+                                    v-model="PermissionsEmployer.commentFinished" 
+                                    name="Comentario Decanato"
+                                    label="Comentario Decanato"
+                                    value=""
+                                    hint=""
+                                    ></v-textarea>
+                                </v-flex>
+                                <v-flex lg4 md6 xs12 pr-4>
                                     <v-dialog
                                         ref="reportDialog"
                                         v-model="modalDate"
-                                        :return-value.sync="MedicalRest.reportDate"
+                                        :return-value.sync="PermissionsEmployer.inDate"
                                         persistent
                                         lazy
                                         full-width
@@ -81,28 +107,28 @@
                                         <v-text-field
                                             slot="activator"
                                             v-model="date_formatted"
-                                            label="Fecha de Reporte del RM"
+                                            label="Fecha de Reporte del Permiso"
                                             prepend-icon="event"
                                             readonly
-                                            key="reportDate"
+                                            key="inDate"
                                         ></v-text-field>
                                         <v-date-picker 
-                                            v-model="MedicalRest.reportDate" 
+                                            v-model="PermissionsEmployer.inDate" 
                                             locale="es-VE"
                                             scrollable
-                                            @input="dateFormat(1, MedicalRest.reportDate)"
+                                            @input="dateFormat(1, PermissionsEmployer.inDate)"
                                         >
                                             <v-spacer></v-spacer>
                                             <v-btn flat color="primary" @click="this.modalDate = false">Cancel</v-btn>
-                                            <v-btn flat color="primary" @click="$refs.reportDialog.save(MedicalRest.reportDate)">OK</v-btn>
+                                            <v-btn flat color="primary" @click="$refs.reportDialog.save(PermissionsEmployer.inDate)">OK</v-btn>
                                         </v-date-picker>
                                     </v-dialog>
                                 </v-flex>
-                                <v-flex lg3 md6 xs12 pr-4>
+                                <v-flex lg4 md6 xs12 pr-4>
                                     <v-dialog
                                         ref="modalStartDate"
                                         v-model="startDate"
-                                        :return-value.sync="MedicalRest.startDate"
+                                        :return-value.sync="PermissionsEmployer.startDate"
                                         persistent
                                         lazy
                                         full-width
@@ -111,28 +137,28 @@
                                         <v-text-field
                                             slot="activator"
                                             v-model="startdate_formatted"
-                                            label="Fecha de Inicio del RM"
+                                            label="Fecha de Inicio del Permiso"
                                             prepend-icon="event"
                                             readonly
                                             key="startDate"
                                         ></v-text-field>
                                         <v-date-picker 
-                                            v-model="MedicalRest.startDate" 
+                                            v-model="PermissionsEmployer.startDate" 
                                             locale="es-VE"
                                             scrollable
-                                            @input="dateFormat(2, MedicalRest.startDate)"
+                                            @input="dateFormat(2, PermissionsEmployer.startDate)"
                                         >
                                             <v-spacer></v-spacer>
                                             <v-btn flat color="primary" @click="this.startDate = false">Cancel</v-btn>
-                                            <v-btn flat color="primary" @click="$refs.modalStartDate.save(MedicalRest.startDate)">OK</v-btn>
+                                            <v-btn flat color="primary" @click="$refs.modalStartDate.save(PermissionsEmployer.startDate)">OK</v-btn>
                                         </v-date-picker>
                                     </v-dialog>
                                 </v-flex>
-                                <v-flex lg3 md6 xs12 pr-4>
+                                <v-flex lg4 md6 xs12 pr-4>
                                     <v-dialog
                                         ref="modalEndDate"
                                         v-model="endDate"
-                                        :return-value.sync="MedicalRest.endDate"
+                                        :return-value.sync="PermissionsEmployer.endDate"
                                         persistent
                                         lazy
                                         full-width
@@ -141,41 +167,24 @@
                                         <v-text-field
                                             slot="activator"
                                             v-model="endDate_formatted"
-                                            label="Fecha de Finalización del RM"
+                                            label="Fecha de Finalización del Permiso"
                                             prepend-icon="event"
                                             readonly
                                             key="endDate"
                                         ></v-text-field>
                                         <v-date-picker 
-                                            v-model="MedicalRest.endDate" 
+                                            v-model="PermissionsEmployer.endDate" 
                                             locale="es-VE"
                                             scrollable
-                                            @input="dateFormat(3, MedicalRest.endDate)"
+                                            @input="dateFormat(3, PermissionsEmployer.endDate)"
                                         >
                                             <v-spacer></v-spacer>
                                             <v-btn flat color="primary" @click="this.endDate = false">Cancel</v-btn>
-                                            <v-btn flat color="primary" @click="$refs.modalEndDate.save(MedicalRest.endDate)">OK</v-btn>
+                                            <v-btn flat color="primary" @click="$refs.modalEndDate.save(PermissionsEmployer.endDate)">OK</v-btn>
                                         </v-date-picker>
                                     </v-dialog>
                                 </v-flex>
-                                <v-flex lg6 md6 xs12 pr-4>
-                                    <v-textarea
-                                    v-model="MedicalRest.description" 
-                                    name="Descripción"
-                                    label="Descripción"
-                                    value=""
-                                    hint=""
-                                    ></v-textarea>
-                                </v-flex>
-                                <v-flex lg6 md6 xs12 pr-4>
-                                    <v-textarea
-                                    v-model="MedicalRest.observation" 
-                                    name="Observación"
-                                    label="Observación"
-                                    value=""
-                                    hint=""
-                                    ></v-textarea>
-                                </v-flex>
+                              
                             </v-layout>
                             </v-container>
                         </v-card-text>
@@ -191,18 +200,19 @@
                     <v-card>
                         <v-data-table
                         :headers="headers"
-                        :items="medicalRest"
+                        :items="permissions"
                         :search="search"
                         class="elevation-1"
                         >
                             <template slot="items" slot-scope="props">
                                 <td class="justify-center">{{ props.item.userData.fName }}</td>
                                 <td class="justify-center">{{ props.item.userData.fSurname }}</td>
-                                <td class="justify-center">{{ props.item.reportDate }}</td>
+                                <td class="justify-center">{{ props.item.inDate }}</td>
                                 <td class="justify-center">{{ props.item.startDate }}</td>
                                 <td class="justify-center">{{ props.item.endDate }}</td>
                                 <td class="justify-center">{{ props.item.description }}</td>
-                                <!-- <td>{{ props.item.observation }}</td> -->
+                                <td class="justify-center">{{ props.item.approvedBoss }}</td>
+                                <td class="justify-center">{{ props.item.approvedFinished }}</td>
                                 <td class="justify-center layout px-0">
                                 <v-icon
                                     small

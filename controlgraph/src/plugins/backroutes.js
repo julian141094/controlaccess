@@ -31,6 +31,14 @@ export default {
             return pk != undefined ?
                 base + "ServicesCommission/" + pk + "/" :
                 base + "ServicesCommission/"
+        },
+        access:(state)=>{
+            return base + "inandout/"
         }
+        // getInAndOut:(state) => (pk) => {
+        //     return pk != undefined ?
+        //         base + "ServicesCommission/" + pk + "/" :
+        //         base + "ServicesCommission/"
+        // },
     }
 }

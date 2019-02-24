@@ -126,7 +126,7 @@ export default {
         return item
         },
         getMedicalRest(){
-          Axios.get(this.$store.getters.getMedicalRest()).then(response=>{
+          axios.get(this.$store.getters.getMedicalRest()).then(response=>{
             console.log(response.data)
             this.medicalRest = response.data.results
           })
@@ -250,6 +250,5 @@ export default {
     },
     mounted(){
         this.getMedicalRest();
-        // this.getEmployers();
     },
   }

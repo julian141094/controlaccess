@@ -143,10 +143,38 @@ export default {
           ]
         },
         { 
-          title: 'Usuarios', 
-          icon: 'fa-dashboard', 
-          url: '/home'
+          title: 'Reportes', 
+          icon: 'fa-poll-people',
+          sub:[
+            { 
+              title: 'Empleados', 
+              icon: 'fa-dashboard', 
+              url: '/home'
+            },
+            { 
+              title: 'Entradas y Salidas', 
+              icon: 'fa-dashboard', 
+              url: '/home'
+            },
+          ]
         },
+        { 
+          title: 'Usuaios', 
+          icon: 'fa-poll-people',
+          sub:[
+            { 
+              title: 'Usuarios de Empleados', 
+              icon: 'fa-dashboard', 
+              url: '/home'
+            },
+            { 
+              title: 'Usuarios de Sistema', 
+              icon: 'fa-dashboard', 
+              url: '/home'
+            },
+          ]
+        },
+        
       ],
     }
   },

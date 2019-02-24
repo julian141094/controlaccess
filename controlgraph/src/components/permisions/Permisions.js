@@ -5,7 +5,7 @@ export default {
       dialog: false,
       search: '',
       load: false,
-      medicalRest: [],
+      permissions: [],
       modalDate: false,
       startDate: false,
       endDate: false,
@@ -41,10 +41,10 @@ export default {
             value: 'fSurname' 
           },
         { 
-          text: 'Fecha Solicitud', 
+          text: 'Solicitud', 
           align: 'left',
           sortable: true,
-          value: 'reportDate' 
+          value: 'inDate' 
         },
         { 
           text: 'Inicio', 
@@ -74,7 +74,13 @@ export default {
           text: 'Aprobación Final', 
             align: 'center',
             sortable: false,
-            value: 'approvedBoss' 
+            value: 'approvedFinished' 
+        },
+        { 
+          text: 'Acción', 
+            align: 'center',
+            sortable: false,
+            value: 'action' 
         },
       ],
       editedIndex: -1,
@@ -134,132 +140,134 @@ export default {
       filterUser (item, queryText, itemText){
         console.log(queryText,item)
         return item
-        },
-        getMedicalRest(){
-          Axios.get(this.$store.getters.getMedicalRest()).then(response=>{
-            console.log(response.data)
-            this.medicalRest = response.data.results
+      },
+      getPermisions(){
+        axios.get(this.$store.getters.getPermisions()).then(response=>{
+          console.log(response.data)
+          this.permissions = response.data.results
+        })
+      },
+      getSearch(search) {
+        axios
+          .get(this.$store.getters.getEmployers(), {
+            params: {
+              search: search != undefined ? search : "",
+              // size: 8
+            }
           })
-        },
-        getSearch(search) {
-          axios
-            .get(this.$store.getters.getEmployers(), {
-              params: {
-                search: search != undefined ? search : "",
-                // size: 8
-              }
-            })
-            .then(response => {
-              this.UserData = [];
-              response.data.results.forEach(element => {
-                if (this.UserData.findIndex(m => m.pk == element.pk) == -1) {
-                  this.UserData.push(element);
-                }
-              });
-            })
-            .catch(err => {
-              console.log(err);
-            })
-            .finally(() => (this.isLoading = false));
-        },
-        deleteItem (item) {
-            console.log('Esto es lo que llega para Eliminar', item);
-            console.log('lo que quiero eliminar tiene este pk', item.pk);
-            axios.delete(this.$store.getters.getMedicalRest(item.pk))
-            .then(response =>{
-              console.log('Debio Eliminar');
-              this.getMedicalRest();
-            })
-            console.log('Debio Ejecutar la Actualizacion');
-        },
-        close () {
-            this.dialog = false
-            setTimeout(() => {
-              this.editedItem = Object.assign({}, this.defaultItem)
-              this.editedIndex = -1
-            }, 300)
-        },
-        saveOrUpdate (mode, MedicalRest) {
-          if(mode == 2 && MedicalRest.pk != undefined){
-            console.log('Esta seria la parte de editar, y e objeto que llega es: ', MedicalRest);
-            // this.editedIndex = this.desserts.indexOf(MedicalRest)
-            this.MedicalRest = Object.assign({}, MedicalRest)
-            //Formatear las fechas
-            this.dateFormat(1,this.MedicalRest.reportDate)
-            this.dateFormat(2,this.MedicalRest.startDate)
-            this.dateFormat(3,this.MedicalRest.endDate)
-
-            // console.log('Los datos del Departamento que se va a editar son: ', this.MedicalRest);
-            this.dialog = true
+          .then(response => {
+            this.UserData = [];
+            console.log(response, 'Este es el console de la respuesta del getSearch');
             
-          }
-          else{
-            console.log('guardar Nuevo');
-            this.$validator.validateAll()
-            .then(()=>{
-              this.load = true
-              if(!this.errors.any()){
-                console.log('Entro en el If de !this.error.any');
-                console.log('El pk del MedicalRest es: ', this.MedicalRest);
-                console.log('El userData_id del MedicalRest es: ', this.MedicalRest.userData_id);
+            response.data.results.forEach(element => {
+              if (this.UserData.findIndex(m => m.pk == element.pk) == -1) {
+                this.UserData.push(element);
+              }
+            });
+          })
+          .catch(err => {
+            console.log(err);
+          })
+          .finally(() => (this.isLoading = false));
+      },
+      deleteItem (item) {
+          console.log('Esto es lo que llega para Eliminar', item);
+          console.log('lo que quiero eliminar tiene este pk', item.pk);
+          axios.delete(this.$store.getters.getPermisions(item.pk))
+          .then(response =>{
+            console.log('Debio Eliminar');
+            this.getPermisions();
+          })
+          console.log('Debio Ejecutar la Actualizacion');
+      },
+      close () {
+          this.dialog = false
+          setTimeout(() => {
+            this.editedItem = Object.assign({}, this.defaultItem)
+            this.editedIndex = -1
+          }, 300)
+      },
+      saveOrUpdate (mode, PermissionsEmployer) {
+        if(mode == 2 && PermissionsEmployer.pk != undefined){
+          console.log('Esta seria la parte de editar, y e objeto que llega es: ', PermissionsEmployer);
+          // this.editedIndex = this.desserts.indexOf(PermissionsEmployer)
+          this.PermissionsEmployer = Object.assign({}, PermissionsEmployer)
+          //Formatear las fechas
+          this.dateFormat(1,this.PermissionsEmployer.reportDate)
+          this.dateFormat(2,this.PermissionsEmployer.startDate)
+          this.dateFormat(3,this.PermissionsEmployer.endDate)
 
-                
-                if(this.MedicalRest.pk == ''){
-                  axios.post(this.$store.getters.getMedicalRest(),this.MedicalRest)
-                  .then(response =>{
-                    this.load = false
-                    this.$validator.reset()
-                    this.$emit('show_message',{
-                      type : "success",
-                      text : "Esta Registrado",
-                      active : true
-                    })
-                    console.log('Esto es lo que va en el response: ',response);
-                    this.close(),
-                    this.getMedicalRest();
-                    this.$emit('registered')
+          // console.log('Los datos del Departamento que se va a editar son: ', this.MedicalRest);
+          this.dialog = true
+          
+        }
+        else{
+          console.log('guardar Nuevo');
+          this.$validator.validateAll()
+          .then(()=>{
+            this.load = true
+            if(!this.errors.any()){
+              console.log('Entro en el If de !this.error.any');
+              console.log('El pk del PermissionsEmployer es: ', this.PermissionsEmployer);
+              console.log('El userData_id del PermissionsEmployer es: ', this.PermissionsEmployer.userData_id);
+
+              
+              if(this.PermissionsEmployer.pk == ''){
+                axios.post(this.$store.getters.getPermisions(),this.PermissionsEmployer)
+                .then(response =>{
+                  this.load = false
+                  this.$validator.reset()
+                  this.$emit('show_message',{
+                    type : "success",
+                    text : "Esta Registrado",
+                    active : true
                   })
-                  .catch(err=>{
-                    this.load = false
-                    
-                    this.$emit('show_message',{
-                      type : "error",
-                      text : err.response.data.non_field_errors[0],
-                      active : true
-                    })
+                  console.log('Esto es lo que va en el response: ',response);
+                  this.close(),
+                  this.getPermisions();
+                  this.$emit('registered')
+                })
+                .catch(err=>{
+                  this.load = false
+                  
+                  this.$emit('show_message',{
+                    type : "error",
+                    text : err.response.data.non_field_errors[0],
+                    active : true
                   })
-                }
-                else{
-                console.log('En caso de que falle el registro entra a editar')
-                  axios.put(this.$store.getters.getMedicalRest(this.MedicalRest.pk),
-                        this.MedicalRest)
-                        .then(response =>{
-                            this.getMedicalRest()
-                            this.MedicalRest.pk = ""
-                            this.MedicalRest.approvedBoss = ""
-                            this.MedicalRest.reportDate = ""
-                            this.MedicalRest.startDate = ""
-                            this.MedicalRest.endDate = ""
-                            this.MedicalRest.description = ""
-                            this.MedicalRest.observation = ""
-                            // userData_id: "",
-                            this.load = false
-                            this.dialog = false
-                            this.$validator.reset()
-                        })
-                }
+                })
               }
               else{
-                this.load = false
-                console.log('En caso de que falle');
-                
+              console.log('En caso de que falle el registro entra a editar')
+                axios.put(this.$store.getters.getPermisions(this.PermissionsEmployer.pk),
+                      this.PermissionsEmployer)
+                      .then(response =>{
+                          this.getPermisions()
+                          this.PermissionsEmployer.pk = ""
+                          this.PermissionsEmployer.approvedBoss = ""
+                          this.PermissionsEmployer.approvedFinished = ""
+                          this.PermissionsEmployer.inDate = ""
+                          this.PermissionsEmployer.startDate = ""
+                          this.PermissionsEmployer.endDate = ""
+                          this.PermissionsEmployer.commentBoss = ""
+                          this.PermissionsEmployer.commentFinished = ""
+                          // userData_id: "",
+                          this.load = false
+                          this.dialog = false
+                          this.$validator.reset()
+                      })
               }
-            })
-          }
+            }
+            else{
+              this.load = false
+              console.log('En caso de que falle');
+              
+            }
+          })
         }
+      }
     },
     mounted(){
-        this.getMedicalRest();
-        // this.getEmployers();
+        this.getPermisions();
     },
   }
