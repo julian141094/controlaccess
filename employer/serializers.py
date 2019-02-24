@@ -35,13 +35,6 @@ class TeachingComponentUserDataSerializer(serializers.ModelSerializer):
         fields = ('typeComponent', 'universityOrigin', 'startDate', 'endDate', 'observation')
 
 
-
-class ServicesCommissionEmployerSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = ServicesCommissionEmployer
-        fields = ('userData', 'reportDate', 'startDate', 'endDate', 'description', 'approved', 'observation')
-
 """
     Este serialicer esta de ultimo porque todos los otros concluyen dentro de este y debe conocerlos.
     el many false es para indicar que la relacion va de regreso al user data, en el http://localhost:8000/api/UserData/ se debe ve el json con todos
@@ -117,6 +110,14 @@ class MedicalRestEmployerSerializer(serializers.ModelSerializer):
     #     model = MedicalRestEmployer
     #     fields = ('pk','userData', 'approvedBoss', 'reportDate', 'startDate', 'endDate', 'description', 'observation', 'userData_id')
     #     read_only_fields = ('userData',)
+
+class ServicesCommissionEmployerSerializer(serializers.ModelSerializer):
+    userData_id = serializers.IntegerField()
+    userData = UserDataSerializer(many=False,read_only=True)
+
+    class Meta:
+        model = ServicesCommissionEmployer
+        fields = ('pk','userData', 'reportDate', 'startDate', 'endDate', 'description', 'approvedBoss', 'observation', 'userData_id')
 
 class PermissionsEmployerSerializer(serializers.ModelSerializer):
     # Con este par de lineas, buscamos el pk del serialicer y nos traemos los datos con la relacion 

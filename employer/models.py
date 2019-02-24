@@ -105,7 +105,7 @@ class ServicesCommissionEmployer(models.Model):
     startDate = models.DateField(verbose_name='Fecha de Inicio', blank=True, null=True)
     endDate = models.DateField(verbose_name='Fecha de Culminacion',blank=True, null=True)
     description = models.CharField(verbose_name='Descripcion del ', max_length=200, null=True,blank=True)
-    approved = models.BooleanField(verbose_name="Aprobado por el Jefe Inmediato")
+    approvedBoss = models.BooleanField(verbose_name="Aprobado por el Jefe Inmediato")
     observation = models.CharField(verbose_name='Observación', max_length=200, null=True,blank=True)
 
 
