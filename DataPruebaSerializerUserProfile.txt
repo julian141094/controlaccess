@@ -1,0 +1,12 @@
+{
+    "password": "jaar1234",
+    "last_login": null,
+    "is_superuser": true,
+    "username": "admin",
+    "first_name": "",
+    "last_name": "",
+    "email": "admin@prueba.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2019-01-26 17:02:54.075-04"
+}
