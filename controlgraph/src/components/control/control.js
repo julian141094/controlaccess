@@ -1,13 +1,19 @@
 import { QrcodeStream, QrcodeCapture } from 'vue-qrcode-reader'
 import Axios from 'axios';
+import keyControl from './keyControl.vue'
+import login from '../login/Login.vue'
 
 export default {
     components:{
+        login,
+        keyControl,
         QrcodeStream,
         QrcodeCapture
     },
     data(){
         return {
+            dialog: false,
+			dialog2: false,            
             code:"",
             errorMessage:"",
             paused:true,

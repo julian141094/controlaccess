@@ -1,10 +1,13 @@
-from rest_framework import viewsets
+# Esto es para importar las viuset, y los permisos que se le otorgaran a las vistas 
+from rest_framework import viewsets, permissions
 from .serializers import *
 from rest_framework import filters
+
 
 class UserDataModelView(viewsets.ModelViewSet):
     
     queryset                    = UserData.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class            = UserDataSerializer
     # Aqui se pasa el filtro
     # filter_fields = {
@@ -22,19 +25,12 @@ class UserDataModelView(viewsets.ModelViewSet):
 class DepartmentsModelView(viewsets.ModelViewSet):
     
     queryset                    = Departments.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
+
     serializer_class            = DepartmentsSerializer
 
-class PermissionsEmployerModelView(viewsets.ModelViewSet):
+class IncidentsEmployerModelView(viewsets.ModelViewSet):
     
-    queryset                    = PermissionsEmployer.objects.all()
-    serializer_class            = PermissionsEmployerSerializer
-
-class MedicalRestEmployerModelView(viewsets.ModelViewSet):
-    
-    queryset                    = MedicalRestEmployer.objects.all()
-    serializer_class            = MedicalRestEmployerSerializer
-
-class ServicesCommissionEmployerModelView(viewsets.ModelViewSet):
-    
-    queryset                    = ServicesCommissionEmployer.objects.all()
-    serializer_class            = ServicesCommissionEmployerSerializer
+    queryset                    = IncidentsEmployer.objects.all()
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class            = IncidentsEmployerSerializer

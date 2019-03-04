@@ -17,21 +17,26 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from employer.views import (UserDataModelView,
-    DepartmentsModelView,PermissionsEmployerModelView,MedicalRestEmployerModelView,ServicesCommissionEmployerModelView
+    DepartmentsModelView,IncidentsEmployerModelView
 )
 from control.views import (InAndOutModelView,InAndOutApiView)
+from user_profile.views import (UserProfileModelView, LoginAPIView)
+from rest_framework_jwt.views import refresh_jwt_token
 
 rout = routers.DefaultRouter()
 rout.register(r'UserData',UserDataModelView)
 #Aqui registro todas las rutas que necesito para interacciones con el backend
 rout.register(r'Departments',DepartmentsModelView)
-rout.register(r'Permisions',PermissionsEmployerModelView)
-rout.register(r'MedicalRest',MedicalRestEmployerModelView)
-rout.register(r'ServicesCommission',ServicesCommissionEmployerModelView)
+rout.register(r'IncidentsEmployer',IncidentsEmployerModelView)
 rout.register(r'Access',InAndOutModelView)
+rout.register(r'User_Profile', UserProfileModelView)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include(rout.urls)),
-    path('api/inandout/',InAndOutApiView.as_view())
+    path('api/inandout/',InAndOutApiView.as_view()),
+    path('api/login/',LoginAPIView.as_view()),
+    path('api/api-token-refresh/', refresh_jwt_token),
+
 ]

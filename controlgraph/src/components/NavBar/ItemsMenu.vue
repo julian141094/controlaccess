@@ -93,21 +93,11 @@ export default {
               title: 'Departamentos', 
               icon: 'fa-dashboard', 
               url: '/departments'
-            },   
+            },     
             { 
-              title: 'Permisos Laborales', 
+              title: 'Incidencias', 
               icon: 'fa-dashboard', 
-              url: '/permisions'
-            },  
-            { 
-              title: 'Reposos Medicos', 
-              icon: 'fa-dashboard', 
-              url: '/medicalrest'
-            },  
-            { 
-              title: 'Comisión de Servicios', 
-              icon: 'fa-dashboard', 
-              url: '/servicescommission'
+              url: '/incidentsEmployer'
             }, 
           ]
         },

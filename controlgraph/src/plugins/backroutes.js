@@ -17,23 +17,24 @@ export default {
                 base + "UserData/" + pk + "/" :
                 base + "UserData/"
         },
-        getMedicalRest:(state) =>(pk) => {
+        getIncidentsEmployer:(state) =>(pk) => {
             return pk != undefined ?
-                base + "MedicalRest/" + pk + "/" :
-                base + "MedicalRest/"
+                base + "IncidentsEmployer/" + pk + "/" :
+                base + "IncidentsEmployer/"
         },
-        getPermisions:(state) =>(pk) => {
+        getUserProfile:(state) =>(pk) => {
             return pk != undefined ?
-                base + "Permisions/" + pk + "/" :
-                base + "Permisions/"
-        },
-        getServicesCommission:(state) =>(pk) => {
-            return pk != undefined ?
-                base + "ServicesCommission/" + pk + "/" :
-                base + "ServicesCommission/"
+                base + "UserProfile/" + pk + "/" :
+                base + "UserProfile/"
         },
         access:(state)=>{
             return base + "inandout/"
+        },
+        loginUrl:(state)=>{
+            return base + "login/"
+        },
+        logoutUrl:(state)=>{
+            return base + 'auth/token/logout'
         }
         // getInAndOut:(state) => (pk) => {
         //     return pk != undefined ?

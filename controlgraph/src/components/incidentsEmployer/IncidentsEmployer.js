@@ -5,14 +5,14 @@ export default {
       dialog: false,
       search: '',
       load: false,
-      servicesCommission: [],
+      incidentsEmployer: [],
       modalDate: false,
       startDate: false,
       endDate: false,
       UserData: [],
       isLoading: false,
       searchUser: "",
-      ServicesCommission:{
+      IncidentsEmployer:{
           pk: "",
           userData_id: "",
           approvedBoss: "",
@@ -73,7 +73,7 @@ export default {
     }),
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'Nuevo Reposo Medico' : 'Editar Departamento'
+        return this.editedIndex === -1 ? 'Nueva Incidencia' : 'Editar Incidencia'
       }
     },
     watch: {
@@ -91,7 +91,7 @@ export default {
     },
     methods: {
       clearFields(){
-        this.ServicesCommission={
+        this.IncidentsEmployer={
             pk: "",
             userData_id: "",
             approvedBoss: "",
@@ -125,10 +125,10 @@ export default {
         console.log(queryText,item)
         return item
         },
-        getServicesCommission(){
-          axios.get(this.$store.getters.getServicesCommission()).then(response=>{
+        getIncidentsEmployer(){
+          axios.get(this.$store.getters.getIncidentsEmployer()).then(response=>{
             console.log(response.data)
-            this.servicesCommission = response.data.results
+            this.incidentsEmployer = response.data.results
           })
         },
         getSearch(search) {
@@ -155,10 +155,10 @@ export default {
         deleteItem (item) {
             console.log('Esto es lo que llega para Eliminar', item);
             console.log('lo que quiero eliminar tiene este pk', item.pk);
-            axios.delete(this.$store.getters.getServicesCommission(item.pk))
+            axios.delete(this.$store.getters.getIncidentsEmployer(item.pk))
             .then(response =>{
               console.log('Debio Eliminar');
-              this.getServicesCommission();
+              this.getIncidentsEmployer();
             })
             console.log('Debio Ejecutar la Actualizacion');
         },
@@ -169,17 +169,17 @@ export default {
               this.editedIndex = -1
             }, 300)
         },
-        saveOrUpdate (mode, ServicesCommission) {
-          if(mode == 2 && ServicesCommission.pk != undefined){
-            console.log('Esta seria la parte de editar, y e objeto que llega es: ', ServicesCommission);
-            // this.editedIndex = this.desserts.indexOf(ServicesCommission)
-            this.ServicesCommission = Object.assign({}, ServicesCommission)
+        saveOrUpdate (mode, IncidentsEmployer) {
+          if(mode == 2 && IncidentsEmployer.pk != undefined){
+            console.log('Esta seria la parte de editar, y e objeto que llega es: ', IncidentsEmployer);
+            // this.editedIndex = this.desserts.indexOf(IncidentsEmployer)
+            this.IncidentsEmployer = Object.assign({}, IncidentsEmployer)
             //Formatear las fechas
-            this.dateFormat(1,this.ServicesCommission.reportDate)
-            this.dateFormat(2,this.ServicesCommission.startDate)
-            this.dateFormat(3,this.ServicesCommission.endDate)
+            this.dateFormat(1,this.IncidentsEmployer.reportDate)
+            this.dateFormat(2,this.IncidentsEmployer.startDate)
+            this.dateFormat(3,this.IncidentsEmployer.endDate)
 
-            // console.log('Los datos del Departamento que se va a editar son: ', this.ServicesCommissiont);
+            // console.log('Los datos del Departamento que se va a editar son: ', this.IncidentsEmployert);
             this.dialog = true
             
           }
@@ -190,12 +190,12 @@ export default {
               this.load = true
               if(!this.errors.any()){
                 console.log('Entro en el If de !this.error.any');
-                console.log('El pk del ServicesCommission es: ', this.ServicesCommission);
-                console.log('El userData_id del ServicesCommission es: ', this.ServicesCommission.userData_id);
+                console.log('El pk del IncidentsEmployer es: ', this.IncidentsEmployer);
+                console.log('El userData_id del IncidentsEmployer es: ', this.IncidentsEmployer.userData_id);
 
                 
-                if(this.ServicesCommission.pk == ''){
-                  axios.post(this.$store.getters.getServicesCommission(),this.ServicesCommission)
+                if(this.IncidentsEmployer.pk == ''){
+                  axios.post(this.$store.getters.getIncidentsEmployer(),this.IncidentsEmployer)
                   .then(response =>{
                     this.load = false
                     this.$validator.reset()
@@ -206,7 +206,7 @@ export default {
                     })
                     console.log('Esto es lo que va en el response: ',response);
                     this.close(),
-                    this.getServicesCommission();
+                    this.getIncidentsEmployer();
                     this.$emit('registered')
                   })
                   .catch(err=>{
@@ -221,17 +221,17 @@ export default {
                 }
                 else{
                 console.log('En caso de que falle el registro entra a editar')
-                  axios.put(this.$store.getters.getServicesCommission(this.ServicesCommission.pk),
-                        this.ServicesCommission)
+                  axios.put(this.$store.getters.getIncidentsEmployer(this.IncidentsEmployer.pk),
+                        this.IncidentsEmployer)
                         .then(response =>{
-                            this.getServicesCommission()
-                            this.ServicesCommission.pk = ""
-                            this.ServicesCommission.approvedBoss = ""
-                            this.ServicesCommission.reportDate = ""
-                            this.ServicesCommission.startDate = ""
-                            this.ServicesCommission.endDate = ""
-                            this.ServicesCommission.description = ""
-                            this.ServicesCommission.observation = ""
+                            this.getIncidentsEmployer()
+                            this.IncidentsEmployer.pk = ""
+                            this.IncidentsEmployer.approvedBoss = ""
+                            this.IncidentsEmployer.reportDate = ""
+                            this.IncidentsEmployer.startDate = ""
+                            this.IncidentsEmployer.endDate = ""
+                            this.IncidentsEmployer.description = ""
+                            this.IncidentsEmployer.observation = ""
                             // userData_id: "",
                             this.load = false
                             this.dialog = false
@@ -249,6 +249,6 @@ export default {
         }
     },
     mounted(){
-        this.getServicesCommission();
+        this.getIncidentsEmployer();
     },
   }

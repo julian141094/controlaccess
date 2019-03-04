@@ -3,7 +3,7 @@
         <v-layout row wrap justify-center>
             <v-flex xs12>
                 <v-toolbar flat color="white">
-                    <v-toolbar-title>Reposos Medicos</v-toolbar-title>
+                    <v-toolbar-title>Incidencias de Empleados</v-toolbar-title>
                     <v-divider
                         class="mx-2"
                         inset
@@ -29,7 +29,7 @@
                             <v-layout row wrap>
                                 <v-flex xs12 >
                                     <v-autocomplete
-                                    v-model="MedicalRest.userData_id"
+                                    v-model="IncidentsEmployer.userData_id"
                                     name="fName"
                                     :error-messages="errors.collect('fName')"
                                     data-vv-as="Primer Nombre"
@@ -61,7 +61,7 @@
                                 </v-flex>
                                 <v-flex lg3 md6 xs12 pr-4>
                                     <v-checkbox
-                                        v-model="MedicalRest.approvedBoss"
+                                        v-model="IncidentsEmployer.approvedBoss"
                                         v-validate="'required'"
                                         label="Firmado por Jefe Inmediato"
                                         required
@@ -72,7 +72,7 @@
                                     <v-dialog
                                         ref="reportDialog"
                                         v-model="modalDate"
-                                        :return-value.sync="MedicalRest.reportDate"
+                                        :return-value.sync="IncidentsEmployer.reportDate"
                                         persistent
                                         lazy
                                         full-width
@@ -87,14 +87,14 @@
                                             key="reportDate"
                                         ></v-text-field>
                                         <v-date-picker 
-                                            v-model="MedicalRest.reportDate" 
+                                            v-model="IncidentsEmployer.reportDate" 
                                             locale="es-VE"
                                             scrollable
-                                            @input="dateFormat(1, MedicalRest.reportDate)"
+                                            @input="dateFormat(1, IncidentsEmployer.reportDate)"
                                         >
                                             <v-spacer></v-spacer>
                                             <v-btn flat color="primary" @click="this.modalDate = false">Cancel</v-btn>
-                                            <v-btn flat color="primary" @click="$refs.reportDialog.save(MedicalRest.reportDate)">OK</v-btn>
+                                            <v-btn flat color="primary" @click="$refs.reportDialog.save(IncidentsEmployer.reportDate)">OK</v-btn>
                                         </v-date-picker>
                                     </v-dialog>
                                 </v-flex>
@@ -102,7 +102,7 @@
                                     <v-dialog
                                         ref="modalStartDate"
                                         v-model="startDate"
-                                        :return-value.sync="MedicalRest.startDate"
+                                        :return-value.sync="IncidentsEmployer.startDate"
                                         persistent
                                         lazy
                                         full-width
@@ -117,14 +117,14 @@
                                             key="startDate"
                                         ></v-text-field>
                                         <v-date-picker 
-                                            v-model="MedicalRest.startDate" 
+                                            v-model="IncidentsEmployer.startDate" 
                                             locale="es-VE"
                                             scrollable
-                                            @input="dateFormat(2, MedicalRest.startDate)"
+                                            @input="dateFormat(2, IncidentsEmployer.startDate)"
                                         >
                                             <v-spacer></v-spacer>
                                             <v-btn flat color="primary" @click="this.startDate = false">Cancel</v-btn>
-                                            <v-btn flat color="primary" @click="$refs.modalStartDate.save(MedicalRest.startDate)">OK</v-btn>
+                                            <v-btn flat color="primary" @click="$refs.modalStartDate.save(IncidentsEmployer.startDate)">OK</v-btn>
                                         </v-date-picker>
                                     </v-dialog>
                                 </v-flex>
@@ -132,7 +132,7 @@
                                     <v-dialog
                                         ref="modalEndDate"
                                         v-model="endDate"
-                                        :return-value.sync="MedicalRest.endDate"
+                                        :return-value.sync="IncidentsEmployer.endDate"
                                         persistent
                                         lazy
                                         full-width
@@ -147,20 +147,20 @@
                                             key="endDate"
                                         ></v-text-field>
                                         <v-date-picker 
-                                            v-model="MedicalRest.endDate" 
+                                            v-model="IncidentsEmployer.endDate" 
                                             locale="es-VE"
                                             scrollable
-                                            @input="dateFormat(3, MedicalRest.endDate)"
+                                            @input="dateFormat(3, IncidentsEmployer.endDate)"
                                         >
                                             <v-spacer></v-spacer>
                                             <v-btn flat color="primary" @click="this.endDate = false">Cancel</v-btn>
-                                            <v-btn flat color="primary" @click="$refs.modalEndDate.save(MedicalRest.endDate)">OK</v-btn>
+                                            <v-btn flat color="primary" @click="$refs.modalEndDate.save(IncidentsEmployer.endDate)">OK</v-btn>
                                         </v-date-picker>
                                     </v-dialog>
                                 </v-flex>
                                 <v-flex lg6 md6 xs12 pr-4>
                                     <v-textarea
-                                    v-model="MedicalRest.description" 
+                                    v-model="IncidentsEmployer.description" 
                                     name="Descripción"
                                     label="Descripción"
                                     value=""
@@ -169,7 +169,7 @@
                                 </v-flex>
                                 <v-flex lg6 md6 xs12 pr-4>
                                     <v-textarea
-                                    v-model="MedicalRest.observation" 
+                                    v-model="IncidentsEmployer.observation" 
                                     name="Observación"
                                     label="Observación"
                                     value=""
@@ -191,7 +191,7 @@
                     <v-card>
                         <v-data-table
                         :headers="headers"
-                        :items="medicalRest"
+                        :items="incidentsEmployer"
                         :search="search"
                         class="elevation-1"
                         >
@@ -227,4 +227,4 @@
         </v-layout>
     </v-container>
 </template>
-<script src="./MedicalRest.js"></script>
+<script src="./IncidentsEmployer.js"></script>
