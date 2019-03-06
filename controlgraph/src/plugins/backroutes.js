@@ -27,6 +27,11 @@ export default {
                 base + "UserProfile/" + pk + "/" :
                 base + "UserProfile/"
         },
+        getInAndOut:(state) => (pk) => {
+            return pk != undefined ?
+                base + "Access/" + pk + "/" :
+                base + "Access/"
+        },
         access:(state)=>{
             return base + "inandout/"
         },

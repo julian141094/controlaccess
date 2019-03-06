@@ -108,7 +108,7 @@ export default {
             { 
               title: 'Control E&S', 
               icon: 'fa-people', 
-              url: '/employers'
+              url: '/internalControl'
             },
             // { 
             //   title: 'Departamentos', 

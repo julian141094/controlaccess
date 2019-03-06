@@ -6,6 +6,7 @@ import Employers from './components/employers/Employers.vue'
 import qr from './components/control/control.vue'
 import Departments from './components/departments/Departments.vue'
 import IncidentsEmployer from './components/incidentsEmployer/IncidentsEmployer.vue'
+import InternalControl from './components/internalControl/InternalControl.vue'
 import store from './store.js' 
 
 Vue.use(Router)
@@ -55,6 +56,12 @@ export default new Router({
       path: '/incidentsEmployer',
       name: 'IncidentsEmployer',
       component: IncidentsEmployer,
+      beforeEnter: ifAuthenticated
+    },
+    {
+      path: '/internalControl',
+      name: 'InternalControl',
+      component: InternalControl,
       beforeEnter: ifAuthenticated
     }
   ]

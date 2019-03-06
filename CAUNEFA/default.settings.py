@@ -44,7 +44,8 @@ DJANGO_APPS = [
 
 PROJECT_APPS = [
     'employer',
-    'control'
+    'control',
+    'reports'
 ]
 
 INSTALLED_APPS = DJANGO_APPS + PROJECT_APPS
@@ -135,6 +136,10 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static/'),
+)
 
 JWT_AUTH = {
     'JWT_ENCODE_HANDLER':

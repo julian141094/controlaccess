@@ -19,18 +19,20 @@ from rest_framework import routers
 from employer.views import (UserDataModelView,
     DepartmentsModelView,IncidentsEmployerModelView
 )
+from reports.views import GenerateReport
 from control.views import (InAndOutModelView,InAndOutApiView)
 from user_profile.views import (UserProfileModelView, LoginAPIView)
 from rest_framework_jwt.views import refresh_jwt_token
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 rout = routers.DefaultRouter()
 rout.register(r'UserData',UserDataModelView)
-#Aqui registro todas las rutas que necesito para interacciones con el backend
+#Aqui registro todas las ru
+# tas que necesito para interacciones con el backend
 rout.register(r'Departments',DepartmentsModelView)
 rout.register(r'IncidentsEmployer',IncidentsEmployerModelView)
 rout.register(r'Access',InAndOutModelView)
 rout.register(r'User_Profile', UserProfileModelView)
-
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -38,5 +40,7 @@ urlpatterns = [
     path('api/inandout/',InAndOutApiView.as_view()),
     path('api/login/',LoginAPIView.as_view()),
     path('api/api-token-refresh/', refresh_jwt_token),
-
+    path('generate/pdf/', GenerateReport.as_view(), name='generate_pdf'),
 ]
+
+urlpatterns += staticfiles_urlpatterns()

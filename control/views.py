@@ -1,4 +1,4 @@
-from rest_framework import viewsets,views,filters,status
+from rest_framework import viewsets,views,filters,status,permissions
 from .serializers import *
 from rest_framework.response import Response
 from django.utils import timezone
@@ -11,6 +11,8 @@ class InAndOutModelView(viewsets.ModelViewSet):
     
     queryset                    = Inandout.objects.all()
     serializer_class            = InAndOutSerializer
+    # permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
 
 #Esta es la view para El carnet
 class InAndOutApiView(views.APIView):
@@ -33,7 +35,7 @@ class InAndOutApiView(views.APIView):
                 return Response({'detail':'Lo siento {} pero no puedes ingresar contacta con el jefe de RRHH'.format('{} {} {} {}'.format(user.fName,
                 user.sName,user.fSurname,user.sSurname))},status=400)
             
-            entry = Inandout.objects.create(userData=user,timeIn=timezone.now())         
+            entry = Inandout.objects.create(userData=user,timeIn=timezone.now(), date=timezone.now())         
             return Response({
                 'detail': 'Bienvenido a la UNEFAB {}'.format('{} {} {} {}'.format(user.fName,
                 user.sName,user.fSurname,user.sSurname))
