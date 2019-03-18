@@ -1,5 +1,6 @@
 from django.db import models
 from .constants import *
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -19,6 +20,7 @@ class UserData(models.Model):
     phone = models.CharField(verbose_name="Celular",max_length=12)
     license = models.BooleanField(verbose_name="Carnet")
     active = models.BooleanField(verbose_name="Activo", default=True)
+    user = models.OneToOneField(User,verbose_name="Usuario", on_delete=models.CASCADE,related_name='userData',null=True,blank=True)
 
 class ExtraUserData(models.Model):
     
