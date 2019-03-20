@@ -6,18 +6,15 @@ export default {
       search: '',
       load: false,
       inAndOutEmployer: [],
-      incidentsEmployer: [],
       modalDate: false,
       modalTimeIn: false,
       modalTimeOutEat: false,
       modalTimeInEat: false,
       modalTimeOut: false,
-      startDate: false,
-      endDate: false,
       UserData: [],
       isLoading: false,
       searchUser: "",
-      InAndOut:{
+    InAndOut:{
         pk: "",
         date: "",
         userData_id: "",
@@ -25,26 +22,20 @@ export default {
         timeOutEat: "",
         timeInEat: "",
         timeOut: "",
-    },
-    IncidentsEmployer:{
-        pk: "",
-        userData_id: "",
-        approvedBoss: "",
-        reportDate: "",
-        startDate: "",
-        endDate: "",
-        description: "",
         observation: ""
     },
       date_formatted:'',
-      startdate_formatted:'',
-      endDate_formatted:'',
+      time_in_formated:'',
+      time_out_eat_formated:'',
+      time_in_eat_formated:'',
+      time_out_formated:'',
       headers: [
-        { 
-        text: 'Fecha', 
+        {
+        text: 'Fecha',
         align: 'left',
         sortable: true,
-        value: 'date' 
+        // isDescending: true,  
+        value: 'date'
         },
         {
           text: 'Nombre',
@@ -52,41 +43,41 @@ export default {
           sortable: true,
           value: 'fName'
         },
-        { 
-          text: 'Apellido', 
+        {
+          text: 'Apellido',
           align: 'left',
             sortable: true,
-            value: 'fSurname' 
+            value: 'fSurname'
           },
-        { 
-          text: 'Hora de Entrada', 
-            align: 'left',
+        {
+          text: 'Hora de Entrada',
+            align: 'center',
             sortable: true,
-            value: 'timeIn' 
+            value: 'timeIn'
           },
-        { 
-          text: 'Salida al Almuerzo', 
-          align: 'left',
+        {
+          text: 'Salida al Almuerzo',
+          align: 'center',
           sortable: true,
-          value: 'timeOutEat' 
+          value: 'timeOutEat'
         },
-        { 
-          text: 'Entrada del Almuerzo', 
-          align: 'left',
+        {
+          text: 'Entrada del Almuerzo',
+          align: 'center',
             sortable: true,
-            value: 'timeInEat' 
+            value: 'timeInEat'
           },
-        { 
-          text: 'Hora de Salida', 
-            align: 'left',
+        {
+          text: 'Hora de Salida',
+            align: 'center',
             sortable: false,
-            value: 'timeOut' 
+            value: 'timeOut'
         },
-        { 
-            text: 'Acción', 
+        {
+            text: 'Acción',
               align: 'center',
               sortable: false,
-              value: 'description' 
+              value: 'description'
           },
       ],
       editedIndex: -1,
@@ -111,34 +102,84 @@ export default {
     },
     methods: {
       clearFields(){
-        this.IncidentsEmployer={
+        this.InAndOut={
             pk: "",
+            date: "",
             userData_id: "",
-            approvedBoss: "",
-            reportDate: "",
-            startDate: "",
-            endDate: "",
-            description: "",
+            timeIn: "",
+            timeOutEat: "",
+            timeInEat: "",
+            timeOut: "",
             observation: ""
         }
         this.date_formatted = ""
         this.startdate_formatted = ""
         this.endDate_formatted = ""
       },
-      //Esto es para que formatee las fehas que llegan AÑO-MES-DIA a DIA-MES-AÑO
       dateFormat(mode, date_orig){
+        //Esto es para que formatee las fehas que llegan AÑO-MES-DIA a DIA-MES-AÑO
         //Formatted date for show in format dd-mm-yy
         if(date_orig != null){
           var new_date = date_orig.split('-')
           if(mode == 1){
           this.date_formatted = `${new_date[2]}/${new_date[1]}/${new_date[0]}`
           }
-          if(mode == 2){
-          this.startdate_formatted = `${new_date[2]}/${new_date[1]}/${new_date[0]}`
-          }
-          if(mode == 3){
-            this.endDate_formatted = `${new_date[2]}/${new_date[1]}/${new_date[0]}`
-          }
+        }
+      },
+      dateFormatTable(date_orig){
+        if(date_orig != null){
+            let new_date = date_orig.split('-')
+            return `${new_date[2]}/${new_date[1]}/${new_date[0]}`
+        }
+        else{
+            return '--REVISAR--'
+        }
+      },
+      timeFormat(mode, date_orig){
+        if(date_orig != null){
+            let new_time = date_orig.split('.')
+            console.log('Este es el tiempo antes del split: ', new_time);
+            let time = new_time[0].split(':')
+            console.log('Este es el tiempo luego del split: ', time);
+            
+            // let time_formated = `${time[0]}:${time[1]}`
+            if(mode == 1){
+                this.time_in_formated = `${time[0]}:${time[1]}`
+            }
+            if(mode == 2){
+                this.time_out_eat_formated = `${time[0]}:${time[1]}`
+            }
+            if(mode == 3){
+                this.time_in_eat_formated = `${time[0]}:${time[1]}`
+            }
+            if(mode == 4){
+                this.time_out_formated = `${time[0]}:${time[1]}`
+            }
+        }
+      },
+      timeFormatTable(date_orig){
+        if(date_orig != null){
+            let time = date_orig.split(':')
+            // return time[0] + ':' + time[1]
+            if(time[0] > 12){
+                let after = time[0] - 12
+                return after + ':' + time[1] + ' PM'
+            }
+            else if (time[0] == 12){
+                return time[0] + ':' + time[1] + ' PM'
+            }
+            else{
+                if (time[0] < 10){
+                    let time_finish = time[0].replace('0','')
+                    return time_finish + ':' + time[1] + ' AM'
+                }
+                else{
+                    return time[0] + ':' + time[1] + ' PM'
+                }
+            }
+        }
+        else{
+            return '---'
         }
       },
       filterUser (item, queryText, itemText){
@@ -150,13 +191,6 @@ export default {
                 console.log('Estos son las Entradas y Salidas: ');
             console.log(response.data)
             this.inAndOutEmployer = response.data.results
-            
-            })
-        },
-        getIncidentsEmployer(){
-            axios.get(this.$store.getters.getIncidentsEmployer()).then(response=>{
-              console.log(response.data)
-              this.incidentsEmployer = response.data.results
             })
         },
         getSearch(search) {
@@ -197,19 +231,19 @@ export default {
               this.editedIndex = -1
             }, 300)
         },
-        saveOrUpdate (mode, IncidentsEmployer) {
-          if(mode == 2 && IncidentsEmployer.pk != undefined){
-            console.log('Esta seria la parte de editar, y e objeto que llega es: ', IncidentsEmployer);
-            // this.editedIndex = this.desserts.indexOf(IncidentsEmployer)
-            this.IncidentsEmployer = Object.assign({}, IncidentsEmployer)
+        saveOrUpdate (mode, InAndOut) {
+          if(mode == 2 && InAndOut.pk != undefined){
+            console.log('Esta seria la parte de editar, y e objeto que llega es: ', InAndOut);
+            // this.editedIndex = this.desserts.indexOf(InAndOut)
+            this.InAndOut = Object.assign({}, InAndOut)
             //Formatear las fechas
-            this.dateFormat(1,this.IncidentsEmployer.reportDate)
-            this.dateFormat(2,this.IncidentsEmployer.startDate)
-            this.dateFormat(3,this.IncidentsEmployer.endDate)
-
-            // console.log('Los datos del Departamento que se va a editar son: ', this.IncidentsEmployert);
+            this.dateFormat(1,this.InAndOut.date)
+            this.timeFormat(1,this.InAndOut.timeIn)
+            this.timeFormat(2,this.InAndOut.timeOutEat)
+            this.timeFormat(3,this.InAndOut.timeInEat)
+            this.timeFormat(4,this.InAndOut.timeOut)
+            // console.log('Los datos del Departamento que se va a editar son: ', this.InAndOutt);
             this.dialog = true
-            
           }
           else{
             console.log('guardar Nuevo');
@@ -218,12 +252,10 @@ export default {
               this.load = true
               if(!this.errors.any()){
                 console.log('Entro en el If de !this.error.any');
-                console.log('El pk del IncidentsEmployer es: ', this.IncidentsEmployer);
-                console.log('El userData_id del IncidentsEmployer es: ', this.IncidentsEmployer.userData_id);
-
-                
-                if(this.IncidentsEmployer.pk == ''){
-                  axios.post(this.$store.getters.getIncidentsEmployer(),this.IncidentsEmployer)
+                console.log('El pk del InAndOut es: ', this.InAndOut);
+                console.log('El userData_id del InAndOut es: ', this.InAndOut.userData_id);
+                if(this.InAndOut.pk == ''){
+                  axios.post(this.$store.getters.getInAndOut(),this.InAndOut)
                   .then(response =>{
                     this.load = false
                     this.$validator.reset()
@@ -234,12 +266,12 @@ export default {
                     })
                     console.log('Esto es lo que va en el response: ',response);
                     this.close(),
-                    this.getIncidentsEmployer();
+                    this.getInAndOut();
                     this.$emit('registered')
                   })
                   .catch(err=>{
                     this.load = false
-                    
+
                     this.$emit('show_message',{
                       type : "error",
                       text : err.response.data.non_field_errors[0],
@@ -249,17 +281,17 @@ export default {
                 }
                 else{
                 console.log('En caso de que falle el registro entra a editar')
-                  axios.put(this.$store.getters.getIncidentsEmployer(this.IncidentsEmployer.pk),
-                        this.IncidentsEmployer)
+                  axios.put(this.$store.getters.getInAndOut(this.InAndOut.pk),
+                        this.InAndOut)
                         .then(response =>{
-                            this.getIncidentsEmployer()
-                            this.IncidentsEmployer.pk = ""
-                            this.IncidentsEmployer.approvedBoss = ""
-                            this.IncidentsEmployer.reportDate = ""
-                            this.IncidentsEmployer.startDate = ""
-                            this.IncidentsEmployer.endDate = ""
-                            this.IncidentsEmployer.description = ""
-                            this.IncidentsEmployer.observation = ""
+                            this.getInAndOut()
+                            this.InAndOut.pk = ""
+                            this.InAndOut.date = ""
+                            this.InAndOut.timeIn = ""
+                            this.InAndOut.timeOutEat = ""
+                            this.InAndOut.timeInEat = ""
+                            this.InAndOut.timeOut = ""
+                            this.InAndOut.observation = ""
                             // userData_id: "",
                             this.load = false
                             this.dialog = false
@@ -270,14 +302,13 @@ export default {
               else{
                 this.load = false
                 console.log('En caso de que falle');
-                
+
               }
             })
           }
         }
     },
     mounted(){
-        // this.getIncidentsEmployer();
         this.getInAndOut();
     },
   }
