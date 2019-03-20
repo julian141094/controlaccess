@@ -8,8 +8,19 @@ import Departments from './components/departments/Departments.vue'
 import Permisions from './components/permisions/Permisions.vue'
 import MedicalRest from './components/medicalRest/MedicalRest.vue'
 import ServicesCommission from './components/servicescommission/ServicesCommission.vue'
+import InternalControl from './components/internalControl/InternalControl.vue'
+import store from './store.js'
 
 Vue.use(Router)
+
+// to, from y next son parametros internos que maneja vue
+const ifAuthenticated = (to, from, next) => {
+  if (store.getters.isAuth) {
+    next()
+    return
+  }
+  next('/')
+}
 
 export default new Router({
   routes: [
@@ -18,33 +29,36 @@ export default new Router({
       name: 'home',
       component: qr
     },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    },
     // {
-    //   path: '/registeremployer',
-    //   name: 'registerEmployer',
-    //   component: RegisterEmployer
+    //   path: '/about',
+    //   name: 'about',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (about.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
     // },
+    {
+       path: '/registeremployer',
+       name: 'registerEmployer',
+       component: RegisterEmployer
+    },
     {
       path: '/employers',
       name: 'Employers',
-      component: Employers
+      component: Employers,
+      beforeEnter: ifAuthenticated
     },
     {
       path: '/departments',
       name: 'Departments',
-      component: Departments
+      component: Departments,
+      beforeEnter: ifAuthenticated
     },
     {
       path: '/permisions',
       name: 'Permisions',
-      component: Permisions
+      component: Permisions,
+      beforeEnter: ifAuthenticated
     },
     {
       path: '/medicalrest',
@@ -54,7 +68,14 @@ export default new Router({
     {
       path: '/servicescommission',
       name: 'ServicesCommission',
-      component: ServicesCommission
+      component: ServicesCommission,
+      beforeEnter: ifAuthenticated
+    },
+    {
+      path: '/internalcontrol',
+      name: 'InternalControl',
+      component: InternalControl,
+      beforeEnter: ifAuthenticated
     }
   ]
 })

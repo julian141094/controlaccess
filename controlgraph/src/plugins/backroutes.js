@@ -32,13 +32,24 @@ export default {
                 base + "ServicesCommission/" + pk + "/" :
                 base + "ServicesCommission/"
         },
+        getUserProfile:(state) =>(pk) => {
+            return pk != undefined ?
+                base + "UserProfile/" + pk + "/" :
+                base + "UserProfile/"
+        },
         access:(state)=>{
             return base + "inandout/"
+        },
+        loginUrl:(state)=>{
+            return base + "login/"
+        },
+        logoutUrl:(state)=>{
+            return base + 'auth/token/logout'
+        },
+        getInAndOut:(state) => (pk) => {
+            return pk != undefined ?
+                base + "Access/" + pk + "/" :
+                base + "Access/"
         }
-        // getInAndOut:(state) => (pk) => {
-        //     return pk != undefined ?
-        //         base + "ServicesCommission/" + pk + "/" :
-        //         base + "ServicesCommission/"
-        // },
     }
 }

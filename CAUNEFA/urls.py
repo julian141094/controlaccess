@@ -19,7 +19,11 @@ from rest_framework import routers
 from employer.views import (UserDataModelView,
     DepartmentsModelView,PermissionsEmployerModelView,MedicalRestEmployerModelView,ServicesCommissionEmployerModelView
 )
+from reports.views import GenerateReport
 from control.views import (InAndOutModelView,InAndOutApiView)
+from user_profile.views import (UserProfileModelView, LoginAPIView)
+from rest_framework_jwt.views import refresh_jwt_token
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
 rout = routers.DefaultRouter()
 rout.register(r'UserData',UserDataModelView)
@@ -29,9 +33,15 @@ rout.register(r'Permisions',PermissionsEmployerModelView)
 rout.register(r'MedicalRest',MedicalRestEmployerModelView)
 rout.register(r'ServicesCommission',ServicesCommissionEmployerModelView)
 rout.register(r'Access',InAndOutModelView)
+rout.register(r'User_Profile', UserProfileModelView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include(rout.urls)),
-    path('api/inandout/',InAndOutApiView.as_view())
+    path('api/inandout/',InAndOutApiView.as_view()),
+    path('api/login/',LoginAPIView.as_view()),
+    path('api/api-token-refresh/', refresh_jwt_token),
+    path('generate/pdf/', GenerateReport.as_view(), name='generate_pdf'),
 ]
+
+urlpatterns += staticfiles_urlpatterns()

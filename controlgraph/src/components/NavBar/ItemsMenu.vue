@@ -118,28 +118,28 @@ export default {
             { 
               title: 'Control E&S', 
               icon: 'fa-people', 
-              url: '/employers'
+              url: '/internalcontrol'
             },
-            // { 
-            //   title: 'Departamentos', 
-            //   icon: 'fa-dashboard', 
-            //   url: '/departments'
-            // },   
-            // { 
-            //   title: 'Permisos Laborales', 
-            //   icon: 'fa-dashboard', 
-            //   url: '/permisions'
-            // },  
-            // { 
-            //   title: 'Reposos Medicos', 
-            //   icon: 'fa-dashboard', 
-            //   url: '/medicalrest'
-            // },  
-            // { 
-            //   title: 'Comisión de Servicios', 
-            //   icon: 'fa-dashboard', 
-            //   url: '/servicescommission'
-            // }, 
+            { 
+              title: 'Departamentos', 
+              icon: 'fa-dashboard', 
+              url: '/departments'
+            },   
+            { 
+              title: 'Permisos Laborales', 
+              icon: 'fa-dashboard', 
+              url: '/permisions'
+            },  
+            { 
+              title: 'Reposos Medicos', 
+              icon: 'fa-dashboard', 
+              url: '/medicalrest'
+            },  
+            { 
+              title: 'Comisión de Servicios', 
+              icon: 'fa-dashboard', 
+              url: '/servicescommission'
+            }, 
           ]
         },
         { 

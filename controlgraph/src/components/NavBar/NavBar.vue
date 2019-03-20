@@ -48,8 +48,8 @@
       </v-btn>
 
       <v-spacer></v-spacer>
-      <v-btn depressed color="transparent" class="grey--text text--darken-2 hidden-xs-only">
-        hola
+      <v-btn right depressed color="transparent" @click.prevent="logout" class="grey--text text--darken-2 hidden-xs-only">
+        Salir
       </v-btn>
 
       <v-spacer></v-spacer>
