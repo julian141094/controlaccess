@@ -7,7 +7,7 @@
                     <v-card-title class="headline">Guardar Trabajador</v-card-title>
                     <v-card-text>Por favor llene el formulario detenidamente, al finalizar todos los campos presione almacenar. </v-card-text>
                     <!-- Formulario de Empliados -->
-                    <formemployers/>
+                        <formemployers/>
                     <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="green darken-1" flat @click="dialog = false">Cancelar</v-btn>
@@ -28,7 +28,7 @@
                         single-line
                         hide-details
                     ></v-text-field>
-                    <v-btn slot="activator"  color="primary" dark>Nuevo</v-btn>
+                    <v-btn @click="dialog = true" color="primary" dark>Nuevo</v-btn>
                     </v-card-title>
                     <v-data-table
                     :headers="headers"
@@ -40,8 +40,8 @@
                     </template>
                     <template slot="items" slot-scope="props">
                         <td>{{ props.item.identification }}</td>
-                        <td class="text-xs-right">{{ props.item.fName }}</td>
-                        <td class="text-xs-right">{{ props.item.fSurname }}</td>
+                        <td class="text-xs-right">{{ props.item.user != null ? props.item.user.first_name : props.item.sName }}</td>
+                        <td class="text-xs-right">{{ props.item.user != null ? props.item.user.last_name : props.item.sSurname}}</td>
                         <td class="text-xs-right">{{ props.item.institutional.condition }}</td>
                         <td class="text-xs-right">{{ props.item.institutional.category }}</td>
                         <td class="text-xs-right">

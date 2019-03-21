@@ -10,12 +10,9 @@ Modelo para el Modulo de Trabajadores
 class UserData(models.Model):
 
     identification = models.CharField(verbose_name="Cedula",max_length=12,unique=True)
-    fName = models.CharField(verbose_name="Nombre",max_length=32)
     sName = models.CharField(verbose_name="Segundo Nombre",max_length=32,blank=True,null=True)
-    fSurname = models.CharField(verbose_name="Apellido",max_length=32)
     sSurname = models.CharField(verbose_name="Segundo apellido",max_length=32,blank=True,null=True)
     birthDate = models.DateField(verbose_name='Fecha de nacimiento')
-    email = models.EmailField(verbose_name='Correo electronico',unique=True)
     address = models.CharField(verbose_name="Direccion",max_length=128)
     phone = models.CharField(verbose_name="Celular",max_length=12)
     license = models.BooleanField(verbose_name="Carnet")

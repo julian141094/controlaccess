@@ -48,17 +48,41 @@ export default {
                     startDate: "", //Este campo debe ser DATE y debe ser diferenciado en el key del input
                     endDate: "", //Este campo debe ser DATE y debe ser diferenciado en el key del input
                     observation: ""
-                }
+                },
+                "user": {
+                    "email": "",
+                    "username": "",
+                    "last_name": "",
+                    "first_name": "",
+                    "password": "",
+                    "is_active": false
+                },
+                "user_id": null
             }
         }
     },
     methods:{
         getDepartments(){
-            axios.get(this.$store.getters.getDepartment()).then(response=>{
-                console.log(response.data);
+            axios.get(this.$store.getters.getDepartment())
+            .then(response=>{
                 this.departments = response.data.results
             })
         },
+        add(){
+            this.$validator.validateAll()
+            .then(()=>{
+                if(!this.errors.any()){
+                    //
+                }
+            })
+        }
+    },
+    watch:{
+        'userData.identification': {
+            handler(val){
+                this.UserData.user.username = this.userData.identification
+            }
+        },  
     },
     mounted(){
         this.getDepartments();

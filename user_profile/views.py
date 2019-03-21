@@ -6,11 +6,6 @@ from .models import *
 from .serializers import *
 from .utils import JwtToken
 
-class UserProfileModelView(viewsets.ModelViewSet):
-
-    queryset                    = User.objects.all()
-    serializer_class            = UserProfileSerializer
-
 class UserAPIView(viewsets.ModelViewSet):
   
     permission_classes          = []
@@ -41,7 +36,3 @@ class LoginAPIView(views.APIView):
         user = serializer.validated_data['user']
         
         return Response(JwtToken(user),status=201)
-
-
-
-# Create your views here.

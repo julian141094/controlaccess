@@ -1,19 +1,17 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-layout justify-center align-center>
       <v-flex xs12 sm8>
         <v-card>
-          <v-layout row wrap class="imgAndText" style>
-            <v-flex xs3>
-              <img src="@/assets/img/logoUnefa.png" style="border: 1px solid blue;">
-            </v-flex>
-            <v-flex xs9>
-              <h1 pa-3 class>Sistema de Control de Entrada y Salida del Personal de la UNEFANB</h1>
-              <br>
-              <h4>Por favor, escané su código qr o suministre sus datos para reportar su llegada a la institución</h4>
-            </v-flex>
-          </v-layout>
-          <v-layout pa-3 row wrap>
+        <v-layout row wrap class="imgAndText" style>
+          <v-flex xs3 md3>
+            <img src="@/assets/img/logoUnefa.png" style="border: 1px solid blue;">
+          </v-flex>
+          <v-flex xs12 md9>
+            <h1 pa-3 class>Sistema de Control de Entrada y Salida del Personal de la UNEFANB</h1>
+            <br>
+            <h4>Por favor, escané su código qr o suministre sus datos para reportar su llegada a la institución</h4>
+          </v-flex>
           <v-flex xs6>
             <h1>{{code}}</h1>
             <h2>{{message}}</h2>
@@ -43,14 +41,14 @@
           </v-layout>
           <v-card-actions align-content-end>
             <v-dialog v-model="dialog" persistent max-width="35%">
-              <v-btn slot="activator"  color="primary" dark>Ingresar al Sistema</v-btn>
+              <v-btn slot="activator" v-if="$store.isAuth"  color="primary" dark>Ingresar al Sistema</v-btn>
               <v-card>
                 <v-card-title class="headline">Iniciar Sesión</v-card-title>
                 <v-card-text>Por favor suministre los datos del usuario para ingresar al sistema.</v-card-text>
                 <!-- Formulario del Login -->
-                <login/>
+                  <login/>
                 <v-card-actions>
-                <v-spacer></v-spacer>
+                  <v-spacer></v-spacer>
                   <v-btn color="success" flat @click="dialog = false">Cancelar</v-btn>
                   <v-btn color="success" flat @click="dialog = false" ref="loginSend" @submit.prevent='login'>Ingresar</v-btn>
                 </v-card-actions>

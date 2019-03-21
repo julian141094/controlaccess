@@ -3,7 +3,7 @@
         <v-layout row wrap>
             <v-flex xs12 >
                 <v-form>
-                    <v-layout row wrap >
+                    <!-- <v-layout row wrap >
                         <v-flex lg3 md6 xs12 pr-4>
                             <v-text-field
                                 v-model="userData.identification"
@@ -18,7 +18,7 @@
                         </v-flex>        
                         <v-flex lg3 md6 xs12 pr-4>
                             <v-text-field
-                                v-model="userData.fName"
+                                v-model="userData.user.first_name"
                                 name="fName"
                                 :error-messages="errors.collect('fName')"
                                 label="Primer Nombre"
@@ -30,7 +30,7 @@
                         </v-flex>
                         <v-flex lg3 md6 xs12 pr-4>
                             <v-text-field
-                                v-model="userData.fSurname"
+                                v-model="userData.user.last_name"
                                 name="fSurname"
                                 :error-messages="errors.collect('fSurname')"
                                 label="Primer Apellido"
@@ -48,18 +48,8 @@
                                 key="condition-input"
                                 v-validate="'required'"
                             ></v-select>
-                            <!-- <v-text-field
-                                v-model="userData.institutional.condition"
-                                name="condition"
-                                :error-messages="errors.collect('condition')"
-                                label="Condición o Tipo de Trabajador"
-                                class=""
-                                data-vv-as="Condición o Tipo de Trabajador"
-                                v-validate="'required'"
-                                key="condition-input"
-                            ></v-text-field> -->
                         </v-flex>
-                    </v-layout>
+                    </v-layout> -->
                     <v-tabs
                     centered
                     color="cyan"
@@ -178,7 +168,7 @@
                                         </v-flex>
                                         <v-flex lg6 md6 xs12 pr-4>
                                             <v-text-field
-                                                v-model="userData.fName"
+                                                v-model="userData.user.first_name"
                                                 name="fName"
                                                 :error-messages="errors.collect('fName')"
                                                 label="Primer Nombre"
@@ -202,7 +192,7 @@
                                         </v-flex>           
                                         <v-flex lg6 md6 xs12 pr-4>
                                             <v-text-field
-                                                v-model="userData.fSurname"
+                                                v-model="userData.user.last_name"
                                                 name="fSurname"
                                                 :error-messages="errors.collect('fSurname')"
                                                 label="Primer Apellido"
@@ -226,7 +216,7 @@
                                         </v-flex>
                                         <v-flex lg6 md6 xs12 pr-4>
                                             <v-text-field
-                                                v-model="userData.email"
+                                                v-model="userData.user.email"
                                                 name="email"
                                                 :error-messages="errors.collect('email')"
                                                 label="Correo Electronico"

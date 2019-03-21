@@ -33,7 +33,7 @@
           ></v-text-field>
           <hr class="separator">
           <v-flex xs12 text-xs-center>
-              <v-btn small round color="ivss--blue" class="white--text"
+              <v-btn small round color="success" class="white--text"
               @click.native="login" 
               :disabled="password != '' && login != '' ? false : true"
               >
