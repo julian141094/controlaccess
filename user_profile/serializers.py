@@ -11,14 +11,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         'first_name', 'last_name', 'email', 'is_staff', 'is_active', 'is_active', 'date_joined')
 
 class LoginSerializer(serializers.Serializer):
-    """!
-    Class that serializer the login
-
-    @author Miguel E. Villamizar R. (mevr02 at gmail.com)
-    @copyright Area862
-    @date 03-02-2019
-    @version 2.0
-    """
+   
     username = serializers.CharField(label=("Username"))
     password = serializers.CharField(label=("Password"),
                                      style={'input_type': 'password'})
