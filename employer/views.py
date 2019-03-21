@@ -24,13 +24,6 @@ class UserDataModelView(viewsets.ModelViewSet):
         'sSurname':['icontains'],
     }
 
-    # def create(self, request, format = None):
-    #     serializer = self.get_serializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     user = serializer.save()
-    #     user.groups.add(2)     
-    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
-
 class DepartmentsModelView(viewsets.ModelViewSet):
     
     queryset                    = Departments.objects.all()
