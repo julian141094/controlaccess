@@ -9,4 +9,4 @@ class InAndOutSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Inandout
-        fields = ('pk','userData', 'date', 'timeIn', 'timeOutEat', 'timeInEat', 'timeOut', 'userData_id')
+        fields = ('pk','userData', 'date', 'timeIn', 'timeOutEat', 'timeInEat', 'timeOut', 'userData_id', 'observation')

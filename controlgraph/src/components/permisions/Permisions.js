@@ -2,6 +2,8 @@ import Axios from "axios";
 
 export default {
     data: () => ({
+      edit: false,
+      editFields: true,
       dialog: false,
       search: '',
       load: false,
@@ -21,6 +23,8 @@ export default {
         description: "",
         approvedBoss: "",
         commentBoss: "",
+        approvedBossTH: "",
+        commentBossTH: "",
         approvedFinished: "",
         commentFinished: ""
       },
@@ -28,6 +32,18 @@ export default {
       startdate_formatted:'',
       endDate_formatted:'',
       headers: [
+        { 
+          text: 'Solicitud', 
+          align: 'left',
+          sortable: true,
+          value: 'inDate' 
+        },
+        {
+          text: 'Cédula',
+          align: 'left',
+          sortable: true,
+          value: 'identification'
+        },
         {
           text: 'Nombre',
           align: 'left',
@@ -40,12 +56,7 @@ export default {
             sortable: true,
             value: 'fSurname' 
           },
-        { 
-          text: 'Solicitud', 
-          align: 'left',
-          sortable: true,
-          value: 'inDate' 
-        },
+        
         { 
           text: 'Inicio', 
             align: 'left',
@@ -58,20 +69,26 @@ export default {
           sortable: true,
           value: 'endDate' 
         },
+        // { 
+        //   text: 'Descripción', 
+        //   align: 'left',
+        //     sortable: true,
+        //     value: 'description' 
+        //   },
         { 
-          text: 'Descripción', 
-          align: 'left',
-            sortable: true,
-            value: 'description' 
-          },
-        { 
-          text: 'Aprobación Jefe', 
+          text: 'Jefe Directo', 
             align: 'center',
             sortable: false,
             value: 'approvedBoss' 
         },
         { 
-          text: 'Aprobación Final', 
+          text: 'Jefe TH', 
+            align: 'center',
+            sortable: false,
+            value: 'approvedBossTH' 
+        },
+        { 
+          text: 'Jefe decano', 
             align: 'center',
             sortable: false,
             value: 'approvedFinished' 
@@ -87,7 +104,7 @@ export default {
     }),
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'Nuevo Reposo Medico' : 'Editar Departamento'
+        return this.PermissionsEmployer.pk != undefined  ? 'Permisos Laborales' : 'Editar Permisos Laborales'
       }
     },
     watch: {
@@ -104,6 +121,9 @@ export default {
       }
     },
     methods: {
+      editMode(){
+        this.editFields = !this.editFields
+      },
       clearFields(){
         this.PermissionsEmployer={
             pk: "",
@@ -114,12 +134,16 @@ export default {
             description: "",
             approvedBoss: "",
             commentBoss: "",
+            approvedBossTH: "",
+            commentBossTH: "",
             approvedFinished: "",
             commentFinished: ""
         }
         this.date_formatted = ""
         this.startdate_formatted = ""
         this.endDate_formatted = ""
+        this.editFields = false
+        this.edit = false 
       },
       //Esto es para que formatee las fehas que llegan AÑO-MES-DIA a DIA-MES-AÑO
       dateFormat(mode, date_orig){
@@ -128,9 +152,11 @@ export default {
           var new_date = date_orig.split('-')
           if(mode == 1){
           this.date_formatted = `${new_date[2]}/${new_date[1]}/${new_date[0]}`
+          console.log(this.date_formatted);
           }
           if(mode == 2){
           this.startdate_formatted = `${new_date[2]}/${new_date[1]}/${new_date[0]}`
+          
           }
           if(mode == 3){
             this.endDate_formatted = `${new_date[2]}/${new_date[1]}/${new_date[0]}`
@@ -182,6 +208,7 @@ export default {
       },
       close () {
           this.dialog = false
+          this.editFields = true
           setTimeout(() => {
             this.editedItem = Object.assign({}, this.defaultItem)
             this.editedIndex = -1
@@ -193,12 +220,13 @@ export default {
           // this.editedIndex = this.desserts.indexOf(PermissionsEmployer)
           this.PermissionsEmployer = Object.assign({}, PermissionsEmployer)
           //Formatear las fechas
-          this.dateFormat(1,this.PermissionsEmployer.reportDate)
+          this.dateFormat(1,this.PermissionsEmployer.inDate)
           this.dateFormat(2,this.PermissionsEmployer.startDate)
           this.dateFormat(3,this.PermissionsEmployer.endDate)
 
           // console.log('Los datos del Departamento que se va a editar son: ', this.MedicalRest);
           this.dialog = true
+          this.edit = true
           
         }
         else{
@@ -254,6 +282,7 @@ export default {
                           // userData_id: "",
                           this.load = false
                           this.dialog = false
+                          this.editFields = false
                           this.$validator.reset()
                       })
               }

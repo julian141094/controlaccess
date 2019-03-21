@@ -74,8 +74,10 @@ class PermissionsEmployer(models.Model):
     startDate = models.DateField(verbose_name='Fecha de Inicio', blank=True, null=True)
     endDate = models.DateField(verbose_name='Fecha de Culminacion',blank=True, null=True)
     description = models.CharField(verbose_name='Descripcion del Trabajador', max_length=100, null=True,blank=True)
-    approvedBoss = models.BooleanField(verbose_name="Aprobado por el Jefe Inmediato")
+    approvedBoss = models.BooleanField(verbose_name="Aprobado por el Jefe Inmediato",blank=True, null=True)
     commentBoss = models.CharField(verbose_name='Comentario del Jefe Inmediato', max_length=100, null=True,blank=True)
+    approvedBossTH = models.BooleanField(verbose_name="Aprobado por el Jefe de Talento Humano",blank=True, null=True)
+    commentBossTH = models.CharField(verbose_name='Comentario del Jefe de Talento Humano', max_length=100, null=True,blank=True)
     approvedFinished = models.BooleanField(verbose_name="Aprobado por Decanato y Talento Humano")
     commentFinished = models.CharField(verbose_name='Comentario Superior', max_length=100, null=True,blank=True)
 
@@ -104,7 +106,8 @@ class ServicesCommissionEmployer(models.Model):
     startDate = models.DateField(verbose_name='Fecha de Inicio', blank=True, null=True)
     endDate = models.DateField(verbose_name='Fecha de Culminacion',blank=True, null=True)
     description = models.CharField(verbose_name='Descripcion del ', max_length=200, null=True,blank=True)
-    approvedBoss = models.BooleanField(verbose_name="Aprobado por el Jefe Inmediato")
+    approvedBoss = models.BooleanField(verbose_name="Aprobado por el Jefe Inmediato", null=True,blank=True)
+    approvedFinished = models.BooleanField(verbose_name="Aprobado por el Decano", null=True,blank=True)
     observation = models.CharField(verbose_name='Observación', max_length=200, null=True,blank=True)
 
 

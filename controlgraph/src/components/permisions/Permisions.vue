@@ -3,7 +3,7 @@
         <v-layout row wrap justify-center>
             <v-flex xs12>
                 <v-toolbar flat color="white">
-                    <v-toolbar-title>Permisos Laborales</v-toolbar-title>
+                    <v-toolbar-title>Gestionar Permisos Laborales</v-toolbar-title>
                     <v-divider
                         class="mx-2"
                         inset
@@ -18,11 +18,13 @@
                         hide-details
                         ></v-text-field>
                         <v-spacer></v-spacer>
-                    <v-dialog v-model="dialog" max-width="100%px">
+                    <v-dialog v-model="dialog" max-width="100%">
                         <v-btn slot="activator" color="primary" dark class="mb-2" @click="clearFields">Nuevo</v-btn>
                         <v-card>
                         <v-card-title>
                             <span class="headline">{{ formTitle }}</span>
+                            <v-spacer></v-spacer>
+                            <v-btn v-if="this.edit" slot="activator" color="primary" dark class="mb-2" @click="editMode">Editar</v-btn>
                         </v-card-title>
                         <v-card-text>
                             <v-container grid-list-xs>
@@ -45,6 +47,7 @@
                                     v-validate="''"
                                     append-icon="fa-search"     
                                     label="Buscar por Nombre de Trabajador"
+                                    :disabled='editFields'
                                     >
                                     <template 
                                         slot="item" slot-scope="data">
@@ -64,34 +67,69 @@
                                         label="Firmado por Jefe Inmediato"
                                         required
                                         key="license-input"
+                                        :disabled='editFields'
                                     ></v-checkbox>
                                 </v-flex>
-                                <v-flex lg8 md6 xs12 pr-4>
-                                    <v-textarea
-                                    v-model="PermissionsEmployer.description" 
-                                    name="Comentario Jefe Inmediato"
-                                    label="Comentario Jefe Inmediato"
-                                    value=""
-                                    hint=""
-                                    ></v-textarea>
+                                
+                                <v-flex lg4 md6 xs12 pr-4>
+                                    <v-checkbox
+                                        v-model="PermissionsEmployer.approvedBossTH"
+                                        v-validate="'required'"
+                                        label="Firmado por Jefe de Talento Humano"
+                                        required
+                                        key="license-input"
+                                        :disabled='editFields'
+                                    ></v-checkbox>
                                 </v-flex>
-                                  
+                                
                                 <v-flex lg4 md6 xs12 pr-4>
                                     <v-checkbox
                                         v-model="PermissionsEmployer.approvedFinished"
                                         v-validate="'required'"
-                                        label="Aprobado por Decanato"
+                                        label="Aprobado por Decano de Núcleo"
                                         required
                                         key="aprovedFinished-input"
+                                        :disabled='editFields'
                                     ></v-checkbox>
                                 </v-flex>
-                                <v-flex lg8 md6 xs12 pr-4>
+                                <v-flex lg4 md6 xs12 pr-4>
                                     <v-textarea
-                                    v-model="PermissionsEmployer.commentFinished" 
-                                    name="Comentario Decanato"
-                                    label="Comentario Decanato"
+                                    v-model="PermissionsEmployer.commentBoss" 
+                                    name="Comentario Jefe Inmediato"
+                                    label="Comentario Jefe Inmediato"
                                     value=""
                                     hint=""
+                                    :disabled='editFields'
+                                    ></v-textarea>
+                                </v-flex>
+                                <v-flex lg4 md6 xs12 pr-4>
+                                    <v-textarea
+                                    v-model="PermissionsEmployer.commentBossTH" 
+                                    name="Comentario Jefe de Talento Humano"
+                                    label="Comentario Jefe de Talento Humano"
+                                    value=""
+                                    hint=""
+                                    :disabled='editFields'
+                                    ></v-textarea>
+                                </v-flex>
+                                <v-flex lg4 md6 xs12 pr-4>
+                                    <v-textarea
+                                    v-model="PermissionsEmployer.commentFinished" 
+                                    name="Comentario Decano de Núcleo"
+                                    label="Comentario Decano de Núcleo"
+                                    value=""
+                                    hint=""
+                                    :disabled='editFields'
+                                    ></v-textarea>
+                                </v-flex>
+                                <v-flex lg12 md6 xs12 pr-4>
+                                    <v-textarea
+                                    v-model="PermissionsEmployer.description" 
+                                    name="Descripción"
+                                    label="Descripción"
+                                    value=""
+                                    hint=""
+                                    :disabled='editFields'
                                     ></v-textarea>
                                 </v-flex>
                                 <v-flex lg4 md6 xs12 pr-4>
@@ -103,6 +141,7 @@
                                         lazy
                                         full-width
                                         width="290px"
+                                        :disabled='editFields'
                                     >
                                         <v-text-field
                                             slot="activator"
@@ -111,6 +150,7 @@
                                             prepend-icon="event"
                                             readonly
                                             key="inDate"
+                                            :disabled='editFields'
                                         ></v-text-field>
                                         <v-date-picker 
                                             v-model="PermissionsEmployer.inDate" 
@@ -133,6 +173,7 @@
                                         lazy
                                         full-width
                                         width="290px"
+                                        :disabled='editFields'
                                     >
                                         <v-text-field
                                             slot="activator"
@@ -141,6 +182,7 @@
                                             prepend-icon="event"
                                             readonly
                                             key="startDate"
+                                            :disabled='editFields'
                                         ></v-text-field>
                                         <v-date-picker 
                                             v-model="PermissionsEmployer.startDate" 
@@ -163,6 +205,7 @@
                                         lazy
                                         full-width
                                         width="290px"
+                                        :disabled='editFields'
                                     >
                                         <v-text-field
                                             slot="activator"
@@ -171,6 +214,7 @@
                                             prepend-icon="event"
                                             readonly
                                             key="endDate"
+                                            :disabled='editFields'
                                         ></v-text-field>
                                         <v-date-picker 
                                             v-model="PermissionsEmployer.endDate" 
@@ -205,21 +249,23 @@
                         class="elevation-1"
                         >
                             <template slot="items" slot-scope="props">
+                                <td class="justify-center">{{ props.item.inDate }}</td>
+                                <td class="justify-center">{{ props.item.userData.identification }}</td>
                                 <td class="justify-center">{{ props.item.userData.fName }}</td>
                                 <td class="justify-center">{{ props.item.userData.fSurname }}</td>
-                                <td class="justify-center">{{ props.item.inDate }}</td>
                                 <td class="justify-center">{{ props.item.startDate }}</td>
                                 <td class="justify-center">{{ props.item.endDate }}</td>
-                                <td class="justify-center">{{ props.item.description }}</td>
-                                <td class="justify-center">{{ props.item.approvedBoss }}</td>
-                                <td class="justify-center">{{ props.item.approvedFinished }}</td>
+                                <!-- <td class="justify-center">{{ props.item.description }}</td> -->
+                                <td class="justify-center"><v-icon>{{props.item.approvedBoss ? 'fa-check' : 'fa-times'}}</v-icon></td>
+                                <td class="justify-center"><v-icon>{{props.item.approvedBossTH ? 'fa-check' : 'fa-times'}}</v-icon></td>
+                                <td class="justify-center"><v-icon>{{props.item.approvedFinished ? 'fa-check' : 'fa-times'}}</v-icon></td>
                                 <td class="justify-center layout px-0">
                                 <v-icon
                                     small
                                     class="mr-2"
                                     @click="saveOrUpdate(2, props.item)"
                                 >
-                                    edit
+                                    search
                                 </v-icon>
                                 <v-icon
                                     small
@@ -231,7 +277,6 @@
                             </template>
                         </v-data-table>
                     </v-card>
-                    
                 </v-flex>
             </v-flex>
         </v-layout>

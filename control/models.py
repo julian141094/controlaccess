@@ -10,3 +10,4 @@ class Inandout(models.Model):
     timeOutEat = models.TimeField(verbose_name='Hora de Salida a Comer',blank=True, null=True)
     timeInEat = models.TimeField(verbose_name='Hora de Entrada',blank=True, null=True)
     timeOut = models.TimeField(verbose_name='Hora de Salida',blank=True, null=True)
+    observation = models.CharField(verbose_name='Observación', max_length=200, null=True,blank=True)

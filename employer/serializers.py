@@ -134,7 +134,7 @@ class ServicesCommissionEmployerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ServicesCommissionEmployer
-        fields = ('pk','userData', 'reportDate', 'startDate', 'endDate', 'description', 'approvedBoss', 'observation', 'userData_id')
+        fields = ('pk','userData', 'reportDate', 'startDate', 'endDate', 'description', 'approvedBoss', 'approvedFinished', 'observation', 'userData_id')
 
 class PermissionsEmployerSerializer(serializers.ModelSerializer):
     # Con este par de lineas, buscamos el pk del serialicer y nos traemos los datos con la relacion 
@@ -143,4 +143,4 @@ class PermissionsEmployerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PermissionsEmployer
-        fields = ('pk','userData', 'inDate', 'startDate', 'endDate', 'description', 'approvedBoss', 'commentBoss', 'approvedFinished', 'commentFinished', 'userData_id')
+        fields = ('pk','userData', 'inDate', 'startDate', 'endDate', 'description', 'approvedBoss', 'commentBoss', 'approvedFinished','commentBossTH', 'approvedBossTH', 'commentFinished', 'userData_id')

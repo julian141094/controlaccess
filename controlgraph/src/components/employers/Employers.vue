@@ -3,7 +3,6 @@
         <v-layout row wrap justify-center>
             <v-flex xs12>
                 <v-dialog v-model="dialog" persistent max-width="100%">
-                <v-btn slot="activator"  color="primary" dark>Agregar un Trabajador</v-btn>
                 <v-card>
                     <v-card-title class="headline">Guardar Trabajador</v-card-title>
                     <v-card-text>Por favor llene el formulario detenidamente, al finalizar todos los campos presione almacenar. </v-card-text>
@@ -20,7 +19,7 @@
             <v-flex xs12>
                 <v-card>
                     <v-card-title>
-                    Listado de Traabjadores
+                    Gestionar Empleados
                     <v-spacer></v-spacer>
                     <v-text-field
                         v-model="search"
@@ -29,6 +28,7 @@
                         single-line
                         hide-details
                     ></v-text-field>
+                    <v-btn slot="activator"  color="primary" dark>Nuevo</v-btn>
                     </v-card-title>
                     <v-data-table
                     :headers="headers"
@@ -54,7 +54,7 @@
                                 class="mr-2"
                                 @click="editItem(props.item)"
                             >
-                                edit
+                                search
                             </v-icon>
                             <v-icon
                                 small
