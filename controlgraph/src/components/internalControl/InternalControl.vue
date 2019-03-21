@@ -29,7 +29,7 @@
                             <v-layout row wrap>
                                 <v-flex xs12 >
                                     <v-autocomplete
-                                    v-model="IncidentsEmployer.userData_id"
+                                    v-model="InAndOut.userData_id"
                                     name="fName"
                                     :error-messages="errors.collect('fName')"
                                     data-vv-as="Primer Nombre"
@@ -101,9 +101,9 @@
                                     >
                                         <v-text-field
                                             slot="activator"
-                                            v-model="date_formatted"
+                                            v-model="time_in_formated"
                                             label="Hora de Entrada"
-                                            prepend-icon="event"
+                                            prepend-icon="access_time"
                                             readonly
                                             key="timeIn"
                                         ></v-text-field>
@@ -111,7 +111,7 @@
                                             v-model="InAndOut.timeIn"
                                             locale="es-VE"
                                             scrollable
-                                            @input="dateFormat(1, InAndOut.timeIn)"
+                                            @input="timeFormat(1, InAndOut.timeIn)"
                                         >
                                             <v-spacer></v-spacer>
                                             <v-btn flat color="primary" @click="this.modalTimeIn = false">Cancel</v-btn>
@@ -132,9 +132,9 @@
                                     >
                                         <v-text-field
                                             slot="activator"
-                                            v-model="date_formatted"
+                                            v-model="time_out_eat_formated"
                                             label="Hora de Salida al Almuerzo"
-                                            prepend-icon="event"
+                                            prepend-icon="access_time"
                                             readonly
                                             key="timeOutEat"
                                         ></v-text-field>
@@ -142,7 +142,7 @@
                                             v-model="InAndOut.timeOutEat"
                                             locale="es-VE"
                                             scrollable
-                                            @input="dateFormat(1, InAndOut.timeOutEat)"
+                                            @input="timeFormat(2, InAndOut.timeOutEat)"
                                         >
                                             <v-spacer></v-spacer>
                                             <v-btn flat color="primary" @click="this.modalTimeOutEat = false">Cancel</v-btn>
@@ -162,9 +162,9 @@
                                     >
                                         <v-text-field
                                             slot="activator"
-                                            v-model="date_formatted"
-                                            label="Hora de Salida al Almuerzo"
-                                            prepend-icon="event"
+                                            v-model="time_in_eat_formated"
+                                            label="Hora de Entrada al Almuerzo"
+                                            prepend-icon="access_time"
                                             readonly
                                             key="timeInEat"
                                         ></v-text-field>
@@ -172,7 +172,7 @@
                                             v-model="InAndOut.timeInEat"
                                             locale="es-VE"
                                             scrollable
-                                            @input="dateFormat(1, InAndOut.timeInEat)"
+                                            @input="timeFormat(3, InAndOut.timeInEat)"
                                         >
                                             <v-spacer></v-spacer>
                                             <v-btn flat color="primary" @click="this.modalTimeInEat = false">Cancel</v-btn>
@@ -192,9 +192,9 @@
                                     >
                                         <v-text-field
                                             slot="activator"
-                                            v-model="date_formatted"
-                                            label="Hora de Salida al Almuerzo"
-                                            prepend-icon="event"
+                                            v-model="time_out_formated"
+                                            label="Hora de Salida"
+                                            prepend-icon="access_time"
                                             readonly
                                             key="timeOut"
                                         ></v-text-field>
@@ -202,7 +202,7 @@
                                             v-model="InAndOut.timeOut"
                                             locale="es-VE"
                                             scrollable
-                                            @input="dateFormat(1, InAndOut.timeOut)"
+                                            @input="timeFormat(4, InAndOut.timeOut)"
                                         >
                                             <v-spacer></v-spacer>
                                             <v-btn flat color="primary" @click="this.modalTimeOut = false">Cancel</v-btn>
@@ -212,7 +212,7 @@
                                 </v-flex>
                                 <v-flex lg12 md6 xs12 pr-4>
                                     <v-textarea
-                                    v-model="IncidentsEmployer.observation"
+                                    v-model="InAndOut.observation"
                                     name="Observación"
                                     label="Observación"
                                     value=""
@@ -239,13 +239,14 @@
                         class="elevation-1"
                         >
                             <template slot="items" slot-scope="props">
-                                <td class="justify-center">{{ props.item.date }}</td>
-                                <td class="justify-center">{{ props.item.userData.fName }}</td>
-                                <td class="justify-center">{{ props.item.userData.fSurname }}</td>
-                                <td class="justify-center">{{ props.item.timeIn }}</td>
-                                <td class="justify-center">{{ props.item.timeOutEat }}</td>
-                                <td class="justify-center">{{ props.item.timeInEat }}</td>
-                                <td class="justify-center">{{ props.item.timeOut }}</td>
+                                <td style="text-align: center;">{{ dateFormatTable(props.item.date) }}</td>
+                                <td >{{ props.item.userData.fName }}</td>
+                                <td >{{ props.item.userData.fSurname }}</td>
+                                <td style="text-align: center;">{{ timeFormatTable(props.item.timeIn) }}</td>
+                                <td style="text-align: center;">{{ timeFormatTable(props.item.timeOutEat) }}</td>
+                                <td style="text-align: center;">{{ timeFormatTable(props.item.timeInEat) }}</td>
+                                <td style="text-align: center;">{{ timeFormatTable(props.item.timeOut) }}</td>
+                                <td style="text-align: center;">{{ timeLabored(props.item) }}</td>
                                 <!-- <td>{{ props.item.observation }}</td> -->
                                 <td class="justify-center layout px-0">
                                 <v-icon
@@ -253,7 +254,7 @@
                                     class="mr-2"
                                     @click="saveOrUpdate(2, props.item)"
                                 >
-                                    edit
+                                    search
                                 </v-icon>
                                 <v-icon
                                     small
@@ -272,3 +273,4 @@
     </v-container>
 </template>
 <script src="./InternalControl.js"></script>
+

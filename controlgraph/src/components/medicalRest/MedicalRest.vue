@@ -23,6 +23,8 @@
                         <v-card>
                         <v-card-title>
                             <span class="headline">{{ formTitle }}</span>
+                            <v-spacer></v-spacer>
+                            <v-btn v-if="this.edit" slot="activator" color="primary" dark class="mb-2" @click="editMode">Editar</v-btn>
                         </v-card-title>
                         <v-card-text>
                             <v-container grid-list-xs>
@@ -37,6 +39,7 @@
                                     :loading="isLoading"
                                     :search-input.sync="searchUser"
                                     class="iprint-third--text attibutes"
+                                    :disabled='editFields'
                                     hide-no-data
                                     :filter='filterUser'
                                     item-text='fName'
@@ -65,6 +68,7 @@
                                         v-validate="'required'"
                                         label="Firmado por Jefe Inmediato"
                                         required
+                                       :disabled='editFields'
                                         key="license-input"
                                     ></v-checkbox>
                                 </v-flex>
@@ -75,6 +79,7 @@
                                         :return-value.sync="MedicalRest.reportDate"
                                         persistent
                                         lazy
+                                        :disabled='editFields'
                                         full-width
                                         width="290px"
                                     >
@@ -84,6 +89,7 @@
                                             label="Fecha de Reporte del RM"
                                             prepend-icon="event"
                                             readonly
+                                            :disabled='editFields'
                                             key="reportDate"
                                         ></v-text-field>
                                         <v-date-picker 
@@ -107,6 +113,7 @@
                                         lazy
                                         full-width
                                         width="290px"
+                                       :disabled='editFields'
                                     >
                                         <v-text-field
                                             slot="activator"
@@ -115,6 +122,7 @@
                                             prepend-icon="event"
                                             readonly
                                             key="startDate"
+                                            :disabled='editFields'
                                         ></v-text-field>
                                         <v-date-picker 
                                             v-model="MedicalRest.startDate" 
@@ -137,6 +145,7 @@
                                         lazy
                                         full-width
                                         width="290px"
+                                        :disabled='editFields'
                                     >
                                         <v-text-field
                                             slot="activator"
@@ -144,6 +153,7 @@
                                             label="Fecha de Finalización del RM"
                                             prepend-icon="event"
                                             readonly
+                                            :disabled='editFields'
                                             key="endDate"
                                         ></v-text-field>
                                         <v-date-picker 
@@ -165,6 +175,7 @@
                                     label="Descripción"
                                     value=""
                                     hint=""
+                                    :disabled='editFields'
                                     ></v-textarea>
                                 </v-flex>
                                 <v-flex lg6 md6 xs12 pr-4>
@@ -174,6 +185,7 @@
                                     label="Observación"
                                     value=""
                                     hint=""
+                                    :disabled='editFields'
                                     ></v-textarea>
                                 </v-flex>
                             </v-layout>
@@ -196,12 +208,14 @@
                         class="elevation-1"
                         >
                             <template slot="items" slot-scope="props">
+                                <td class="justify-center">{{ props.item.reportDate }}</td>
+                                <td class="justify-center">{{ props.item.userData.identification }}</td>
                                 <td class="justify-center">{{ props.item.userData.fName }}</td>
                                 <td class="justify-center">{{ props.item.userData.fSurname }}</td>
-                                <td class="justify-center">{{ props.item.reportDate }}</td>
+                                <td class="justify-center">{{ props.item.userData.institutional.condition }}</td>
                                 <td class="justify-center">{{ props.item.startDate }}</td>
                                 <td class="justify-center">{{ props.item.endDate }}</td>
-                                <td class="justify-center">{{ props.item.description }}</td>
+                                <!-- <td class="justify-center">{{ props.item.description }}</td> -->
                                 <!-- <td>{{ props.item.observation }}</td> -->
                                 <td class="justify-center layout px-0">
                                 <v-icon
@@ -209,7 +223,7 @@
                                     class="mr-2"
                                     @click="saveOrUpdate(2, props.item)"
                                 >
-                                    edit
+                                    search
                                 </v-icon>
                                 <v-icon
                                     small

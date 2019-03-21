@@ -3,7 +3,7 @@
         <v-layout row wrap justify-center>
             <v-flex xs12>
                 <v-toolbar flat color="white">
-                    <v-toolbar-title>Comisiones de Servicio</v-toolbar-title>
+                    <v-toolbar-title>Gestionar Comisiones de Servicio</v-toolbar-title>
                     <v-divider
                         class="mx-2"
                         inset
@@ -23,6 +23,9 @@
                         <v-card>
                         <v-card-title>
                             <span class="headline">{{ formTitle }}</span>
+                            <v-spacer></v-spacer>
+                            <v-btn v-if="this.edit" slot="activator" color="primary" dark class="mb-2" @click="editMode">Editar</v-btn>
+                        
                         </v-card-title>
                         <v-card-text>
                             <v-container grid-list-xs>
@@ -45,6 +48,7 @@
                                     v-validate="''"
                                     append-icon="fa-search"     
                                     label="Buscar por Nombre de Trabajador"
+                                    :disabled='editFields'
                                     >
                                     <template 
                                         slot="item" slot-scope="data">
@@ -61,11 +65,22 @@
                                 </v-flex>
                                 <v-flex lg3 md6 xs12 pr-4>
                                     <v-checkbox
+                                        v-model="ServicesCommission.approvedFinished"
+                                        v-validate="'required'"
+                                        label="Aprobado por Decano de Núcleo"
+                                        required
+                                        key="decano"
+                                        :disabled='editFields'
+                                    ></v-checkbox>
+                                </v-flex>
+                                <v-flex lg3 md6 xs12 pr-4>
+                                    <v-checkbox
                                         v-model="ServicesCommission.approvedBoss"
                                         v-validate="'required'"
-                                        label="Firmado por Jefe Inmediato"
+                                        label="Aprobado por Jefe Inmediato"
                                         required
                                         key="license-input"
+                                        :disabled='editFields'
                                     ></v-checkbox>
                                 </v-flex>
                                 <v-flex lg3 md6 xs12 pr-4>
@@ -77,14 +92,16 @@
                                         lazy
                                         full-width
                                         width="290px"
+                                        :disabled='editFields'
                                     >
                                         <v-text-field
                                             slot="activator"
                                             v-model="date_formatted"
-                                            label="Fecha de Reporte del RM"
+                                            label="Fecha de Reporte"
                                             prepend-icon="event"
                                             readonly
                                             key="reportDate"
+                                            :disabled='editFields'
                                         ></v-text-field>
                                         <v-date-picker 
                                             v-model="ServicesCommission.reportDate" 
@@ -107,14 +124,16 @@
                                         lazy
                                         full-width
                                         width="290px"
+                                        :disabled='editFields'
                                     >
                                         <v-text-field
                                             slot="activator"
                                             v-model="startdate_formatted"
-                                            label="Fecha de Inicio del RM"
+                                            label="Fecha de Inicio"
                                             prepend-icon="event"
                                             readonly
                                             key="startDate"
+                                            :disabled='editFields'
                                         ></v-text-field>
                                         <v-date-picker 
                                             v-model="ServicesCommission.startDate" 
@@ -137,14 +156,16 @@
                                         lazy
                                         full-width
                                         width="290px"
+                                        :disabled='editFields'
                                     >
                                         <v-text-field
                                             slot="activator"
                                             v-model="endDate_formatted"
-                                            label="Fecha de Finalización del RM"
+                                            label="Fecha de Finalización "
                                             prepend-icon="event"
                                             readonly
                                             key="endDate"
+                                            :disabled='editFields'
                                         ></v-text-field>
                                         <v-date-picker 
                                             v-model="ServicesCommission.endDate" 
@@ -158,22 +179,24 @@
                                         </v-date-picker>
                                     </v-dialog>
                                 </v-flex>
-                                <v-flex lg6 md6 xs12 pr-4>
+                                <v-flex lg5 md6 xs12 pr-4>
                                     <v-textarea
                                     v-model="ServicesCommission.description" 
                                     name="Descripción"
-                                    label="Descripción"
+                                    label="Detalles Comunicación"
                                     value=""
                                     hint=""
+                                    :disabled='editFields'
                                     ></v-textarea>
                                 </v-flex>
-                                <v-flex lg6 md6 xs12 pr-4>
+                                <v-flex lg4 md6 xs12 pr-4>
                                     <v-textarea
                                     v-model="ServicesCommission.observation" 
                                     name="Observación"
                                     label="Observación"
                                     value=""
                                     hint=""
+                                    :disabled='editFields'
                                     ></v-textarea>
                                 </v-flex>
                             </v-layout>
@@ -196,20 +219,20 @@
                         class="elevation-1"
                         >
                             <template slot="items" slot-scope="props">
+                                <td class="justify-center">{{ props.item.reportDate }}</td>
+                                <td class="justify-center">{{ props.item.userData.identification }}</td>
                                 <td class="justify-center">{{ props.item.userData.fName }}</td>
                                 <td class="justify-center">{{ props.item.userData.fSurname }}</td>
-                                <td class="justify-center">{{ props.item.reportDate }}</td>
                                 <td class="justify-center">{{ props.item.startDate }}</td>
                                 <td class="justify-center">{{ props.item.endDate }}</td>
-                                <td class="justify-center">{{ props.item.description }}</td>
+                                <!-- <td class="justify-center">{{ props.item.description }}</td> -->
                                 <!-- <td>{{ props.item.observation }}</td> -->
                                 <td class="justify-center layout px-0">
                                 <v-icon
                                     small
                                     class="mr-2"
                                     @click="saveOrUpdate(2, props.item)"
-                                >
-                                    edit
+                                >                                    search
                                 </v-icon>
                                 <v-icon
                                     small

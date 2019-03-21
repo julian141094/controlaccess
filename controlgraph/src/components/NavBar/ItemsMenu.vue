@@ -80,93 +80,103 @@ export default {
           icon: 'fa-dashboard', 
           url: '/home'
         },
-        { 
-          title: 'Trabajadores', 
-          icon: 'fa-poll-people',
-          sub:[
+        // { 
+        //   title: 'Trabajadores', 
+        //   icon: 'fa-poll-people',
+        //   sub:[
             { 
               title: 'Empleados', 
               icon: 'fa-people', 
               url: '/employers'
             },
-            { 
-              title: 'Departamentos', 
-              icon: 'fa-dashboard', 
-              url: '/departments'
-            },   
-            { 
-              title: 'Permisos Laborales', 
-              icon: 'fa-dashboard', 
-              url: '/permisions'
-            },  
-            { 
-              title: 'Reposos Medicos', 
-              icon: 'fa-dashboard', 
-              url: '/medicalrest'
-            },  
-            { 
-              title: 'Comisión de Servicios', 
-              icon: 'fa-dashboard', 
-              url: '/servicescommission'
-            }, 
-          ]
+        //   ]
+        // },  
+        { 
+          title: 'Permisos Laborales', 
+          icon: 'fa-dashboard', 
+          url: '/permisions'
+        },  
+        { 
+          title: 'Reposos Medicos', 
+          icon: 'fa-dashboard', 
+          url: '/medicalrest'
+        },  
+        { 
+          title: 'Comisión de Servicios', 
+          icon: 'fa-dashboard', 
+          url: '/servicescommission'
         },
         { 
-          title: 'Entrada y Salida', 
-          icon: 'fa-poll-people',
-          sub:[
-            { 
-              title: 'Control E&S', 
-              icon: 'fa-people', 
-              url: '/internalcontrol'
-            },
-            { 
-              title: 'Departamentos', 
-              icon: 'fa-dashboard', 
-              url: '/departments'
-            },   
-            { 
-              title: 'Permisos Laborales', 
-              icon: 'fa-dashboard', 
-              url: '/permisions'
-            },  
-            { 
-              title: 'Reposos Medicos', 
-              icon: 'fa-dashboard', 
-              url: '/medicalrest'
-            },  
-            { 
-              title: 'Comisión de Servicios', 
-              icon: 'fa-dashboard', 
-              url: '/servicescommission'
-            }, 
-          ]
-        },
+          title: 'Control E&S', 
+          icon: 'fa-people', 
+          url: '/internalcontrol'
+        }, 
+        // { 
+        //   title: 'Entrada y Salida', 
+        //   icon: 'fa-poll-people',
+        //   sub:[
+            // { 
+            //   title: 'Departamentos', 
+            //   icon: 'fa-dashboard', 
+            //   url: '/departments'
+            // },   
+            // { 
+            //   title: 'Permisos Laborales', 
+            //   icon: 'fa-dashboard', 
+            //   url: '/permisions'
+            // },  
+            // { 
+            //   title: 'Reposos Medicos', 
+            //   icon: 'fa-dashboard', 
+            //   url: '/medicalrest'
+            // },  
+            // { 
+            //   title: 'Comisión de Servicios', 
+            //   icon: 'fa-dashboard', 
+            //   url: '/servicescommission'
+            // }, 
+        //   ]
+        // },
         { 
           title: 'Reportes', 
           icon: 'fa-poll-people',
           sub:[
-            { 
-              title: 'Empleados', 
-              icon: 'fa-dashboard', 
-              url: '/home'
-            },
-            { 
-              title: 'Entradas y Salidas', 
-              icon: 'fa-dashboard', 
-              url: '/home'
-            },
+            // { 
+            //   title: 'Empleados', 
+            //   icon: 'fa-dashboard', 
+            //   url: '/home'
+            // },
+            // { 
+            //   title: 'Entradas y Salidas', 
+            //   icon: 'fa-dashboard', 
+            //   url: '/home'
+            // },
+            // { 
+            //   title: 'Permisos Personales', 
+            //   icon: 'fa-dashboard', 
+            //   url: '/home'
+            // },
+            // { 
+            //   title: 'Reposos Médicos', 
+            //   icon: 'fa-dashboard', 
+            //   url: '/home'
+            // },
+            // { 
+            //   title: 'Comisiones de Servicios', 
+            //   icon: 'fa-dashboard', 
+            //   url: '/home'
+            // },
           ]
         },
         { 
           title: 'Usuaios', 
           icon: 'fa-poll-people',
           sub:[
-            { 
-              title: 'Usuarios de Empleados', 
-              icon: 'fa-dashboard', 
-              url: '/home'
-            },
+            // { 
+            //   title: 'Usuarios de Empleados', 
+            //   icon: 'fa-dashboard', 
+            //   url: '/home'
+            // },
             { 
               title: 'Usuarios de Sistema', 
               icon: 'fa-dashboard', 
@@ -174,7 +184,22 @@ export default {
             },
           ]
         },
-        
+        { 
+          title: 'Configuraciones', 
+          icon: 'fa-poll-people',
+          sub:[
+            { 
+              title: 'Departamentos', 
+              icon: 'fa-dashboard', 
+              url: '/departments'
+            }, 
+            { 
+              title: 'Cargos y Nombramientos', 
+              icon: 'fa-dashboard', 
+              url: '/departments'
+            }, 
+          ]
+        },
       ],
     }
   },

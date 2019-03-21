@@ -12,14 +12,7 @@ class UserProfileModelView(viewsets.ModelViewSet):
     serializer_class            = UserProfileSerializer
 
 class UserAPIView(viewsets.ModelViewSet):
-    """
-    View to create the user profile
-
-    @author Miguel E. Villamizar R. (mevr02 at gmail.com)
-    @copyright Area862
-    @date 21-01-19
-    @version 2.0
-    """
+  
     permission_classes          = []
     queryset                    = User.objects.all()
     serializer_class            = UserProfileSerializer
@@ -31,14 +24,7 @@ class UserAPIView(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 class LoginAPIView(views.APIView):
-    """
-    View to LoginAPIView  
-
-    @author Miguel Eduardo Villamizar (mevr02 at gmail.com)
-    @copyright Area862
-    @date 03-02-19
-    @version 2.0
-    """
+ 
     permission_classes = [permissions.AllowAny]
     serializer_class = LoginSerializer
 

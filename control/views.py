@@ -11,8 +11,8 @@ class InAndOutModelView(viewsets.ModelViewSet):
     
     queryset                    = Inandout.objects.all()
     serializer_class            = InAndOutSerializer
-    # permission_classes = (permissions.AllowAny,)
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.AllowAny,)
+    # permission_classes = (permissions.IsAuthenticated,)
 
 #Esta es la view para El carnet
 class InAndOutApiView(views.APIView):

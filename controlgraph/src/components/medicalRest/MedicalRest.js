@@ -2,8 +2,11 @@ import Axios from "axios";
 
 export default {
     data: () => ({
+      edit: false,
+      editFields: true,
       dialog: false,
       search: '',
+      search2: '',
       load: false,
       medicalRest: [],
       modalDate: false,
@@ -26,6 +29,18 @@ export default {
       startdate_formatted:'',
       endDate_formatted:'',
       headers: [
+        { 
+          text: 'Fecha Reporte', 
+          align: 'left',
+          sortable: true,
+          value: 'reportDate' 
+        },
+        {
+          text: 'Cédula',
+          align: 'left',
+          sortable: true,
+          value: 'identification'
+        },
         {
           text: 'Nombre',
           align: 'left',
@@ -37,13 +52,14 @@ export default {
           align: 'left',
             sortable: true,
             value: 'fSurname' 
-          },
-        { 
-          text: 'Fecha Reporte', 
+        },
+        {
+          text: 'Condición',
           align: 'left',
           sortable: true,
-          value: 'reportDate' 
+          value: 'condition'
         },
+        
         { 
           text: 'Inicio', 
             align: 'left',
@@ -56,12 +72,12 @@ export default {
           sortable: true,
           value: 'endDate' 
         },
-        { 
-          text: 'Descripción', 
-          align: 'left',
-            sortable: true,
-            value: 'description' 
-          },
+        // { 
+        //   text: 'Descripción', 
+        //   align: 'left',
+        //     sortable: true,
+        //     value: 'description' 
+        //   },
         { 
           text: 'Acción', 
             align: 'center',
@@ -73,7 +89,7 @@ export default {
     }),
     computed: {
       formTitle () {
-        return this.editedIndex === -1 ? 'Nuevo Reposo Medico' : 'Editar Departamento'
+        return this.editedIndex === -1 ? 'Reposo Medico' : 'Editar Reposo Medico'
       }
     },
     watch: {
@@ -90,6 +106,13 @@ export default {
       }
     },
     methods: {
+      // close(){
+      //   this.dialog = false
+      //   this.editFields = true
+      // },
+      editMode(){
+        this.editFields = !this.editFields
+      },
       clearFields(){
         this.MedicalRest={
             pk: "",
@@ -104,6 +127,8 @@ export default {
         this.date_formatted = ""
         this.startdate_formatted = ""
         this.endDate_formatted = ""
+        this.editFields = false
+        this.edit = false 
       },
       //Esto es para que formatee las fehas que llegan AÑO-MES-DIA a DIA-MES-AÑO
       dateFormat(mode, date_orig){
@@ -164,6 +189,7 @@ export default {
         },
         close () {
             this.dialog = false
+            this.editFields = true
             setTimeout(() => {
               this.editedItem = Object.assign({}, this.defaultItem)
               this.editedIndex = -1
@@ -181,6 +207,7 @@ export default {
 
             // console.log('Los datos del Departamento que se va a editar son: ', this.MedicalRest);
             this.dialog = true
+            this.edit = true
             
           }
           else{
@@ -235,6 +262,7 @@ export default {
                             // userData_id: "",
                             this.load = false
                             this.dialog = false
+                            this.editFields = false
                             this.$validator.reset()
                         })
                 }
