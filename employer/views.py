@@ -18,9 +18,7 @@ class UserDataModelView(viewsets.ModelViewSet):
     # }
     # filter_backends = (filters.SearchFilter,)
     search_fields = {
-        'fName':['icontains'],
         'sName':['icontains'],
-        'fSurname':['icontains'],
         'sSurname':['icontains'],
     }
 

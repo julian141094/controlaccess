@@ -52,11 +52,11 @@
                                     <template 
                                         slot="item" slot-scope="data">
                                         <v-list-tile-content>
-                                        <v-list-tile-title v-html="data.item.fName+' '+data.item.sName+' '+data.item.fSurname+' '+data.item.sSurname"></v-list-tile-title>
+                                        <v-list-tile-title v-html="data.item.sName+' '+data.item.sSurname"></v-list-tile-title>
                                         </v-list-tile-content>
                                     </template>
                                     <template slot="selection" slot-scope="data">
-                                        {{data.item.fName+' '+data.item.sName+' '+data.item.fSurname+' '+data.item.sSurname}}
+                                        {{data.item.sName+' '+data.item.sSurname}}
                                     </template>
                                     </v-autocomplete>
                                 </v-flex>
@@ -251,8 +251,8 @@
                             <template slot="items" slot-scope="props">
                                 <td class="justify-center">{{ props.item.inDate }}</td>
                                 <td class="justify-center">{{ props.item.userData.identification }}</td>
-                                <td class="justify-center">{{ props.item.userData.fName }}</td>
-                                <td class="justify-center">{{ props.item.userData.fSurname }}</td>
+                                <td class="justify-center">{{ props.item.userData.sName }}</td>
+                                <td class="justify-center">{{ props.item.userData.sSurname }}</td>
                                 <td class="justify-center">{{ props.item.startDate }}</td>
                                 <td class="justify-center">{{ props.item.endDate }}</td>
                                 <!-- <td class="justify-center">{{ props.item.description }}</td> -->

@@ -39,7 +39,7 @@
                                     class="iprint-third--text attibutes"
                                     hide-no-data
                                     :filter='filterUser'
-                                    item-text='fName'
+                                    item-text='sName'
                                     item-value="pk"
                                     key="attributes-input"
                                     v-validate="''"
@@ -49,13 +49,13 @@
                                     <template
                                         slot="item" slot-scope="data">
                                         <v-list-tile-content>
-                                        <v-list-tile-title v-html="data.item.fName+' '+data.item.sName+' '+data.item.fSurname+' '+data.item.sSurname"></v-list-tile-title>
+                                        <v-list-tile-title v-html="data.item.sName+' '+data.item.sSurname"></v-list-tile-title>
                                         <!-- <v-list-tile-sub-title v-html="data.item.institutional.condition"></v-list-tile-sub-title> -->
                                         <!-- <v-list-tile-sub-title v-html="data.item.measure.name"></v-list-tile-sub-title> -->
                                         </v-list-tile-content>
                                     </template>
                                     <template slot="selection" slot-scope="data">
-                                        {{data.item.fName+' '+data.item.sName+' '+data.item.fSurname+' '+data.item.sSurname}}
+                                        {{data.item.sName+' '+data.item.sSurname}}
                                     </template>
                                     </v-autocomplete>
                                 </v-flex>
@@ -240,8 +240,8 @@
                         >
                             <template slot="items" slot-scope="props">
                                 <td style="text-align: center;">{{ dateFormatTable(props.item.date) }}</td>
-                                <td >{{ props.item.userData.fName }}</td>
-                                <td >{{ props.item.userData.fSurname }}</td>
+                                <td >{{ props.item.userData.sName }}</td>
+                                <td >{{ props.item.userData.sSurname }}</td>
                                 <td style="text-align: center;">{{ timeFormatTable(props.item.timeIn) }}</td>
                                 <td style="text-align: center;">{{ timeFormatTable(props.item.timeOutEat) }}</td>
                                 <td style="text-align: center;">{{ timeFormatTable(props.item.timeInEat) }}</td>

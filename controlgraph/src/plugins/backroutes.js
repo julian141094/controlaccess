@@ -34,8 +34,8 @@ export default {
         },
         getUserProfile:(state) =>(pk) => {
             return pk != undefined ?
-                base + "UserProfile/" + pk + "/" :
-                base + "UserProfile/"
+                base + "User_Profile/" + pk + "/" :
+                base + "User_Profile/"
         },
         access:(state)=>{
             return base + "inandout/"

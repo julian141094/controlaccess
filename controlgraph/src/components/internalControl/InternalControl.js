@@ -42,13 +42,13 @@ export default {
           text: 'Nombre',
           align: 'left',
           sortable: true,
-          value: 'fName'
+          value: 'user.first_name'
         },
         {
           text: 'Apellido',
           align: 'left',
             sortable: true,
-            value: 'fSurname'
+            value: 'user.last_name'
           },
         {
           text: 'Hora de Entrada',

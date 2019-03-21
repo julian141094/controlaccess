@@ -5,7 +5,7 @@
         <v-card>
         <v-layout row wrap class="imgAndText" style>
           <v-flex xs3 md3>
-            <img src="@/assets/img/logoUnefa.png" style="border: 1px solid blue;">
+            <img src="@/assets/img/logoUnefa.png" >
           </v-flex>
           <v-flex xs12 md9>
             <h1 pa-3 class>Sistema de Control de Entrada y Salida del Personal de la UNEFANB</h1>
@@ -41,7 +41,7 @@
           </v-layout>
           <v-card-actions align-content-end>
             <v-dialog v-model="dialog" persistent max-width="35%">
-              <v-btn slot="activator" v-if="$store.isAuth"  color="primary" dark>Ingresar al Sistema</v-btn>
+              <v-btn slot="activator" v-if="!$store.getters.isAuth"  color="primary" dark>Ingresar al Sistema</v-btn>
               <v-card>
                 <v-card-title class="headline">Iniciar Sesión</v-card-title>
                 <v-card-text>Por favor suministre los datos del usuario para ingresar al sistema.</v-card-text>

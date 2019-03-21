@@ -10,6 +10,7 @@ import MedicalRest from './components/medicalRest/MedicalRest.vue'
 import ServicesCommission from './components/servicescommission/ServicesCommission.vue'
 import InternalControl from './components/internalControl/InternalControl.vue'
 import Userss from './components/users/userss.vue'
+import usersystem from './components/usersystem/userSystem.vue'
 import store from './store.js'
 
 Vue.use(Router)
@@ -50,13 +51,13 @@ export default new Router({
       beforeEnter: ifAuthenticated
     },
     {
-      path: '/departments',
-      name: 'Departments',
-      component: Departments,
+      path: '/usersystem',
+      name: 'usersystem',
+      component: usersystem,
       beforeEnter: ifAuthenticated
     },
     {
-      path: '/appointment',
+      path: '/departments',
       name: 'Departments',
       component: Departments,
       beforeEnter: ifAuthenticated

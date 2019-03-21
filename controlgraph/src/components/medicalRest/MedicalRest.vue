@@ -32,7 +32,7 @@
                                 <v-flex xs12 >
                                     <v-autocomplete
                                     v-model="MedicalRest.userData_id"
-                                    name="fName"
+                                    name="sName"
                                     :error-messages="errors.collect('fName')"
                                     data-vv-as="Primer Nombre"
                                     :items="UserData"
@@ -42,7 +42,7 @@
                                     :disabled='editFields'
                                     hide-no-data
                                     :filter='filterUser'
-                                    item-text='fName'
+                                    item-text='sName'
                                     item-value="pk"
                                     key="attributes-input"
                                     v-validate="''"
@@ -52,13 +52,13 @@
                                     <template 
                                         slot="item" slot-scope="data">
                                         <v-list-tile-content>
-                                        <v-list-tile-title v-html="data.item.fName+' '+data.item.sName+' '+data.item.fSurname+' '+data.item.sSurname"></v-list-tile-title>
+                                        <v-list-tile-title v-html="data.item.sName+' '+data.item.sSurname"></v-list-tile-title>
                                         <!-- <v-list-tile-sub-title v-html="data.item.institutional.condition"></v-list-tile-sub-title> -->
                                         <!-- <v-list-tile-sub-title v-html="data.item.measure.name"></v-list-tile-sub-title> -->
                                         </v-list-tile-content>
                                     </template>
                                     <template slot="selection" slot-scope="data">
-                                        {{data.item.fName+' '+data.item.sName+' '+data.item.fSurname+' '+data.item.sSurname}}
+                                        {{data.item.sName+' '+data.item.sSurname}}
                                     </template>
                                     </v-autocomplete>
                                 </v-flex>
@@ -210,8 +210,8 @@
                             <template slot="items" slot-scope="props">
                                 <td class="justify-center">{{ props.item.reportDate }}</td>
                                 <td class="justify-center">{{ props.item.userData.identification }}</td>
-                                <td class="justify-center">{{ props.item.userData.fName }}</td>
-                                <td class="justify-center">{{ props.item.userData.fSurname }}</td>
+                                <td class="justify-center">{{ props.item.userData.sName }}</td>
+                                <td class="justify-center">{{ props.item.userData.sSurname }}</td>
                                 <td class="justify-center">{{ props.item.userData.institutional.condition }}</td>
                                 <td class="justify-center">{{ props.item.startDate }}</td>
                                 <td class="justify-center">{{ props.item.endDate }}</td>

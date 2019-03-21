@@ -17,27 +17,29 @@ class UserProfileSerializer(serializers.ModelSerializer):
     """
     password = serializers.CharField(
         style={'input_type': 'password'},
-        write_only=True
+        write_only=True,
+        required=False
     )
     class Meta:
         model = User
         fields = tuple(User.REQUIRED_FIELDS) + (
             User.USERNAME_FIELD, User._meta.pk.name,'last_name','first_name','password','is_active'
         )
-
+    
     def validate(self,attrs):
-        user = User(**attrs)
-        password = attrs.get('password')
-        if User.objects.filter(email = attrs.get('email')):
-            msg = "Este Correo ya a sido registrado!"
-            raise serializers.ValidationError({'non_field_errors': msg})
-        try:
-            validate_password(password, user)
-        except ValidationError as e:
-            serializer_error = serializers.as_serializer_error(e)
-            raise serializers.ValidationError({
-                'non_field_errors': serializer_error['non_field_errors']
-            })
+        if not self.instance:
+            user = User(**attrs)
+            password = attrs.get('password')
+            if User.objects.filter(email = attrs.get('email')):
+                msg = "Este Correo ya a sido registrado!"
+                raise serializers.ValidationError({'non_field_errors': msg})
+            try:
+                validate_password(password, user)
+            except ValidationError as e:
+                serializer_error = serializers.as_serializer_error(e)
+                raise serializers.ValidationError({
+                    'non_field_errors': serializer_error['non_field_errors']
+                })
         return attrs
 
     def create(self, validated_data):

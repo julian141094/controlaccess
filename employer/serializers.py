@@ -106,9 +106,9 @@ class UserDataSerializer(serializers.ModelSerializer):
         StudyUserDataSerializer().update(instance.study,study)
         TeachingComponentUserDataSerializer().update(instance.teaching,teaching)
         
-        # serializer = UserProfileSerializer(data=user)
-        # serializer.is_valid(raise_exception=True)
-        # serializer.update(instance.user_id,user)
+        serializer = UserProfileSerializer(data=user)
+        serializer.is_valid(raise_exception=True)
+        serializer.update(instance.user_id,user)
         return instance
 
 class MedicalRestEmployerSerializer(serializers.ModelSerializer):

@@ -89,6 +89,11 @@ export default {
               icon: 'fa-people', 
               url: '/employers'
             },
+            { 
+              title: 'Usuarios del sistema', 
+              icon: 'fa-people', 
+              url: '/usersystem'
+            },
         //   ]
         // },  
         { 
