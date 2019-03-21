@@ -21,7 +21,7 @@ from employer.views import (UserDataModelView,
 )
 from reports.views import GenerateReport
 from control.views import (InAndOutModelView,InAndOutApiView)
-from user_profile.views import (UserProfileModelView, LoginAPIView)
+from user_profile.views import (UserAPIView, LoginAPIView)
 from rest_framework_jwt.views import refresh_jwt_token
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 
@@ -33,7 +33,7 @@ rout.register(r'Permisions',PermissionsEmployerModelView)
 rout.register(r'MedicalRest',MedicalRestEmployerModelView)
 rout.register(r'ServicesCommission',ServicesCommissionEmployerModelView)
 rout.register(r'Access',InAndOutModelView)
-rout.register(r'User_Profile', UserProfileModelView)
+rout.register(r'User_Profile', UserAPIView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

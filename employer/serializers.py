@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from .models import *
+from django.contrib.auth.models import User
+from user_profile.serializers import UserProfileSerializer
 
 class ExtraUserDataSerializer(serializers.ModelSerializer):
     
@@ -46,20 +48,29 @@ class UserDataSerializer(serializers.ModelSerializer):
     institutional = InstitutionalUserDataSerializer(many=False)
     study = StudyUserDataSerializer(many=True)
     teaching = TeachingComponentUserDataSerializer(many=False)
+    user_id = serializers.IntegerField(required=False,allow_null=True)
+    user = UserProfileSerializer(many=False)
     # permissions = PermissionsEmployerSerializer(many=False,read_only=True) #El read Only es para que este serializer no sea obligatorio mandarlo en los post
     # medicalrest = MedicalRestEmployerSerializer(many=False,read_only=True)
     # servicescomission = ServicesCommissionEmployerSerializer(many=False,read_only=True)
 
     class Meta:
         model = UserData
-        fields = ('pk','identification','fName','sName','fSurname',
-        'sSurname','birthDate','email','address','phone','license','extra',
+        fields = ('pk','identification','sName','sSurname',
+         'birthDate','address','phone','license','extra',
          'institutional','study','teaching','active',#, 'permissions', 'medicalrest', 'servicescomission'
+         'user','user_id'
         )
         depth = 1 
 
     def create(self, validated_data):
-        print(validated_data, 'Aqui VAAAAAAAAAAAAAAAAA')
+        userMain = validated_data.pop('user') if type(validated_data['user_id']) != int else validated_data.pop('user_id')
+        if(type(userMain) != int):
+            new_user = UserProfileSerializer(data=userMain)
+            new_user.is_valid(raise_exception=True)
+            userSer = new_user.save()
+            validated_data['user_id'] = userSer.id
+
         institutional = validated_data.pop('institutional')
         extra = validated_data.pop('extra')
         study = validated_data.pop('study')
@@ -84,14 +95,20 @@ class UserDataSerializer(serializers.ModelSerializer):
 
     #El self es la instancia
     def update(self, instance, validated_data):
+        print(instance,'instance','validate',validated_data)
         institutional = validated_data.pop('institutional')
         extra = validated_data.pop('extra')
         study = validated_data.pop('study')
         teaching = validated_data.pop('teaching')
+        user = validated_data.pop('user')
         instance = super().update(instance,validated_data)
         InstitutionalUserDataSerializer().update(instance.institutional,institutional)
         StudyUserDataSerializer().update(instance.study,study)
         TeachingComponentUserDataSerializer().update(instance.teaching,teaching)
+        
+        # serializer = UserProfileSerializer(data=user)
+        # serializer.is_valid(raise_exception=True)
+        # serializer.update(instance.user_id,user)
         return instance
 
 class MedicalRestEmployerSerializer(serializers.ModelSerializer):
