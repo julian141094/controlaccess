@@ -71,7 +71,7 @@
                 <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="success" flat @click="dialog2 = false">Cancelar</v-btn>
-                <v-btn color="success" flat @click="dialog2 = false" @submit.prevent='register'>Ingresar</v-btn>
+                <v-btn color="success" flat @click="register">Ingresar</v-btn>
                   </v-card-actions>
               </v-card>
             </v-dialog>
