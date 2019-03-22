@@ -22,6 +22,24 @@ class UserDataModelView(viewsets.ModelViewSet):
         'sSurname':['icontains'],
     }
 
+    def update(self, request, pk=None):
+        """
+        Method of the request by put to update the Price Formula data
+
+        @param self Object which instantiates the method
+        @param request Object with the request
+        @param pk Get the pk of the url
+        @return Returns the data and stores in database
+        """
+        userData = self.get_object()
+        user = request.data.pop("user")
+        serializer = self.get_serializer(userData, data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.update_user(user)
+        # serializer.update(pk,request.data)
+        serializer.save()
+        return Response(serializer.data)
+
 class DepartmentsModelView(viewsets.ModelViewSet):
     
     queryset                    = Departments.objects.all()

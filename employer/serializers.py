@@ -49,7 +49,7 @@ class UserDataSerializer(serializers.ModelSerializer):
     study = StudyUserDataSerializer(many=True)
     teaching = TeachingComponentUserDataSerializer(many=False)
     user_id = serializers.IntegerField(required=False,allow_null=True)
-    user = UserProfileSerializer(many=False)
+    user = UserProfileSerializer(many=False,required=False,allow_null=True)
     # permissions = PermissionsEmployerSerializer(many=False,read_only=True) #El read Only es para que este serializer no sea obligatorio mandarlo en los post
     # medicalrest = MedicalRestEmployerSerializer(many=False,read_only=True)
     # servicescomission = ServicesCommissionEmployerSerializer(many=False,read_only=True)
@@ -95,20 +95,15 @@ class UserDataSerializer(serializers.ModelSerializer):
 
     #El self es la instancia
     def update(self, instance, validated_data):
-        print(instance,'instance','validate',validated_data)
         institutional = validated_data.pop('institutional')
+        print(validated_data , 'validated2')
         extra = validated_data.pop('extra')
         study = validated_data.pop('study')
         teaching = validated_data.pop('teaching')
-        user = validated_data.pop('user')
         instance = super().update(instance,validated_data)
         InstitutionalUserDataSerializer().update(instance.institutional,institutional)
         StudyUserDataSerializer().update(instance.study,study)
         TeachingComponentUserDataSerializer().update(instance.teaching,teaching)
-        
-        serializer = UserProfileSerializer(data=user)
-        serializer.is_valid(raise_exception=True)
-        serializer.update(instance.user_id,user)
         return instance
 
 class MedicalRestEmployerSerializer(serializers.ModelSerializer):
