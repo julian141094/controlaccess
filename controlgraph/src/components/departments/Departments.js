@@ -2,6 +2,8 @@ import Axios from "axios";
 
 export default {
     data: () => ({
+      edit: false,
+      editFields: true,
       dialog: false,
       search: '',
       load: false,
@@ -44,12 +46,17 @@ export default {
       }
     },
     methods: {
+      editMode(){
+        this.editFields = !this.editFields
+      },
       clearFields(){
         this.departmentsUNEFANB= {
           pk:'',
           name: "",
           description: ""
         }
+        this.editFields = false
+        this.edit = false 
       },
       getDepartments(){
           Axios.get(this.$store.getters.getDepartment()).then(response=>{
@@ -73,6 +80,7 @@ export default {
       },
       close () {
         this.dialog = false
+        this.editFields = true
         setTimeout(() => {
           this.editedItem = Object.assign({}, this.defaultItem)
           this.editedIndex = -1
@@ -85,6 +93,7 @@ export default {
           this.departmentsUNEFANB = Object.assign({}, departmentsUNEFANB)
           // console.log('Los datos del Departamento que se va a editar son: ', this.departmentsUNEFANB);
           this.dialog = true
+          this.edit = true
         }
         else{
           console.log('guardar Nuevo');
@@ -127,6 +136,7 @@ export default {
                           this.departmentsUNEFANB.description = ""
                           this.load = false
                           this.dialog = false
+                          this.editFields = false
                           this.$validator.reset()
                       })
               }

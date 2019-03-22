@@ -23,6 +23,8 @@
                         <v-card>
                         <v-card-title>
                             <span class="headline">{{ formTitle }}</span>
+                            <v-spacer></v-spacer>
+                            <v-btn v-if="this.edit" slot="activator" color="primary" dark class="mb-2" @click="editMode">Editar</v-btn>
                         </v-card-title>
                         <v-card-text>
                             <v-container grid-list-xs>
@@ -45,6 +47,7 @@
                                     v-validate="''"
                                     append-icon="fa-search"
                                     label="Buscar por Nombre de Trabajador"
+                                    :disabled='editFields'
                                     >
                                     <template
                                         slot="item" slot-scope="data">
@@ -76,6 +79,7 @@
                                             prepend-icon="event"
                                             readonly
                                             key="Date"
+                                            :disabled='editFields'
                                         ></v-text-field>
                                         <v-date-picker
                                             v-model="InAndOut.date"
@@ -98,6 +102,7 @@
                                         lazy
                                         full-width
                                         width="290px"
+                                        :disabled='editFields'
                                     >
                                         <v-text-field
                                             slot="activator"
@@ -106,6 +111,7 @@
                                             prepend-icon="access_time"
                                             readonly
                                             key="timeIn"
+                                            :disabled='editFields'
                                         ></v-text-field>
                                         <v-time-picker
                                             v-model="InAndOut.timeIn"
@@ -129,9 +135,11 @@
                                         lazy
                                         full-width
                                         width="290px"
+                                        :disabled='editFields'
                                     >
                                         <v-text-field
                                             slot="activator"
+                                            :disabled='editFields'
                                             v-model="time_out_eat_formated"
                                             label="Hora de Salida al Almuerzo"
                                             prepend-icon="access_time"
@@ -159,6 +167,7 @@
                                         lazy
                                         full-width
                                         width="290px"
+                                        :disabled='editFields'
                                     >
                                         <v-text-field
                                             slot="activator"
@@ -167,6 +176,7 @@
                                             prepend-icon="access_time"
                                             readonly
                                             key="timeInEat"
+                                            :disabled='editFields'
                                         ></v-text-field>
                                         <v-time-picker
                                             v-model="InAndOut.timeInEat"
@@ -189,6 +199,7 @@
                                         lazy
                                         full-width
                                         width="290px"
+                                        :disabled='editFields'
                                     >
                                         <v-text-field
                                             slot="activator"
@@ -197,6 +208,7 @@
                                             prepend-icon="access_time"
                                             readonly
                                             key="timeOut"
+                                            :disabled='editFields'
                                         ></v-text-field>
                                         <v-time-picker
                                             v-model="InAndOut.timeOut"
@@ -217,6 +229,7 @@
                                     label="Observación"
                                     value=""
                                     hint=""
+                                    :disabled='editFields'
                                     ></v-textarea>
                                 </v-flex>
                             </v-layout>

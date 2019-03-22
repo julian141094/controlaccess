@@ -15,7 +15,7 @@
               v-model="username"
               name="username"
               :error-messages="errors.collect('username')"
-              label="Cédula"
+              label="Nombre de Usuario"
               color="ivss-blue"
               data-vv-as="Cédula"
               v-validate="'required'"
@@ -35,7 +35,7 @@
           <v-flex xs12 text-xs-center>
               <v-btn small round color="success" class="white--text"
               @click.native="login" 
-              :disabled="password != '' && login != '' ? false : true"
+              
               >
               Ingresar
               </v-btn>

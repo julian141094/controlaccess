@@ -2,6 +2,8 @@ import Axios from "axios";
 
 export default {
     data: () => ({
+      edit: false,
+      editFields: true,
       labored: "",
       dialog: false,
       search: '',
@@ -108,6 +110,9 @@ export default {
       }
     },
     methods: {
+      editMode(){
+        this.editFields = !this.editFields
+      },
       timeLabored(date_orig){
         console.log('Datos de la nueva Función', date_orig);
         if (date_orig.timeIn && date_orig.timeOut) {
@@ -158,9 +163,6 @@ export default {
 
           return (rDia)
 
-          
-          
-          // let mañana = time2 - time1
         }
         else {
           return ('--')
@@ -182,6 +184,8 @@ export default {
         this.time_out_eat_formated=''
         this.time_in_eat_formated=''
         this.time_out_formated=''
+        this.editFields = false
+        this.edit = false 
         
       },
       dateFormat(mode, date_orig){
@@ -313,6 +317,7 @@ export default {
         },
         close () {
             this.dialog = false
+            this.editFields = true
             setTimeout(() => {
               this.editedItem = Object.assign({}, this.defaultItem)
               this.editedIndex = -1
@@ -331,6 +336,7 @@ export default {
             this.timeFormat(4,this.InAndOut.timeOut)
             // console.log('Los datos del Departamento que se va a editar son: ', this.InAndOutt);
             this.dialog = true
+            this.edit = true
           }
           else{
             console.log('guardar Nuevo');
@@ -379,6 +385,7 @@ export default {
                             this.InAndOut.timeInEat = ""
                             this.InAndOut.timeOut = ""
                             this.InAndOut.observation = ""
+                            this.editFields = false
                             // userData_id: "",
                             this.load = false
                             this.dialog = false

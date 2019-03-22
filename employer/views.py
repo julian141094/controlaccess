@@ -25,7 +25,7 @@ class UserDataModelView(viewsets.ModelViewSet):
 class DepartmentsModelView(viewsets.ModelViewSet):
     
     queryset                    = Departments.objects.all()
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.AllowAny,)
 
     serializer_class            = DepartmentsSerializer
 

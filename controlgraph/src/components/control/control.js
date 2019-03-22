@@ -6,7 +6,7 @@ import login from '../login/Login.vue'
 export default {
     components:{
         login,
-        keyControl,
+        // keyControl,
         QrcodeStream,
         QrcodeCapture
     },
@@ -17,10 +17,26 @@ export default {
             code:"",
             errorMessage:"",
             paused:true,
-            message:""
+            message:"",
+            identification:'',
+            password:'',
+            username: '',
+            mode: 1,
+            showPass: false, 
         }
     },
     methods: {
+        register(){
+            axios.post(this.$store.getters.access,{
+                'mode':'login',
+                'identification':this.username,
+                'password':this.password
+            })
+            .then(response => {
+                console.log(response.data)
+                this.message = response.data.detail
+            })
+        },
         onCode(decodedString){
             this.paused = true
             this.code = decodedString.split(' ')[0]

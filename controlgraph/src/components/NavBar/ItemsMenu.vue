@@ -89,11 +89,7 @@ export default {
               icon: 'fa-people', 
               url: '/employers'
             },
-            { 
-              title: 'Usuarios del sistema', 
-              icon: 'fa-people', 
-              url: '/usersystem'
-            },
+            
         //   ]
         // },  
         { 
@@ -183,9 +179,9 @@ export default {
             //   url: '/home'
             // },
             { 
-              title: 'Usuarios de Sistema', 
-              icon: 'fa-dashboard', 
-              url: '/home'
+              title: 'Usuarios del sistema', 
+              icon: 'fa-people', 
+              url: '/usersystem'
             },
           ]
         },
