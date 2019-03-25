@@ -212,6 +212,16 @@ export default {
                 console.log('Debio Ejecutar la Actualizacion');
             }
         },
+        removeStudy(index,cost_pk){
+            if(cost_pk != ''){
+                // axios.delete(this.$store.getters.getExtracost(cost_pk))
+                if(!('deleteCost' in this.product)){
+                    this.product['deleteCost'] = []
+                }
+                this.product['deleteCost'].push(cost_pk)
+            }
+            this.product.extracost.splice(index,1)
+        },
     },
     watch:{
         // 'userData.identification': {

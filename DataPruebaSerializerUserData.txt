@@ -1,73 +1,65 @@
-  {
-        "identification": "V-112222",
-        "sName": "Valentina",
-        "sSurname": "Uzcategui",
-        "birthDate": "1994-05-02",
-        "address": "torre D el Rodeo",
-        "phone": "04247760009",
-        "license": false,
-        "extra": {
-            "codCPatria": "000200200",
-            "serCPatria": "012302222",
-            "whatsapp": "041223232",
-            "facebook": "asdasdasdasd",
-            "instagram": "asdasdasdasd",
-            "twitter": "adsasdasdads"
-        },
-        "institutional": {
-            "dateIn": "2019-02-21",
-            "condition": "ADMINISTRATIVO",
-            "category": "TIEMPOVARIABLE",
-            "appointment": "asdasdasd",
-            "positionOPSU": "asdasdas",
-            "department_id": 1
-    },
-        "study": [
-    {
-        "typeStudy": "PREGRADO",
-        "startDate": "1234-12-11",
-        "endDate": "1234-12-12",
-        "study": "Disenadora Grafica"   
-    },
-    {
-        "typeStudy": "PREGRADO",
-        "startDate": "1234-12-11",
-        "endDate": "1234-12-12",
-        "study": "Prueba"   
-     },
-    {
-        "typeStudy": "PREGRADO",
-        "startDate": "1234-12-11",
-        "endDate": "1234-12-12",
-        "study": "Disenadora Grafica"   
-    }
-    ],
-        "teaching": [
-       {
-            "typeComponent": "VIRTUAL",
-            "universityOrigin": "ULA",
-            "startDate": "2016-12-01",
-            "endDate": "2018-12-01",
-            "observation": "HECHO"
-      },
-       {
-            "typeComponent": "VIRTUAL",
-            "universityOrigin": "ULAsasasasasas",
-            "startDate": "2016-12-01",
-            "endDate": "2018-12-01",
-            "observation": "HECHO"
-      }
-      ],
-     "active": true   
+{
+            "identification": "V-333333",
+            "fName": "Julian",
+            "sName": "Arkangel",
+            "fSurname": "Avendaño",
+            "sSurname": "Rojas",
+            "birthDate": "1994-10-14",
+            "address": "El Mirador",
+            "phone": "04124275881",
+            "license": true,
+            "extra": {
+                "codCPatria": 200200,
+                "serCPatria": 12302222,
+                "whatsapp": "041223232",
+                "facebook": "asdasdasdasd",
+                "instagram": "asdasdasdasd",
+                "twitter": "adsasdasdads"
+            },
+            "institutional": {
+                "dateIn": "2016-11-01",
+                "condition": "ADMINISTRATIVO",
+                "category": "TIEMPOVARIABLE",
+                "appointment": "asdasdasd",
+                "positionOPSU": "asdasdas",
+                "department": {
+                    "pk": 23,
+                    "name": "Tecnologia",
+                    "description": "TIC"
+                },
+                "department_id": 23
+            },
+            "study": [
+                {
+                    "typeStudy": "PREGRADO",
+                    "startDate": "1234-12-11",
+                    "endDate": "1234-12-12",
+                    "study": "Disenadora Grafica"
+                },
+                {
+                    "typeStudy": "PREGRADO",
+                    "startDate": "1234-12-11",
+                    "endDate": "1234-12-12",
+                    "study": "Disdasdasdasdasda"
+                }
+            ],
+            "teaching": [
+                {
+                    "typeComponent": "VIRTUAL",
+                    "universityOrigin": "ULA",
+                    "startDate": "2016-12-01",
+                    "endDate": "2018-12-01",
+                    "observation": "HECHO"
+                }
+            ],
+            "active": true
     }
 
 
 
 
-
     {
-            "pk": 19,
-            "identification": "V-2419649444",
+            "identification": "V-222111",
             "fName": "Julian",
             "sName": "Arkangel",
             "fSurname": "Avendaño",
@@ -115,3 +107,4 @@
                 }
             ],
             "active": true
+    }
