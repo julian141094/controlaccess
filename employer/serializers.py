@@ -47,29 +47,29 @@ class UserDataSerializer(serializers.ModelSerializer):
     extra = ExtraUserDataSerializer(many=False)
     institutional = InstitutionalUserDataSerializer(many=False)
     study = StudyUserDataSerializer(many=True)
-    teaching = TeachingComponentUserDataSerializer(many=False)
-    user_id = serializers.IntegerField(required=False,allow_null=True)
-    user = UserProfileSerializer(many=False,required=False,allow_null=True)
+    teaching = TeachingComponentUserDataSerializer(many=True)
+    # user_id = serializers.IntegerField(required=False,allow_null=True)
+    # user = UserProfileSerializer(many=False,required=False,allow_null=True)
     # permissions = PermissionsEmployerSerializer(many=False,read_only=True) #El read Only es para que este serializer no sea obligatorio mandarlo en los post
     # medicalrest = MedicalRestEmployerSerializer(many=False,read_only=True)
     # servicescomission = ServicesCommissionEmployerSerializer(many=False,read_only=True)
 
     class Meta:
         model = UserData
-        fields = ('pk','identification','sName','sSurname',
-         'birthDate','address','phone','license','extra',
-         'institutional','study','teaching','active',#, 'permissions', 'medicalrest', 'servicescomission'
-         'user','user_id'
+        fields = ('pk','identification','fName','sName','fSurname','sSurname',
+         'birthDate','address','phone','license','extra', #'email',
+         'institutional','study','teaching','active',
+        #  'user','user_id'
         )
         depth = 1 
 
     def create(self, validated_data):
-        userMain = validated_data.pop('user') if type(validated_data['user_id']) != int else validated_data.pop('user_id')
-        if(type(userMain) != int):
-            new_user = UserProfileSerializer(data=userMain)
-            new_user.is_valid(raise_exception=True)
-            userSer = new_user.save()
-            validated_data['user_id'] = userSer.id
+        # userMain = validated_data.pop('user') if type(validated_data['user_id']) != int else validated_data.pop('user_id')
+        # if(type(userMain) != int):
+        #     new_user = UserProfileSerializer(data=userMain)
+        #     new_user.is_valid(raise_exception=True)
+        #     userSer = new_user.save()
+        #     validated_data['user_id'] = userSer.id
 
         institutional = validated_data.pop('institutional')
         extra = validated_data.pop('extra')
@@ -82,10 +82,13 @@ class UserDataSerializer(serializers.ModelSerializer):
         for study_obj in study:
             study_obj['userData'] = user
             StudyUserData.objects.create(**study_obj)
-        teaching['userData'] = user
+        # teaching['userData'] = user
+        for teaching_obj in teaching:
+            teaching_obj['userData'] = user
+            TeachingComponentUserData.objects.create(**teaching_obj)
         ExtraUserData.objects.create(**extra)
         InstitutionalUserData.objects.create(**institutional)
-        TeachingComponentUserData.objects.create(**teaching)
+        # TeachingComponentUserData.objects.create(**teaching)
         #user.study.create(**study)
         #user.teaching.create(**teaching)
         #user.extra.create(**extra)

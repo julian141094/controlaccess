@@ -1,6 +1,4 @@
 import FormEmployers from "./registerEmployer.vue"
-
-
 export default {
     components: {
       formemployers: FormEmployers
@@ -30,24 +28,6 @@ export default {
           { text: 'Departamento', value: 'department.name' },
           { text: 'Acción', value: 'iron' }
         ],
-        desserts: [
-          {
-            name: 'Frozen Yogurt',
-            calories: 159,
-            fat: 6.0,
-            carbs: 24,
-            protein: 4.0,
-            iron: '1%'
-          },
-          {
-            name: 'Ice cream sandwich',
-            calories: 237,
-            fat: 9.0,
-            carbs: 37,
-            protein: 4.3,
-            iron: '1%'
-          },
-        ]
       }
     },
     methods:{
@@ -56,6 +36,95 @@ export default {
           console.log(response.data);
           this.employers = response.data.results
         })
+      },
+      saveOrUpdate (mode, userData) {
+        if(mode == 2 && userData.pk != undefined){
+          console.log('Esta seria la parte de editar, y e objeto que llega es: ', userData);
+          // this.editedIndex = this.desserts.indexOf(userData)
+          this.userData = Object.assign({}, userData)
+          // if(this.userData.commentBoss == ''){
+          //   this.userData.commentBoss = 'No Aplica'
+          // }
+          // if(this.userData.commentBossTH == ''){
+          //   this.userData.commentBossTH = 'No Aplica'
+          // }
+          // if(this.userData.commentFinished == ''){
+          //   this.userData.commentFinished = 'No Aplica'
+          // }
+          this.dialog = true
+          this.edit = true
+          
+        }
+        else{
+          console.log('guardar Nuevo');
+          this.$validator.validateAll()
+          .then(()=>{
+            this.load = true
+            if(!this.errors.any()){
+              console.log('Entro en el If de !this.error.any');
+              // console.log('El pk del userData es: ', this.userData);
+              if(this.userData.pk == undefined){
+                // if(this.userData.commentBoss == ''){
+                //   this.userData.commentBoss = 'No Aplica'
+                // }
+                // if(this.userData.commentBossTH == ''){
+                //   this.userData.commentBossTH = 'No Aplica'
+                // }
+                // if(this.userData.commentFinished == ''){
+                //   this.userData.commentFinished = 'No Aplica'
+                // }
+                axios.post(this.$store.getters.getEmployers(),this.userData)
+                .then(response =>{
+                  this.load = false
+                  this.$validator.reset()
+                  this.$emit('show_message',{
+                    type : "success",
+                    text : "Esta Registrado",
+                    active : true
+                  })
+                  console.log('Esto es lo que va en el response: ',response);
+                  this.close(),
+                  this.getEmployers();
+                  this.$emit('registered')
+                })
+                .catch(err=>{
+                  this.load = false
+                  this.$emit('show_message',{
+                    type : "error",
+                    text : err.response.data.non_field_errors[0],
+                    active : true
+                  })
+                })
+              }
+              else{
+              console.log('En caso de que falle el registro entra a editar')
+                axios.put(this.$store.getters.getEmployers(this.userData.pk),
+                      this.userData)
+                      .then(response =>{
+                          this.getEmployers()
+                          this.userData.pk = ""
+                          this.userData.approvedBoss = ""
+                          this.userData.approvedFinished = ""
+                          this.userData.inDate = ""
+                          this.userData.startDate = ""
+                          this.userData.endDate = ""
+                          this.userData.commentBoss = ""
+                          this.userData.commentFinished = ""
+                          // userData_id: "",
+                          this.load = false
+                          this.dialog = false
+                          this.editFields = false
+                          this.$validator.reset()
+                      })
+              }
+            }
+            else{
+              this.load = false
+              console.log('En caso de que falle');
+              
+            }
+          })
+        }
       },
     },
     mounted(){

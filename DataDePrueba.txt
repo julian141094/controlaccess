@@ -1,0 +1,43 @@
+{
+    "pk": 10,
+    "identification": "V-24196494",
+        "fName": "Julian",
+    "sName": "Arkangel",
+        "fSurname": "Avendaño",
+    "sSurname": "Rojas",
+    "birthDate": "1994-10-14",
+    "address": "El Mirador",
+    "phone": "04124275881",
+    "license": true,
+    "extra": {
+            "codCPatria": "000200200",
+            "serCPatria": "012302222",
+            "whatsapp": "041223232",
+            "facebook": "asdasdasdasd",
+            "instagram": "asdasdasdasd",
+            "twitter": "adsasdasdads"
+        },
+    "institutional": {
+        "dateIn": "2016-11-01",
+        "condition": "ADMINISTRATIVO",
+        "category": "TIEMPOVARIABLE",
+        "appointment": "asdasdasd",
+        "positionOPSU": "asdasdas",
+        "department": null,
+        "department_id": 23
+    },
+    "study": [{
+      "typeStudy": "PREGRADO",
+        "startDate": "1234-12-11",
+        "endDate": "1234-12-12",
+        "study": "Disenadora Grafica"
+    }],
+    "teaching": {
+    "typeComponent": "VIRTUAL",
+            "universityOrigin": "ULA",
+            "startDate": "2016-12-01",
+            "endDate": "2018-12-01",
+            "observation": "HECHO"
+     },
+    "active": true
+}

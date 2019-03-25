@@ -10,14 +10,17 @@ Modelo para el Modulo de Trabajadores
 class UserData(models.Model):
 
     identification = models.CharField(verbose_name="Cedula",max_length=12,unique=True)
+    fName = models.CharField(verbose_name="Primer Nombre",max_length=32,blank=True,null=True)
     sName = models.CharField(verbose_name="Segundo Nombre",max_length=32,blank=True,null=True)
+    fSurname = models.CharField(verbose_name="Segundo apellido",max_length=32,blank=True,null=True)
     sSurname = models.CharField(verbose_name="Segundo apellido",max_length=32,blank=True,null=True)
     birthDate = models.DateField(verbose_name='Fecha de nacimiento')
+    # email = models.CharField(verbose_name="Correo",max_length=128, unique=True)
     address = models.CharField(verbose_name="Direccion",max_length=128)
     phone = models.CharField(verbose_name="Celular",max_length=12)
     license = models.BooleanField(verbose_name="Carnet")
     active = models.BooleanField(verbose_name="Activo", default=True)
-    user = models.OneToOneField(User,verbose_name="Usuario", on_delete=models.CASCADE,related_name='userData',null=True,blank=True)
+    # user = models.OneToOneField(User,verbose_name="Usuario", on_delete=models.CASCADE,related_name='userData',null=True,blank=True)
 
 class ExtraUserData(models.Model):
     
@@ -56,7 +59,7 @@ class StudyUserData(models.Model):
 
 class TeachingComponentUserData(models.Model):
 
-    userData = models.OneToOneField(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='teaching')
+    userData = models.ForeignKey(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='teaching')
     typeComponent = models.CharField(verbose_name="Tipo: Virtual o Presencial", max_length=12, blank=True, null=True, choices=EmployerComponent)
     universityOrigin = models.CharField(verbose_name="Universidad de Origen", max_length=60, blank=True, null=True)
     startDate = models.DateField(verbose_name='Fecha de inicio', blank=True, null=True)

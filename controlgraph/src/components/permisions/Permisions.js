@@ -1,7 +1,6 @@
-import Axios from "axios";
-
 export default {
     data: () => ({
+      activateC: false,
       edit: false,
       editFields: true,
       dialog: false,
@@ -118,9 +117,60 @@ export default {
         } else {
           this.getSearch();
         }
+      },
+      // date_formatted(val){
+      //   console.log('holis',val)
+      //     this.startdate_formatted = ""  
+      // },
+      // startdate_formatted(val) {
+      //     this.endDate_formatted = ""
+      // }
+      'PermissionsEmployer.userData.active':{
+        handler(val){
+          console.log('Debio cambiar de Valor del active a: ', val);
+          if (val == false) {
+            this.activateC = true
+          }
+          else {
+            this.activateC = false
+          }
+        }
       }
     },
     methods: {
+      closeCalendars(option){
+        if (option == 1) {
+          this.modalDate = false
+        }
+        if(option == 2){
+          this.startDate = false
+        }
+        if(option == 3){
+          this.endDate = false
+        }
+      },
+      validateCalendars(target){
+        let date = new Date().toISOString().substr(0, 10)
+        if (target==1) {
+          // console.log('Este es la fecha', date);
+          return (date)       
+        }
+      },
+      validateChange(option){
+        if (option == 1) {
+          console.log('1');
+          this.startdate_formatted = "" 
+          this.PermissionsEmployer.startDate = ""
+        }
+      },
+      validateChange2(option){
+        
+        if (option == 2) {
+          console.log('2');
+          this.endDate_formatted = "" 
+          this.PermissionsEmployer.endDate = ""
+        }
+      },
       editMode(){
         this.editFields = !this.editFields
       },
@@ -144,6 +194,7 @@ export default {
         this.endDate_formatted = ""
         this.editFields = false
         this.edit = false 
+        this.$validator.reset()
       },
       //Esto es para que formatee las fehas que llegan AÑO-MES-DIA a DIA-MES-AÑO
       dateFormat(mode, date_orig){
@@ -184,10 +235,11 @@ export default {
           .then(response => {
             this.UserData = [];
             console.log(response, 'Este es el console de la respuesta del getSearch');
-            
             response.data.results.forEach(element => {
               if (this.UserData.findIndex(m => m.pk == element.pk) == -1) {
                 this.UserData.push(element);
+                // console.log('esto es lo que esta en e UserData ', this.UserData);
+                
               }
             });
           })
@@ -219,6 +271,15 @@ export default {
           console.log('Esta seria la parte de editar, y e objeto que llega es: ', PermissionsEmployer);
           // this.editedIndex = this.desserts.indexOf(PermissionsEmployer)
           this.PermissionsEmployer = Object.assign({}, PermissionsEmployer)
+          if(this.PermissionsEmployer.commentBoss == ''){
+            this.PermissionsEmployer.commentBoss = 'No Aplica'
+          }
+          if(this.PermissionsEmployer.commentBossTH == ''){
+            this.PermissionsEmployer.commentBossTH = 'No Aplica'
+          }
+          if(this.PermissionsEmployer.commentFinished == ''){
+            this.PermissionsEmployer.commentFinished = 'No Aplica'
+          }
           //Formatear las fechas
           this.dateFormat(1,this.PermissionsEmployer.inDate)
           this.dateFormat(2,this.PermissionsEmployer.startDate)
@@ -238,9 +299,16 @@ export default {
               console.log('Entro en el If de !this.error.any');
               console.log('El pk del PermissionsEmployer es: ', this.PermissionsEmployer);
               console.log('El userData_id del PermissionsEmployer es: ', this.PermissionsEmployer.userData_id);
-
-              
               if(this.PermissionsEmployer.pk == ''){
+                if(this.PermissionsEmployer.commentBoss == ''){
+                  this.PermissionsEmployer.commentBoss = 'No Aplica'
+                }
+                if(this.PermissionsEmployer.commentBossTH == ''){
+                  this.PermissionsEmployer.commentBossTH = 'No Aplica'
+                }
+                if(this.PermissionsEmployer.commentFinished == ''){
+                  this.PermissionsEmployer.commentFinished = 'No Aplica'
+                }
                 axios.post(this.$store.getters.getPermisions(),this.PermissionsEmployer)
                 .then(response =>{
                   this.load = false

@@ -11,7 +11,7 @@
                     <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="green darken-1" flat @click="dialog = false">Cancelar</v-btn>
-                    <v-btn color="green darken-1" flat @click="dialog = false">Guardar</v-btn>
+                    <v-btn color="green darken-1" flat @click="saveOrUpdate(1)">Guardar</v-btn>
                     </v-card-actions>
                 </v-card>
                 </v-dialog>

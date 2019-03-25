@@ -15,7 +15,7 @@
                                 v-validate="'required'"
                                 key="identification-input"
                             ></v-text-field>
-                        </v-flex>        
+                        </v-flex>
                         <v-flex lg3 md6 xs12 pr-4>
                             <v-text-field
                                 v-model="userData.user.first_name"
@@ -62,7 +62,7 @@
                         <v-icon>fa-edit</v-icon>
                         </v-tab>
                         <v-tab href="#tab-2">
-                        Estudios Realizados 
+                        Estudios Realizados
                         <v-icon>fa-graduation-cap</v-icon>
                         </v-tab>
                         <v-tab href="#tab-3">
@@ -95,11 +95,11 @@
                                                 v-validate="'required'"
                                                 key="identification-input"
                                             ></v-text-field>
-                                        </v-flex>        
+                                        </v-flex>
                                         <v-flex lg3 md6 xs12 pr-4>
                                             <v-dialog
-                                                ref="dialog"
-                                                v-model="modalDate "
+                                                ref="dialogBD"
+                                                v-model="modalBD"
                                                 :return-value.sync="userData.birthDate"
                                                 persistent
                                                 lazy
@@ -108,20 +108,24 @@
                                             >
                                                 <v-text-field
                                                     slot="activator"
-                                                    v-model="userData.birthDate"
+                                                    v-model="date_formatted"
                                                     label="Fecha de Nacimiento"
                                                     prepend-icon="event"
                                                     readonly
                                                     key="birthDate-input"
+                                                    name="Fecha de Nacimiento"
+                                                    :error-messages="errors.collect('Fecha de Nacimiento')"
+                                                    v-validate="'required'"
                                                 ></v-text-field>
-                                                <v-date-picker 
-                                                    v-model="userData.birthDate" 
+                                                <v-date-picker
+                                                    v-model="userData.birthDate"
                                                     locale="es-VE"
                                                     scrollable
+                                                    @input="dateFormat(1, userData.birthDate)"
                                                 >
                                                     <v-spacer></v-spacer>
-                                                    <v-btn flat color="primary" @click="this.modalDate = false">Cancel</v-btn>
-                                                    <v-btn flat color="primary" @click="$refs.dialog.save(modalDate)">OK</v-btn>
+                                                    <v-btn flat color="primary" @click.prevent="closeCalendars(1)">Cancel</v-btn>
+                                                    <v-btn flat color="primary" @click="$refs.dialogBD.save(userData.birthDate)">OK</v-btn>
                                                 </v-date-picker>
                                             </v-dialog>
                                             <!-- <v-text-field
@@ -168,7 +172,7 @@
                                         </v-flex>
                                         <v-flex lg6 md6 xs12 pr-4>
                                             <v-text-field
-                                                v-model="userData.user.first_name"
+                                                v-model="userData.fName"
                                                 name="fName"
                                                 :error-messages="errors.collect('fName')"
                                                 label="Primer Nombre"
@@ -189,10 +193,10 @@
                                                 v-validate="'required'"
                                                 key="sName-input"
                                             ></v-text-field>
-                                        </v-flex>           
+                                        </v-flex>
                                         <v-flex lg6 md6 xs12 pr-4>
                                             <v-text-field
-                                                v-model="userData.user.last_name"
+                                                v-model="userData.fSurname"
                                                 name="fSurname"
                                                 :error-messages="errors.collect('fSurname')"
                                                 label="Primer Apellido"
@@ -216,7 +220,7 @@
                                         </v-flex>
                                         <v-flex lg6 md6 xs12 pr-4>
                                             <v-text-field
-                                                v-model="userData.user.email"
+                                                v-model="userData.email"
                                                 name="email"
                                                 :error-messages="errors.collect('email')"
                                                 label="Correo Electronico"
@@ -238,7 +242,7 @@
                                                 key="address-input"
                                             ></v-text-field>
                                         </v-flex>
-                                    </v-layout>                                                      
+                                    </v-layout>
                                 </v-card-text>
                             </v-card>
                         </v-tab-item>
@@ -248,118 +252,136 @@
                         >
                             <v-card >
                                 <v-card-text>
-                                    <v-layout row wrap>
-                                        <v-flex lg6 md6 xs12 pr-4>
-                                            <v-select
-                                                :items="typeSt"
-                                                v-model="userData.study.typeStudy"
-                                                label="Tipo de Estudio del Trabajador"
-                                                key="typeStudy-input"
-                                                v-validate="'required'"
-                                            ></v-select>
-                                            <!-- <v-text-field
-                                                v-model="userData.study.typeStudy"
-                                                name="typeStudy"
-                                                :error-messages="errors.collect('typeStudy')"
-                                                label="Tipo de Estudio del Trabajador"
-                                                class=""
-                                                data-vv-as="Tipo de Estudio del Trabajador"
-                                                v-validate="'required'"
-                                                key="typeStudy-input"
-                                            ></v-text-field> -->
-                                        </v-flex>
-                                        <v-flex lg6 md6 xs12 pr-4>
-                                            <v-dialog
-                                                ref="dialog"
-                                                v-model="modalDate"
-                                                :return-value.sync="userData.study.startDate"
-                                                persistent
-                                                lazy
-                                                full-width
-                                                width="290px"
-                                            >
-                                                <v-text-field
-                                                    slot="activator"
-                                                    v-model="userData.study.startDate"
-                                                    label="Fecha de Inicio del Estudio"
-                                                    prepend-icon="event"
-                                                    readonly
-                                                    key="startDate-study-input"
-                                                ></v-text-field>
-                                                <v-date-picker 
-                                                    v-model="userData.study.startDate" 
-                                                    locale="es-VE"
-                                                    scrollable
-                                                >
+                                    <v-layout column >
+                                        <v-layout xs12 pr-4>
+                                            <v-btn color="primary" dark @click="modalStudy = true">Nuevo</v-btn>
+                                            <v-dialog v-model="modalStudy" persistent max-width="75%">
+                                                <v-card>
+                                                    <v-card-title class="headline">Suministre los datos del estudio a cargar:</v-card-title>
+                                                    <v-card-text></v-card-text>
+                                                    <v-layout row wrap mx-5>
+                                                        <v-flex lg6 md6 xs12 pr-4>
+                                                            <v-select
+                                                                :items="typeSt"
+                                                                v-model="study.typeStudy"
+                                                                label="Tipo de Estudio del Trabajador"
+                                                                data-vv-as="Tipo de Estudio del Trabajador"
+                                                                key="typeStudy-input"
+                                                                name="study-type"
+                                                                :error-messages="errors.collect('study-type')"
+                                                                v-validate="'required'"
+                                                            ></v-select>
+                                                        </v-flex>
+                                                        <v-flex lg6 md6 xs12 pr-4>
+                                                            <v-dialog
+                                                                ref="dialogStudyStart"
+                                                                v-model="modalStudyStartDate"
+                                                                :return-value.sync="study.startDate"
+                                                                persistent
+                                                                lazy
+                                                                full-width
+                                                                width="290px"
+                                                            >
+                                                                <v-text-field
+                                                                    slot="activator"
+                                                                    v-model="studyStartDate_Formatted"
+                                                                    label="Fecha de Inicio del Estudio"
+                                                                    data-vv-as="Fecha de Inicio del Estudio"
+                                                                    prepend-icon="event"
+                                                                    readonly
+                                                                    key="startDate-study-input"
+                                                                    name="study-startdate"
+                                                                    :error-messages="errors.collect('study-startdate')"
+                                                                    v-validate="'required'"
+                                                                ></v-text-field>
+                                                                <v-date-picker
+                                                                    v-model="study.startDate"
+                                                                    locale="es-VE"
+                                                                    scrollable
+                                                                    @input="dateFormat(2, study.startDate)"
+                                                                    @change="validateChange(1)"
+                                                                >
+                                                                    <v-spacer></v-spacer>
+                                                                    <v-btn flat color="primary" @click.prevent="">Cancel</v-btn>
+                                                                    <v-btn flat color="primary" @click="$refs.dialogStudyStart.save(study.startDate)">OK</v-btn>
+                                                                </v-date-picker>
+                                                            </v-dialog>
+                                                        </v-flex>
+                                                        <v-flex lg6 md6 xs12 pr-4>
+                                                            <v-dialog
+                                                                ref="dialogStudyEnd"
+                                                                v-model="modalStudyEndDate"
+                                                                :return-value.sync="study.endDate"
+                                                                persistent
+                                                                lazy
+                                                                full-width
+                                                                width="290px"
+                                                            >
+                                                                <v-text-field
+                                                                    slot="activator"
+                                                                    v-model="studyEndDate_Formatted"
+                                                                    label="Fecha de Finalización del Estudio"
+                                                                    data-vv-as="Fecha de Finalización del Estudio"
+                                                                    prepend-icon="event"
+                                                                    readonly
+                                                                    key="endDate-study-input"
+                                                                    name="study-endDate"                                                                
+                                                                    :error-messages="errors.collect('study-endDate')"
+                                                                    v-validate="'required'"
+                                                                ></v-text-field>
+                                                                <v-date-picker
+                                                                    :min="study.startDate"
+                                                                    v-model="study.endDate"
+                                                                    locale="es-VE"
+                                                                    scrollable
+                                                                    @input="dateFormat(3, study.endDate)"
+                                                                >
+                                                                    <v-spacer></v-spacer>
+                                                                    <v-btn flat color="primary" @click="this.modalDate = false">Cancel</v-btn>
+                                                                    <v-btn flat color="primary" @click="$refs.dialogStudyEnd.save(study.endDate)">OK</v-btn>
+                                                                </v-date-picker>
+                                                            </v-dialog>
+                                                        </v-flex>
+                                                        <v-flex lg6 md6 xs12 pr-4>
+                                                            <v-text-field
+                                                                v-model="study.study"
+                                                                label="Nombre del Estudio"
+                                                                data-vv-as="Nombre del Estudio"                                                                
+                                                                name="study-name"                                                                
+                                                                :error-messages="errors.collect('study-name')"
+                                                                v-validate="'required'"
+                                                                key="study-name-input"
+                                                            ></v-text-field>
+                                                        </v-flex>
+                                                    </v-layout>
+                                                    <v-card-actions>
                                                     <v-spacer></v-spacer>
-                                                    <v-btn flat color="primary" @click="this.modalDate = false">Cancel</v-btn>
-                                                    <v-btn flat color="primary" @click="$refs.dialog.save(modalBirthDate)">OK</v-btn>
-                                                </v-date-picker>
+                                                    <v-btn color="green darken-1" flat @click.prevent="closeCalendars(6)">Cancelar</v-btn>
+                                                    <v-btn color="green darken-1" flat @click="addStudyOrTeaching(1)">Guardar</v-btn>
+                                                    </v-card-actions>
+                                                </v-card>
                                             </v-dialog>
-                                            <!-- <v-text-field
-                                                v-model="userData.study.startDate"
-                                                name="startDate"
-                                                :error-messages="errors.collect('startDate')"
-                                                label="Fecha de Inicio del Estudio"
-                                                class=""
-                                                data-vv-as="Fecha de Inicio del Estudio"
-                                                v-validate="'required'"
-                                                key="startDate-study-input"
-                                            ></v-text-field> -->
-                                        </v-flex>
-                                        <v-flex lg6 md6 xs12 pr-4>
-                                            <v-dialog
-                                                ref="dialog"
-                                                v-model="modalDate"
-                                                :return-value.sync="userData.study.endDate"
-                                                persistent
-                                                lazy
-                                                full-width
-                                                width="290px"
-                                            >
-                                                <v-text-field
-                                                    slot="activator"
-                                                    v-model="userData.study.endDate"
-                                                    label="Fecha de Finalización del Estudio"
-                                                    prepend-icon="event"
-                                                    readonly
-                                                    key="endDate-study-input"
-                                                ></v-text-field>
-                                                <v-date-picker 
-                                                    v-model="userData.study.endDate" 
-                                                    locale="es-VE"
-                                                    scrollable
-                                                >
-                                                    <v-spacer></v-spacer>
-                                                    <v-btn flat color="primary" @click="this.modalDate = false">Cancel</v-btn>
-                                                    <v-btn flat color="primary" @click="$refs.dialog.save(modalBirthDate)">OK</v-btn>
-                                                </v-date-picker>
-                                            </v-dialog>
-                                            <!-- <v-text-field
-                                                v-model="userData.study.endDate"
-                                                name="endDate"
-                                                :error-messages="errors.collect('endDate')"
-                                                label="Fecha de Finalización del Estudio"
-                                                class=""
-                                                data-vv-as="Fecha de Finalización del Estudio"
-                                                v-validate="'required'"
-                                                key="endDate-study-input"
-                                            ></v-text-field> -->
-                                        </v-flex>
-                                        <v-flex lg6 md6 xs12 pr-4>
-                                            <v-text-field
-                                                v-model="userData.study.study"
-                                                name="study"
-                                                :error-messages="errors.collect('study')"
-                                                label="Nombre del Estudio"
-                                                class=""
-                                                data-vv-as="Nombre del Estudio"
-                                                v-validate="'required'"
-                                                key="study-input"
-                                            ></v-text-field>
-                                        </v-flex>
+                                        </v-layout>
+                                        <v-layout row wrap pa-3>
+                                            <v-flex v-for="(item, index) in userData.study" :key="index" lg4 md6 xs12 pr-2>
+                                                <v-card>
+                                                    <v-card-title primary-title>
+                                                        <div>
+                                                            <h3 class="headline mb-0">{{item.study}}</h3>
+                                                            <div> Tipo de Estudio: {{item.typeStudy}}</div>
+                                                            <div> Fecha de Inicio: {{dateFormat(4, item.startDate)}}</div>
+                                                            <div> Fecha de Finalización: {{dateFormat(4, item.endDate)}}</div>
+                                                        </div>
+                                                    </v-card-title>
+                                                    <v-card-actions>
+                                                    <v-btn flat color="green darken-1">Modificar</v-btn>
+                                                    <v-btn flat color="green darken-1">Eliminar</v-btn>
+                                                    </v-card-actions>
+                                                </v-card>
+                                            </v-flex>
+                                        </v-layout>
                                     </v-layout>
-                                    
+
                                 </v-card-text>
                             </v-card>
                         </v-tab-item>
@@ -419,14 +441,14 @@
                                                     readonly
                                                     key="startDate-teaching-input"
                                                 ></v-text-field>
-                                                <v-date-picker 
-                                                    v-model="userData.teaching.startDate" 
+                                                <v-date-picker
+                                                    v-model="userData.teaching.startDate"
                                                     locale="es-VE"
                                                     scrollable
                                                 >
                                                     <v-spacer></v-spacer>
                                                     <v-btn flat color="primary" @click="this.modalDate = false">Cancel</v-btn>
-                                                    <v-btn flat color="primary" @click="$refs.dialog.save(modalBirthDate)">OK</v-btn>
+                                                    <v-btn flat color="primary" @click="$refs.dialog.save(userData.teaching.startDate)">OK</v-btn>
                                                 </v-date-picker>
                                             </v-dialog>
                                             <!-- <v-text-field
@@ -458,17 +480,17 @@
                                                     readonly
                                                     key="endDate-teaching-input"
                                                 ></v-text-field>
-                                                <v-date-picker 
-                                                    v-model="userData.teaching.endDate" 
+                                                <v-date-picker
+                                                    v-model="userData.teaching.endDate"
                                                     locale="es-VE"
                                                     scrollable
                                                 >
                                                     <v-spacer></v-spacer>
                                                     <v-btn flat color="primary" @click="this.modalDate = false">Cancel</v-btn>
-                                                    <v-btn flat color="primary" @click="$refs.dialog.save(modalBirthDate)">OK</v-btn>
+                                                    <v-btn flat color="primary" @click="$refs.dialog.save(userData.teaching.endDate)">OK</v-btn>
                                                 </v-date-picker>
                                             </v-dialog>
-                                            
+
                                         </v-flex>
                                         <v-flex lg6 md6 xs12 pr-4>
                                             <v-text-field
@@ -483,7 +505,7 @@
                                             ></v-text-field>
                                         </v-flex>
                                     </v-layout>
-                                    
+
                                 </v-card-text>
                             </v-card>
                         </v-tab-item>
@@ -514,18 +536,8 @@
                                                 key="condition-input"
                                                 v-validate="'required'"
                                             ></v-select>
-                                            <!-- <v-text-field
-                                                v-model="userData.institutional.condition"
-                                                name="condition"
-                                                :error-messages="errors.collect('condition')"
-                                                label="Condición o Tipo de Trabajador"
-                                                class=""
-                                                data-vv-as="Condición o Tipo de Trabajador"
-                                                v-validate="'required'"
-                                                key="condition-input"
-                                            ></v-text-field> -->
                                         </v-flex>
-                                        <v-flex lg6 md6 xs12 pr-4>
+                                        <v-flex v-if="userData.institutional.condition == 'DOCENTE'" lg6 md6 xs12 pr-4>
                                             <v-select
                                                 :items="categoryInt"
                                                 v-model="userData.institutional.category"
@@ -534,16 +546,6 @@
                                                 v-validate="'required'"
                                             >
                                             </v-select>
-                                            <!-- <v-text-field
-                                                v-model="userData.institutional.category"
-                                                name="category"
-                                                :error-messages="errors.collect('category')"
-                                                label="Categoria o Nivel del Trabajador"
-                                                class=""
-                                                data-vv-as="Categoria o Nivel del Trabajador"
-                                                v-validate="'required'"
-                                                key="category-input"
-                                            ></v-text-field> -->
                                         </v-flex>
                                         <v-flex lg6 md6 xs12 pr-4>
                                             <v-text-field
@@ -582,7 +584,7 @@
                                             </v-select>
                                         </v-flex>
                                     </v-layout>
-                                        
+
                                 </v-card-text>
                             </v-card>
                         </v-tab-item>
@@ -665,9 +667,9 @@
                                             key="twitter-input"
                                         ></v-text-field>
                                     </v-flex>
-                                
+
                                 </v-layout>
-                                
+
 
                             </v-card-text>
                         </v-card>

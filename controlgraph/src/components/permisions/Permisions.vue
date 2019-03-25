@@ -24,212 +24,237 @@
                         <v-card-title>
                             <span class="headline">{{ formTitle }}</span>
                             <v-spacer></v-spacer>
-                            <v-btn v-if="this.edit" slot="activator" color="primary" dark class="mb-2" @click="editMode">Editar</v-btn>
+                            
+                                <v-btn v-if="this.edit" slot="activator" color="primary" dark class="mb-2" @click="editMode">Editar</v-btn>
+                            
                         </v-card-title>
                         <v-card-text>
                             <v-container grid-list-xs>
-                            <v-layout row wrap>
-                                <v-flex xs12 >
-                                    <v-autocomplete
-                                    v-model="PermissionsEmployer.userData_id"
-                                    name="fName"
-                                    :error-messages="errors.collect('fName')"
-                                    data-vv-as="Primer Nombre"
-                                    :items="UserData"
-                                    :loading="isLoading"
-                                    :search-input.sync="searchUser"
-                                    class="iprint-third--text attibutes"
-                                    hide-no-data
-                                    :filter='filterUser'
-                                    item-text='fName'
-                                    item-value="pk"
-                                    key="attributes-input"
-                                    v-validate="''"
-                                    append-icon="fa-search"     
-                                    label="Buscar por Nombre de Trabajador"
-                                    :disabled='editFields'
-                                    >
-                                    <template 
-                                        slot="item" slot-scope="data">
-                                        <v-list-tile-content>
-                                        <v-list-tile-title v-html="data.item.sName+' '+data.item.sSurname"></v-list-tile-title>
-                                        </v-list-tile-content>
-                                    </template>
-                                    <template slot="selection" slot-scope="data">
-                                        {{data.item.sName+' '+data.item.sSurname}}
-                                    </template>
-                                    </v-autocomplete>
-                                </v-flex>
-                                <v-flex lg4 md6 xs12 pr-4>
-                                    <v-checkbox
-                                        v-model="PermissionsEmployer.approvedBoss"
+                                <v-layout row wrap>
+                                    <v-flex xs12 >
+                                        <v-autocomplete
+                                        v-model="PermissionsEmployer.userData_id"
+                                        name="fName"
+                                        :error-messages="errors.collect('fName')"
                                         v-validate="'required'"
-                                        label="Firmado por Jefe Inmediato"
-                                        required
-                                        key="license-input"
+                                        data-vv-as="Empleado"
+                                        :items="UserData"
+                                        :loading="isLoading"
+                                        :search-input.sync="searchUser"
+                                        class="iprint-third--text attibutes"
+                                        hide-no-data
+                                        :filter='filterUser'
+                                        item-text='fName'
+                                        item-value="pk"
+                                        key="attributes-input"
+                                        append-icon="fa-search"     
+                                        label="Buscar por Nombre de Trabajador"
                                         :disabled='editFields'
-                                    ></v-checkbox>
-                                </v-flex>
-                                
-                                <v-flex lg4 md6 xs12 pr-4>
-                                    <v-checkbox
-                                        v-model="PermissionsEmployer.approvedBossTH"
-                                        v-validate="'required'"
-                                        label="Firmado por Jefe de Talento Humano"
-                                        required
-                                        key="license-input"
-                                        :disabled='editFields'
-                                    ></v-checkbox>
-                                </v-flex>
-                                
-                                <v-flex lg4 md6 xs12 pr-4>
-                                    <v-checkbox
-                                        v-model="PermissionsEmployer.approvedFinished"
-                                        v-validate="'required'"
-                                        label="Aprobado por Decano de Núcleo"
-                                        required
-                                        key="aprovedFinished-input"
-                                        :disabled='editFields'
-                                    ></v-checkbox>
-                                </v-flex>
-                                <v-flex lg4 md6 xs12 pr-4>
-                                    <v-textarea
-                                    v-model="PermissionsEmployer.commentBoss" 
-                                    name="Comentario Jefe Inmediato"
-                                    label="Comentario Jefe Inmediato"
-                                    value=""
-                                    hint=""
-                                    :disabled='editFields'
-                                    ></v-textarea>
-                                </v-flex>
-                                <v-flex lg4 md6 xs12 pr-4>
-                                    <v-textarea
-                                    v-model="PermissionsEmployer.commentBossTH" 
-                                    name="Comentario Jefe de Talento Humano"
-                                    label="Comentario Jefe de Talento Humano"
-                                    value=""
-                                    hint=""
-                                    :disabled='editFields'
-                                    ></v-textarea>
-                                </v-flex>
-                                <v-flex lg4 md6 xs12 pr-4>
-                                    <v-textarea
-                                    v-model="PermissionsEmployer.commentFinished" 
-                                    name="Comentario Decano de Núcleo"
-                                    label="Comentario Decano de Núcleo"
-                                    value=""
-                                    hint=""
-                                    :disabled='editFields'
-                                    ></v-textarea>
-                                </v-flex>
-                                <v-flex lg12 md6 xs12 pr-4>
-                                    <v-textarea
-                                    v-model="PermissionsEmployer.description" 
-                                    name="Descripción"
-                                    label="Descripción"
-                                    value=""
-                                    hint=""
-                                    :disabled='editFields'
-                                    ></v-textarea>
-                                </v-flex>
-                                <v-flex lg4 md6 xs12 pr-4>
-                                    <v-dialog
-                                        ref="reportDialog"
-                                        v-model="modalDate"
-                                        :return-value.sync="PermissionsEmployer.inDate"
-                                        persistent
-                                        lazy
-                                        full-width
-                                        width="290px"
-                                        :disabled='editFields'
-                                    >
-                                        <v-text-field
-                                            slot="activator"
-                                            v-model="date_formatted"
-                                            label="Fecha de Reporte del Permiso"
-                                            prepend-icon="event"
-                                            readonly
-                                            key="inDate"
-                                            :disabled='editFields'
-                                        ></v-text-field>
-                                        <v-date-picker 
-                                            v-model="PermissionsEmployer.inDate" 
-                                            locale="es-VE"
-                                            scrollable
-                                            @input="dateFormat(1, PermissionsEmployer.inDate)"
                                         >
-                                            <v-spacer></v-spacer>
-                                            <v-btn flat color="primary" @click="this.modalDate = false">Cancel</v-btn>
-                                            <v-btn flat color="primary" @click="$refs.reportDialog.save(PermissionsEmployer.inDate)">OK</v-btn>
-                                        </v-date-picker>
-                                    </v-dialog>
-                                </v-flex>
-                                <v-flex lg4 md6 xs12 pr-4>
-                                    <v-dialog
-                                        ref="modalStartDate"
-                                        v-model="startDate"
-                                        :return-value.sync="PermissionsEmployer.startDate"
-                                        persistent
-                                        lazy
-                                        full-width
-                                        width="290px"
-                                        :disabled='editFields'
-                                    >
-                                        <v-text-field
-                                            slot="activator"
-                                            v-model="startdate_formatted"
-                                            label="Fecha de Inicio del Permiso"
-                                            prepend-icon="event"
-                                            readonly
-                                            key="startDate"
-                                            :disabled='editFields'
-                                        ></v-text-field>
-                                        <v-date-picker 
-                                            v-model="PermissionsEmployer.startDate" 
-                                            locale="es-VE"
-                                            scrollable
-                                            @input="dateFormat(2, PermissionsEmployer.startDate)"
-                                        >
-                                            <v-spacer></v-spacer>
-                                            <v-btn flat color="primary" @click="this.startDate = false">Cancel</v-btn>
-                                            <v-btn flat color="primary" @click="$refs.modalStartDate.save(PermissionsEmployer.startDate)">OK</v-btn>
-                                        </v-date-picker>
-                                    </v-dialog>
-                                </v-flex>
-                                <v-flex lg4 md6 xs12 pr-4>
-                                    <v-dialog
-                                        ref="modalEndDate"
-                                        v-model="endDate"
-                                        :return-value.sync="PermissionsEmployer.endDate"
-                                        persistent
-                                        lazy
-                                        full-width
-                                        width="290px"
-                                        :disabled='editFields'
-                                    >
-                                        <v-text-field
-                                            slot="activator"
-                                            v-model="endDate_formatted"
-                                            label="Fecha de Finalización del Permiso"
-                                            prepend-icon="event"
-                                            readonly
-                                            key="endDate"
-                                            :disabled='editFields'
-                                        ></v-text-field>
-                                        <v-date-picker 
-                                            v-model="PermissionsEmployer.endDate" 
-                                            locale="es-VE"
-                                            scrollable
-                                            @input="dateFormat(3, PermissionsEmployer.endDate)"
-                                        >
-                                            <v-spacer></v-spacer>
-                                            <v-btn flat color="primary" @click="this.endDate = false">Cancel</v-btn>
-                                            <v-btn flat color="primary" @click="$refs.modalEndDate.save(PermissionsEmployer.endDate)">OK</v-btn>
-                                        </v-date-picker>
-                                    </v-dialog>
-                                </v-flex>
-                              
-                            </v-layout>
+                                            <template 
+                                                slot="item" slot-scope="data">
+                                                <v-list-tile-content>
+                                                <v-list-tile-title v-html="data.item.sName+' '+data.item.sSurname"></v-list-tile-title>
+                                                </v-list-tile-content>
+                                            </template>
+                                            <template slot="selection" slot-scope="data">
+                                                {{data.item.sName+' '+data.item.sSurname}}
+                                            </template>
+                                        </v-autocomplete>
+                                    </v-flex>
+                                        <v-layout row wrap >
+                                        <!-- <v-flex v-if="PermissionsEmployer.userData.active" > -->
+                                            <v-flex lg4 md6 xs12 pr-4>
+                                                <v-checkbox
+                                                    v-model="PermissionsEmployer.approvedBoss"
+                                                    name="Aprobado por Jefe Inmediato"
+                                                    :error-messages="errors.collect('Aprobado por Jefe Inmediato')"
+                                                    v-validate="'required'"
+                                                    label="Aprobado por Jefe Inmediato"
+                                                    key="AprovedBoss"
+                                                    :disabled='editFields'
+                                                ></v-checkbox>
+                                            </v-flex>
+                                            <v-flex lg4 md6 xs12 pr-4>
+                                                <v-checkbox
+                                                    v-model="PermissionsEmployer.approvedBossTH"
+                                                    name="Aprobado por Jefe de Talento Humano"
+                                                    v-validate="'required'"
+                                                    :error-messages="errors.collect('Aprobado por Jefe de Talento Humano')"
+                                                    label="Aprobado por Jefe de Talento Humano"
+                                                    key="license-input"
+                                                    :disabled='editFields'
+                                                ></v-checkbox>
+                                            </v-flex>
+                                            <v-flex lg4 md6 xs12 pr-4>
+                                                <v-checkbox
+                                                    v-model="PermissionsEmployer.approvedFinished"
+                                                    name="Aprobado por Decano de Núcleo"
+                                                    v-validate="'required'"
+                                                    :error-messages="errors.collect('Aprobado por Decano de Núcleo')"
+                                                    label="Aprobado por Decano de Núcleo"
+                                                    key="aprovedFinished-input"
+                                                    :disabled='editFields'
+                                                ></v-checkbox>
+                                            </v-flex>
+                                            <v-flex lg4 md6 xs12 pr-4>
+                                                <v-textarea
+                                                v-model="PermissionsEmployer.commentBoss" 
+                                                name="Comentario Jefe Inmediato"
+                                                label="Comentario Jefe Inmediato"
+                                                value=""
+                                                hint=""
+                                                :disabled='editFields'
+                                                ></v-textarea>
+                                            </v-flex>
+                                            <v-flex lg4 md6 xs12 pr-4>
+                                                <v-textarea
+                                                v-model="PermissionsEmployer.commentBossTH" 
+                                                name="Comentario Jefe de Talento Humano"
+                                                label="Comentario Jefe de Talento Humano"
+                                                value=""
+                                                hint=""
+                                                :disabled='editFields'
+                                                ></v-textarea>
+                                            </v-flex>
+                                            <v-flex lg4 md6 xs12 pr-4>
+                                                <v-textarea
+                                                v-model="PermissionsEmployer.commentFinished" 
+                                                name="Comentario Decano de Núcleo"
+                                                label="Comentario Decano de Núcleo"
+                                                value=""
+                                                hint=""
+                                                :disabled='editFields'
+                                                ></v-textarea>
+                                            </v-flex>
+                                            <v-flex lg12 md6 xs12 pr-4>
+                                                <v-textarea
+                                                v-model="PermissionsEmployer.description" 
+                                                name="Descripción"
+                                                :error-messages="errors.collect('Descripción')"    
+                                                v-validate="'required'"
+                                                label="Descripción"
+                                                value=""
+                                                hint=""
+                                                :disabled='editFields'
+                                                ></v-textarea>
+                                            </v-flex>
+                                            <v-flex lg4 md6 xs12 pr-4>
+                                                <v-dialog
+                                                    ref="reportDialog"
+                                                    v-model="modalDate"
+                                                    :return-value.sync="PermissionsEmployer.inDate"
+                                                    persistent
+                                                    lazy
+                                                    full-width
+                                                    width="290px"
+                                                    :disabled='editFields'
+                                                >
+                                                    <v-text-field
+                                                        slot="activator"
+                                                        v-model="date_formatted"
+                                                        label="Fecha de Reporte del Permiso"
+                                                        prepend-icon="event"
+                                                        readonly
+                                                        key="inDate"
+                                                        :disabled='editFields'
+                                                        name="Fecha de Reporte del Permiso"
+                                                        :error-messages="errors.collect('Fecha de Reporte del Permiso')"  
+                                                        v-validate="'required'"
+                                                    ></v-text-field>
+                                                    <v-date-picker 
+                                                        v-model="PermissionsEmployer.inDate" 
+                                                        locale="es-VE"
+                                                        scrollable
+                                                        :min="validateCalendars(1)"
+                                                        @input="dateFormat(1, PermissionsEmployer.inDate)"            
+                                                        @change="validateChange(1)"
+                                                    >
+                                                        <v-spacer></v-spacer>
+                                                        <v-btn flat color="primary" @click.prevent="closeCalendars(1)">Cancel</v-btn>
+                                                        {{modalDate}}
+                                                        <v-btn flat color="primary" @click="$refs.reportDialog.save(PermissionsEmployer.inDate)">OK</v-btn>
+                                                    </v-date-picker>
+                                                </v-dialog>
+                                            </v-flex>
+                                            <v-flex lg4 md6 xs12 pr-4 v-if="PermissionsEmployer.inDate != ''"> 
+                                                <v-dialog
+                                                    ref="modalStartDate"
+                                                    v-model="startDate"
+                                                    :return-value.sync="PermissionsEmployer.startDate"
+                                                    persistent
+                                                    lazy
+                                                    full-width
+                                                    :disabled='editFields'
+                                                    width="290px"
+                                                >
+                                                    <v-text-field
+                                                        slot="activator"
+                                                        v-model="startdate_formatted"
+                                                        label="Fecha de Inicio del Permiso"
+                                                        prepend-icon="event"
+                                                        readonly
+                                                        key="startDate"
+                                                        name="Fecha de Inicio del Permiso"
+                                                        :error-messages="errors.collect('Fecha de Inicio del Permiso')"  
+                                                        v-validate="'required'"
+                                                        :disabled='editFields'
+                                                    ></v-text-field>
+                                                    <v-date-picker 
+                                                        :min="PermissionsEmployer.inDate"
+                                                        v-model="PermissionsEmployer.startDate" 
+                                                        locale="es-VE"
+                                                        scrollable
+                                                        @input="dateFormat(2, PermissionsEmployer.startDate)"
+                                                        @change="validateChange2(2)"
+                                                    >
+                                                        <v-spacer></v-spacer>
+                                                        <v-btn flat color="primary" @click.prevent="closeCalendars(2)">Cancel</v-btn>
+                                                        <v-btn flat color="primary" @click="$refs.modalStartDate.save(PermissionsEmployer.startDate)">OK</v-btn>
+                                                    </v-date-picker>
+                                                </v-dialog>
+                                            </v-flex>
+                                            <v-flex lg4 md6 xs12 pr-4 v-if="PermissionsEmployer.startDate != ''">
+                                                <v-dialog
+                                                    ref="modalEndDate"
+                                                    v-model="endDate"
+                                                    :return-value.sync="PermissionsEmployer.endDate"
+                                                    persistent
+                                                    lazy
+                                                    full-width
+                                                    width="290px"
+                                                    :disabled='editFields'
+                                                >
+                                                    <v-text-field
+                                                        slot="activator"
+                                                        v-model="endDate_formatted"
+                                                        label="Fecha de Finalización del Permiso"
+                                                        prepend-icon="event"
+                                                        readonly
+                                                        key="endDate"
+                                                        :disabled='editFields'
+                                                        name="Fecha de Finalización del Permiso"
+                                                        :error-messages="errors.collect('Fecha de Finalización del Permiso')"  
+                                                        v-validate="'required'"
+                                                    ></v-text-field>
+                                                    <v-date-picker 
+                                                        :min="PermissionsEmployer.startDate"
+                                                        v-model="PermissionsEmployer.endDate" 
+                                                        locale="es-VE"
+                                                        scrollable
+                                                        @input="dateFormat(3, PermissionsEmployer.endDate)"
+                                                    >
+                                                        <v-spacer></v-spacer>
+                                                        <v-btn flat color="primary" @click.prevent="closeCalendars(3)">Cancel</v-btn>
+                                                        <v-btn flat color="primary" @click="$refs.modalEndDate.save(PermissionsEmployer.endDate)">OK</v-btn>
+                                                    </v-date-picker>
+                                                </v-dialog>
+                                            </v-flex>
+                                        </v-layout>
+                                        <v-layout v-if="activateC" pt-4 >
+                                            <span> <v-icon>fa-exclamation-triangle</v-icon> El empleado que ha seleccionado está inactivo, verifique su estatus</span>                                            
+                                        </v-layout>
+                                </v-layout>
                             </v-container>
                         </v-card-text>
                         <v-card-actions>
