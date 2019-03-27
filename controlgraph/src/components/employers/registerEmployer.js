@@ -51,6 +51,7 @@ export default {
                 teaching: [],
                 active: true
             },
+            studys: -1,
             study: {
                 typeStudy: "", //Este campo debe ser un SELECT
                 startDate: "", //Este campo debe ser DATE y debe ser diferenciado en el key del input
@@ -133,8 +134,9 @@ export default {
                     endDate: "", 
                     study: ""
                 },
-                this.studyStartDate_Formatted = "",
+                this.studyStartDate_Formatted = ""
                 this.studyEndDate_Formatted = ""
+                this.studys = -1
             }
             // if (mode == 3) {
             //     teaching= {
@@ -168,7 +170,12 @@ export default {
                 Promise.all(fieldsVal)
                 .then(()=>{
                     if(!this.errors.any()){
-                        this.userData.study.push(this.study)
+                        if(this.studys > -1){
+                            this.userData.study[this.studys] = this.study
+                          }
+                          else{
+                            this.userData.study.push(this.study)
+                        }
                         console.log('Esto es lo que se le va agregando a los estudios del empleado:', this.userData.study);  
                         this.modalStudy = false
                         this.clearFields(2)
@@ -179,48 +186,33 @@ export default {
             else{
                 this.load = false
                 console.log('En caso de que falle');
-                
-            }
-            if (mode == 2) {
-                this.$validator.validateAll()
-                .then(()=>{
-                    this.load = true
-                    if(!this.errors.any()){
-                        this.userData.teaching.push(this.teaching)
-                        console.log('Esto es lo que se le va agregando a teaching del empleado:', this.userData.teaching);  
-                        this.modalTeaching = false
-                        this.clearFields(3)
-                        this.$validator.reset()
-                    }
-                })
-            }
-            else{
-                this.load = false
-                console.log('En caso de que falle');
-                
             }
         },
-        deleteStudyOrTeaching (mode, item) {
+        editStudyOrTeaching(mode, item, index){
+            console.log('Este es el item que llega al editar',item);
             if (mode == 1) {
-                console.log('Esto es lo que llega para Eliminar', item);
-                console.log('lo que quiero eliminar tiene este pk', item.index);
-                axios.delete(this.$store.getters.getPermisions(item.index))
-                .then(response =>{
-                  console.log('Debio Eliminar');
-                //   this.getPermisions();
-                })
-                console.log('Debio Ejecutar la Actualizacion');
+                this.studys = index
+                this.study = JSON.parse(JSON.stringify(item))
+                this.studyStartDate_Formatted = this.dateFormat(4, this.study.startDate) 
+                this.studyEndDate_Formatted = this.dateFormat(4, this.study.endDate) 
+                console.log('Este es study que queda luego del parse',this.study);                
+                this.modalStudy = true
+                // this.getFormula2()
+                // this.calculatedVars()
             }
         },
-        removeStudy(index,cost_pk){
-            if(cost_pk != ''){
-                // axios.delete(this.$store.getters.getExtracost(cost_pk))
-                if(!('deleteCost' in this.product)){
-                    this.product['deleteCost'] = []
+        deleteStudyOrTeaching (mode, index, item_pk) {
+            if (mode == 1) {
+                console.log('Esto es lo que llega para Eliminar', item_pk);
+                if (item_pk != '') {
+                    // axios.delete(this.$store.getters.getExtracost(cost_pk))
+                        if(!('deleteStudy' in this.userData.study)){
+                            this.userData.study['deleteStudy'] = []
+                        }
+                        this.userData.study['deleteStudy'].push(item_pk)
                 }
-                this.product['deleteCost'].push(cost_pk)
+                this.userData.study.splice(index,1)
             }
-            this.product.extracost.splice(index,1)
         },
     },
     watch:{

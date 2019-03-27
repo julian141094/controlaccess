@@ -41,6 +41,15 @@
                     {% endfor %}
                   </tr>
                 </thead>
+                <tbody>
+                  {% for worker in employer %}
+                    <tr>
+                      <td>
+                        {{ worker.identification }}
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
               </table>
             </div>
           </div>

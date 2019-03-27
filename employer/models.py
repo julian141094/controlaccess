@@ -15,7 +15,7 @@ class UserData(models.Model):
     fSurname = models.CharField(verbose_name="Segundo apellido",max_length=32,blank=True,null=True)
     sSurname = models.CharField(verbose_name="Segundo apellido",max_length=32,blank=True,null=True)
     birthDate = models.DateField(verbose_name='Fecha de nacimiento')
-    # email = models.CharField(verbose_name="Correo",max_length=128, unique=True)
+    email = models.CharField(verbose_name="Correo",max_length=128, unique=True)
     address = models.CharField(verbose_name="Direccion",max_length=128)
     phone = models.CharField(verbose_name="Celular",max_length=12)
     license = models.BooleanField(verbose_name="Carnet")

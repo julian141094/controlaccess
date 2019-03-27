@@ -1,6 +1,7 @@
 from django_weasyprint import WeasyTemplateResponseMixin
 from django.views.generic import TemplateView
 from django.conf import settings
+from employer.models import UserData
 # Create your views here.
 class GenerateReport(TemplateView, WeasyTemplateResponseMixin):
 
@@ -13,5 +14,7 @@ class GenerateReport(TemplateView, WeasyTemplateResponseMixin):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["headers"] = ["Nombre",'Fecha','Hr Entrada','Hr de Comer','Hr reingreso','Hr salida'] 
+        employer = UserData.objects.all()
+        context['employer'] = employer
         return context
     

@@ -307,7 +307,7 @@
                                                                 </v-date-picker>
                                                             </v-dialog>
                                                         </v-flex>
-                                                        <v-flex lg6 md6 xs12 pr-4>
+                                                        <v-flex v-if="studyStartDate_Formatted" lg6 md6 xs12 pr-4>
                                                             <v-dialog
                                                                 ref="dialogStudyEnd"
                                                                 v-model="modalStudyEndDate"
@@ -371,11 +371,12 @@
                                                             <div> Tipo de Estudio: {{item.typeStudy}}</div>
                                                             <div> Fecha de Inicio: {{dateFormat(4, item.startDate)}}</div>
                                                             <div> Fecha de Finalización: {{dateFormat(4, item.endDate)}}</div>
+                                                            {{index}}
                                                         </div>
                                                     </v-card-title>
                                                     <v-card-actions>
-                                                    <v-btn flat color="green darken-1">Modificar</v-btn>
-                                                    <v-btn flat color="green darken-1">Eliminar</v-btn>
+                                                    <v-btn flat color="green darken-1" @click="editStudyOrTeaching(1, item, index)">Modificar</v-btn>
+                                                    <v-btn flat color="green darken-1" @click.prevent="deleteStudyOrTeaching(1, item.pk)">Eliminar</v-btn>
                                                     </v-card-actions>
                                                 </v-card>
                                             </v-flex>

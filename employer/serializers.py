@@ -7,7 +7,7 @@ class ExtraUserDataSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = ExtraUserData
-        fields = ('codCPatria','serCPatria','whatsapp','facebook','instagram','twitter')
+        fields = ('pk','codCPatria','serCPatria','whatsapp','facebook','instagram','twitter')
 
 class DepartmentsSerializer(serializers.ModelSerializer):
 
@@ -21,20 +21,20 @@ class InstitutionalUserDataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = InstitutionalUserData
-        fields = ('dateIn', 'condition', 'category', 'appointment', 'positionOPSU', 'department',"department_id")
+        fields = ('pk','dateIn', 'condition', 'category', 'appointment', 'positionOPSU', 'department',"department_id")
         depth = 1
 
 class StudyUserDataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StudyUserData
-        fields = ('typeStudy', 'startDate', 'endDate', 'study')
+        fields = ('pk', 'typeStudy', 'startDate', 'endDate', 'study')
 
 class TeachingComponentUserDataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TeachingComponentUserData
-        fields = ('typeComponent', 'universityOrigin', 'startDate', 'endDate', 'observation')
+        fields = ('pk', 'typeComponent', 'universityOrigin', 'startDate', 'endDate', 'observation')
 
 
 """
@@ -64,13 +64,6 @@ class UserDataSerializer(serializers.ModelSerializer):
         depth = 1 
 
     def create(self, validated_data):
-        # userMain = validated_data.pop('user') if type(validated_data['user_id']) != int else validated_data.pop('user_id')
-        # if(type(userMain) != int):
-        #     new_user = UserProfileSerializer(data=userMain)
-        #     new_user.is_valid(raise_exception=True)
-        #     userSer = new_user.save()
-        #     validated_data['user_id'] = userSer.id
-
         institutional = validated_data.pop('institutional')
         extra = validated_data.pop('extra')
         study = validated_data.pop('study')
@@ -82,31 +75,21 @@ class UserDataSerializer(serializers.ModelSerializer):
         for study_obj in study:
             study_obj['userData'] = user
             StudyUserData.objects.create(**study_obj)
-        # teaching['userData'] = user
+
         for teaching_obj in teaching:
             teaching_obj['userData'] = user
             TeachingComponentUserData.objects.create(**teaching_obj)
         ExtraUserData.objects.create(**extra)
-        InstitutionalUserData.objects.create(**institutional)
-        # TeachingComponentUserData.objects.create(**teaching)
-        #user.study.create(**study)
-        #user.teaching.create(**teaching)
-        #user.extra.create(**extra)
-        #user.institutional.create(**institutional)
-        #print(user,'extr',extra,'obj',extraObj)
+        InstitutionalUserData.objects.create(**institutional)      
         return user
 
     #El self es la instancia
     def update(self, instance, validated_data):
-        institutional = validated_data.pop('institutional')
-        print(validated_data , 'validated2')
-        extra = validated_data.pop('extra')
-        study = validated_data.pop('study')
-        teaching = validated_data.pop('teaching')
+        validated_data.pop('institutional') if "institutional" in validated_data else None
+        validated_data.pop('extra') if "extra" in validated_data else None
+        validated_data.pop('study') if "study" in validated_data else None
+        validated_data.pop('teaching') if "teaching" in validated_data else None
         instance = super().update(instance,validated_data)
-        InstitutionalUserDataSerializer().update(instance.institutional,institutional)
-        StudyUserDataSerializer().update(instance.study,study)
-        TeachingComponentUserDataSerializer().update(instance.teaching,teaching)
         return instance
 
 class MedicalRestEmployerSerializer(serializers.ModelSerializer):
