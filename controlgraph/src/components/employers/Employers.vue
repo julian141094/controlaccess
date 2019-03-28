@@ -7,11 +7,11 @@
                     <v-card-title class="headline">Guardar Trabajador</v-card-title>
                     <v-card-text>Por favor llene el formulario detenidamente, al finalizar todos los campos presione almacenar. </v-card-text>
                     <!-- Formulario de Empliados -->
-                        <formemployers/>
+                        <formemployers ref="FormRegisterEmployer"/>
                     <v-card-actions>
                     <v-spacer></v-spacer>
                     <v-btn color="green darken-1" flat @click="dialog = false">Cancelar</v-btn>
-                    <v-btn color="green darken-1" flat @click="saveOrUpdate(1)">Guardar</v-btn>
+                    <v-btn color="green darken-1" flat @click="saveOrUpdate(1, $refs.FormRegisterEmployer.getUserData())">Guardar</v-btn>
                     </v-card-actions>
                 </v-card>
                 </v-dialog>
@@ -28,7 +28,7 @@
                         single-line
                         hide-details
                     ></v-text-field>
-                    <v-btn @click="dialog = true" color="primary" dark>Nuevo</v-btn>
+                    <v-btn @click.prevent="openDialogs()" color="primary" dark>Nuevo</v-btn>
                     </v-card-title>
                     <v-data-table
                     :headers="headers"

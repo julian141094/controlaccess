@@ -37,7 +37,14 @@ export default {
           this.employers = response.data.results
         })
       },
+      openDialogs(){
+        this.dialog = true
+        console.log('Esta es la referencia', this.$refs.FormRegisterEmployer.getUserData());
+        
+      },
       saveOrUpdate (mode, userData) {
+        console.log('Este es userData: ',userData);
+        
         if(mode == 2 && userData.pk != undefined){
           console.log('Esta seria la parte de editar, y e objeto que llega es: ', userData);
           // this.editedIndex = this.desserts.indexOf(userData)
@@ -62,8 +69,8 @@ export default {
             this.load = true
             if(!this.errors.any()){
               console.log('Entro en el If de !this.error.any');
-              // console.log('El pk del userData es: ', this.userData);
-              if(this.userData.pk == undefined){
+              console.log('El pk del userData es: ', userData.pk);
+              if(userData.pk == undefined || userData.pk == ''){
                 // if(this.userData.commentBoss == ''){
                 //   this.userData.commentBoss = 'No Aplica'
                 // }
@@ -73,7 +80,7 @@ export default {
                 // if(this.userData.commentFinished == ''){
                 //   this.userData.commentFinished = 'No Aplica'
                 // }
-                axios.post(this.$store.getters.getEmployers(),this.userData)
+                axios.post(this.$store.getters.getEmployers(),userData)
                 .then(response =>{
                   this.load = false
                   this.$validator.reset()
@@ -98,7 +105,7 @@ export default {
               }
               else{
               console.log('En caso de que falle el registro entra a editar')
-                axios.put(this.$store.getters.getEmployers(this.userData.pk),
+                axios.put(this.$store.getters.getEmployers(userData.pk),
                       this.userData)
                       .then(response =>{
                           this.getEmployers()
@@ -129,5 +136,7 @@ export default {
     },
     mounted(){
       this.getEmployers();
+      
+      
     }
   }
