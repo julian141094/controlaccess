@@ -1,3 +1,15 @@
+:root {
+  --blue-unefa : #002163;
+  --red-unefa : #E42222
+}
 .imgAndText{
     border: 1px solid red;
+}
+
+
+.blue-text-unefa{
+    color: var(--blue-unefa) !important
+}
+.blue-bg-unefa{
+    background-color: var(--blue-unefa) !important
 }

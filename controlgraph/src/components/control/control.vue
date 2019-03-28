@@ -1,18 +1,18 @@
 <template>
-  <v-container fluid>
-    <v-layout justify-center align-center>
+  <v-container fluid fill-height>
+    <v-layout align-center justify-center row>
       <v-flex xs12 sm8>
         <v-card>
-        <v-layout row wrap class="imgAndText" style>
-          <v-flex xs3 md3>
-            <img src="@/assets/img/logoUnefa.png" >
+        <v-layout row wrap>
+          <v-flex xs12 sm4 md3 class="text-xs-center">
+            <img src="@/assets/img/logoUnefa.png">
           </v-flex>
-          <v-flex xs12 md9>
-            <h1 pa-3 class>Sistema de Control de Entrada y Salida del Personal de la UNEFANB</h1>
+          <v-flex xs12 sm8 md9 class="px-1">
+            <h1 pa-3 class="text-sm-center">Sistema de Control de Entrada y Salida del Personal de la UNEFANB</h1>
             <br>
-            <h4>Por favor, escané su código qr o suministre sus datos para reportar su llegada a la institución</h4>
+            <h4 class="text-sm-center">Por favor, escané su código qr o suministre sus datos para reportar su llegada a la institución</h4>
           </v-flex>
-          <v-flex xs6>
+          <v-flex xs12 class="text-xs-right" style="border-top: 1px solid #E42222">
             <h1>{{code}}</h1>
             <h2>{{message}}</h2>
             <v-btn color="success" @click="activeCamera">
@@ -82,8 +82,8 @@
           </v-flex>
           </v-layout>
           <v-card-actions align-content-end>
-            <v-dialog v-model="dialog" persistent max-width="35%">
-              <v-btn slot="activator" v-if="!$store.getters.isAuth"  color="primary" dark>Ingresar al Sistema</v-btn>
+            <v-dialog v-model="dialog" persistent max-width="35%" class="text-xs-center mx-auto">
+              <v-btn slot="activator" v-if="!$store.getters.isAuth"  color="primary" dark >Ingresar al Sistema</v-btn>
               <v-card>
                 <v-card-title class="headline">Iniciar Sesión</v-card-title>
                 <v-card-text>Por favor suministre los datos del usuario para ingresar al sistema.</v-card-text>
