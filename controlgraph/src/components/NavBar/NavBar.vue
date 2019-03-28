@@ -1,20 +1,21 @@
 <template>
-    <v-layout>   
+    <v-layout>
         <v-navigation-drawer
         v-model="drawer"
         stateless
         fixed
         app
-        clipped
-        class="pt-2 bg-cme--blue "
+        X_clipped
+        class="pt-0 bg-cme--blue "
         width="260"
         >
-            <v-toolbar flat>
+            <v-toolbar flat height="64px" color="white">
                 <v-list>
-                    <v-list-tile>
-                        <v-list-tile-title class="title text-md-center">
-                        UNEFANB
-                        </v-list-tile-title>
+                    <v-list-tile class="title" style="display: flex; justify-content: center; align-items: center;">
+                        <!-- <v-list-tile-title class="title text-md-center" style="border: 1px solid red; display: flex; justify-content: center;"> -->
+                          <img src="/unefa.png" alt="unefa" width="40px" height="40px" class="mr-1">
+                          <h3 class="blue-text-unefa">UNEFANB</h3>
+                        <!-- </v-list-tile-title> -->
                     </v-list-tile>
                 </v-list>
             </v-toolbar>
@@ -24,11 +25,12 @@
     </v-navigation-drawer>
 
     <!-- Toolbar -->
-    <v-toolbar app fixed clipped-left dense color="white" class="py-2 grey--text text--darken-2 text-uppercase body-2">
+    <v-toolbar app fixed X_clipped-left dense color="white" class="py-2 grey--text text--darken-2 text-uppercase body-2">
       <div>
       <!-- <div v-if="this.$store.getters.isAuth">       -->
         <v-btn icon @click.stop="drawer = !drawer">
-          <v-icon>menu</v-icon>
+          <v-icon class="blue-text-unefa">menu</v-icon>
+
         </v-btn>
         <!-- <v-btn icon @click.stop="miniVariant = !miniVariant" v-if="$vuetify.breakpoint.name === 'xs' ? false : true">
           <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
@@ -37,9 +39,9 @@
       <!-- <login v-else></login> -->
 
       <v-spacer></v-spacer>
-      <v-btn depressed color="transparent" class="grey--text text--darken-2 hidden-xs-only ml-auto">
+      <!-- <v-btn depressed color="transparent" class="grey--text text--darken-2 hidden-xs-only ml-auto">
         texto
-      </v-btn>
+      </v-btn> -->
 
       <v-spacer></v-spacer>
       <v-btn icon flat color="transparent" to="/">
@@ -48,11 +50,16 @@
       </v-btn>
 
       <v-spacer></v-spacer>
-      <v-btn right depressed color="transparent" @click.prevent="logout" class="grey--text text--darken-2 hidden-xs-only">
-        Salir
-      </v-btn>
+      <v-tooltip bottom>
+        <template  v-slot:activator="{ on }">
+              <v-btn fab dark large right depressed color="transparent" @click.prevent="logout" class="grey--text text--darken-2 hidden-xs-only" v-on="on">
+                <v-icon icon>power_settings_new</v-icon>
+              </v-btn>
+        </template>
+        <span>Salir</span>
+      </v-tooltip>
 
-      <v-spacer></v-spacer>
+      <!-- <v-spacer></v-spacer> -->
       
     </v-toolbar>
      <!-- End - Toolbar -->

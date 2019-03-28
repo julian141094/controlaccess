@@ -6,7 +6,7 @@
   <v-list-tile v-if="!item.sub" :class="$route.fullPath === item.url ? 'active-list' : false" >
       <v-list-tile-content>
           <v-list-tile-title v-on="item.click != undefined ? {'click':item.click} : {}">
-              <router-link :to="item.url">
+              <router-link :to="item.url" class="blue-text-unefa">
                   <v-list-tile-title>
                       {{ item.title }}
                   </v-list-tile-title>
@@ -24,7 +24,8 @@
   <v-list-group
     :prepend-icon="item.icon"
     append-icon="fa-chevron-down"
-    v-if="item.sub">
+    v-if="item.sub" 
+    class="blue-text-unefa">
     <v-list-tile slot="activator">
       <v-list-tile-title >{{ item.title }} </v-list-tile-title>
     </v-list-tile>
