@@ -1,6 +1,8 @@
 export default {
     data(){
         return {
+            dateIn_Formatted: "",
+            modalDateIn: false,
             load: false,
             modalTeahingStartDate: false,
             modalTeahingEndDate: false,
@@ -20,36 +22,80 @@ export default {
             modalDate: false,
             text: 'En Construcciòn...',
             userData: {
-                pk: "",
-                identification: "",
-                fName: "",
-                sName: "",
-                fSurname: "", 
-                sSurname: "", 
-                birthDate: "", //Este campo debe ser DATE
-                email: "",
-                address: "",
-                phone: "",
-                license: "", //Este campo debe ser un CHECKBOX
-                extra: {
-                    serCPatria: "",
-                    codCPatria: "",
-                    whatsapp: "",
-                    facebook: "",
-                    instagram: "",
-                    twitter: ""
+                // pk: "",
+                // identification: "",
+                // fName: "",
+                // sName: "",
+                // fSurname: "", 
+                // sSurname: "", 
+                // birthDate: "", //Este campo debe ser DATE
+                // email: "",
+                // address: "",
+                // phone: "",
+                // license: "", //Este campo debe ser un CHECKBOX
+                // extra: {
+                //     serCPatria: "",
+                //     codCPatria: "",
+                //     whatsapp: "",
+                //     facebook: "",
+                //     instagram: "",
+                //     twitter: ""
+                // },
+                // institutional: {
+                //     dateIn: "", //Este campo debe ser DATE
+                //     condition: "", //Este campo debe ser un SELECT
+                //     category: "",  //Este campo debe ser un SELECT
+                //     appointment: "",
+                //     positionOPSU: "",
+                //     department_id: ""
+                // },
+                // study: [],
+                // teaching: [],
+                // active: true
+
+                "pk": "",
+                "identification": "V-2222122",
+                    "fName": "Julian",
+                "sName": "Arkangel",
+                    "fSurname": "Avendaño",
+                "sSurname": "Rojas",
+                "birthDate": "1994-10-14",
+                "email": "alsgo@prueewewba.com",
+                "address": "El Mirador",
+                "phone": "04124275881",
+                "license": true,
+                "extra": {
+                        "codCPatria": "000200200",
+                        "serCPatria": "012302222",
+                        "whatsapp": "041223232",
+                        "facebook": "asdasdasdasd",
+                        "instagram": "asdasdasdasd",
+                        "twitter": "adsasdasdads"
+                    },
+                "institutional": {
+                    "dateIn": "2016-11-01",
+                    "condition": "ADMINISTRATIVO",
+                    "category": "TIEMPOVARIABLE",
+                    "appointment": "asdasdasd",
+                    "positionOPSU": "asdasdas",
+                    "department_id": 1
                 },
-                institutional: {
-                    dateIn: "", //Este campo debe ser DATE
-                    condition: "", //Este campo debe ser un SELECT
-                    category: "",  //Este campo debe ser un SELECT
-                    appointment: "",
-                    positionOPSU: "",
-                    department_id: ""
-                },
-                study: [],
-                teaching: [],
-                active: true
+                "study": [{
+                "typeStudy": "PREGRADO",
+                    "startDate": "1234-12-11",
+                    "endDate": "1234-12-12",
+                    "study": "Disenadora Grafica"
+                }],
+                "teaching": [
+                    {
+                    "typeComponent": "VIRTUAL",
+                            "universityOrigin": "ULA",
+                            "startDate": "2016-12-01",
+                            "endDate": "2018-12-01",
+                            "observation": "HECHO"
+                    }
+                ],
+                "active": true
             },
             studys: -1,
             study: {
@@ -65,6 +111,9 @@ export default {
                 endDate: "", //Este campo debe ser DATE y debe ser diferenciado en el key del input
                 observation: ""
             },
+            getUserData(){
+                return this.userData
+            },
         }
     },
     methods:{
@@ -74,6 +123,7 @@ export default {
                 this.departments = response.data.results
             })
         },
+        
         add(){
             this.$validator.validateAll()
             .then(()=>{
@@ -99,6 +149,9 @@ export default {
               if(mode == 4){
                 return `${new_date[2]}/${new_date[1]}/${new_date[0]}`
               }
+              if(mode == 5){
+                this.dateIn_Formatted = `${new_date[2]}/${new_date[1]}/${new_date[0]}`
+              }
             }
         },
         closeCalendars(option){
@@ -121,6 +174,9 @@ export default {
                 this.modalStudy = false
                 this.$validator.reset()
                 this.clearFields(2)
+            }
+            if(option == 7){
+                this.modalDateIn = false
             }
         },
         clearFields(mode){

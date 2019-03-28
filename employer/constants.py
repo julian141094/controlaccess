@@ -36,12 +36,14 @@ Constantes de Estudios realizadados por los Trabajadores
 
 PREGRADO = 'PREGRADO'
 POSTGRADO = 'POSTGRADO'
+# COMPONENTEDOCENTE = 'COMPONENTEDOCENTE'
 OTROESTUDIO = 'OTROESTUDIO''DEDICACIONEXCLUSIVA'
 
 
 EmployerStudy = (
     (PREGRADO, 'Pre Grado'),
     (POSTGRADO, 'Post Grado'),
+    # (COMPONENTEDOCENTE, 'Componente Docente'),
     (OTROESTUDIO, 'Otro Estudio')
 )
 

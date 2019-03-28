@@ -57,7 +57,7 @@ class UserDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserData
         fields = ('pk','identification','fName','sName','fSurname','sSurname',
-         'birthDate','address','phone','license','extra', #'email',
+         'birthDate','address','phone','license','extra', 'email',
          'institutional','study','teaching','active',
         #  'user','user_id'
         )

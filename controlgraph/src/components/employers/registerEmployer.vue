@@ -128,16 +128,6 @@
                                                     <v-btn flat color="primary" @click="$refs.dialogBD.save(userData.birthDate)">OK</v-btn>
                                                 </v-date-picker>
                                             </v-dialog>
-                                            <!-- <v-text-field
-                                                v-model="userData.birthDate"
-                                                name="birthDate"
-                                                :error-messages="errors.collect('birthDate')"
-                                                label="Fecha de Nacimiento"
-                                                class=""
-                                                data-vv-as="Fecha de Nacimiento"
-                                                v-validate="'required'"
-                                                key="birthDate-input"
-                                            ></v-text-field> -->
                                         </v-flex>
                                         <v-flex lg3 md6 xs12 pr-4>
                                             <v-text-field
@@ -159,16 +149,6 @@
                                                 required
                                                 key="license-input"
                                             ></v-checkbox>
-                                            <!-- <v-text-field
-                                                v-model="userData.license"
-                                                name="license"
-                                                :error-messages="errors.collect('license')"
-                                                label="Tiene Carnet de la Institución?"
-                                                class=""
-                                                data-vv-as="Tiene Carnet de la Institución?"
-                                                v-validate="'required'"
-                                                key="license-input"
-                                            ></v-text-field> -->
                                         </v-flex>
                                         <v-flex lg6 md6 xs12 pr-4>
                                             <v-text-field
@@ -401,16 +381,6 @@
                                                 key="typeComponent-input"
                                                 v-validate="'required'"
                                             ></v-select>
-                                            <!-- <v-text-field
-                                                v-model="userData.teaching.typeComponent"
-                                                name="typeComponent"
-                                                :error-messages="errors.collect('typeComponent')"
-                                                label="Tipo de Componente Docente"
-                                                class=""
-                                                data-vv-as="Tipo de Componente Docente"
-                                                v-validate="'required'"
-                                                key="typeComponent-input"
-                                            ></v-text-field> -->
                                         </v-flex>
                                         <v-flex lg6 md6 xs12 pr-4>
                                             <v-text-field
@@ -452,16 +422,6 @@
                                                     <v-btn flat color="primary" @click="$refs.dialog.save(userData.teaching.startDate)">OK</v-btn>
                                                 </v-date-picker>
                                             </v-dialog>
-                                            <!-- <v-text-field
-                                                v-model="userData.teaching.startDate"
-                                                name="startDate"
-                                                :error-messages="errors.collect('startDate')"
-                                                label="Fecha de Inicio del Componente Docente"
-                                                class=""
-                                                data-vv-as="Fecha de Inicio del Componente Docente"
-                                                v-validate="'required'"
-                                                key="startDate-teaching-input"
-                                            ></v-text-field> -->
                                         </v-flex>
                                         <v-flex lg6 md6 xs12 pr-4>
                                             <v-dialog
@@ -518,6 +478,40 @@
                                 <v-card-text>
                                     <v-layout row wrap>
                                         <v-flex lg6 md6 xs12 pr-4>
+                                            <v-dialog
+                                                ref="dialogDateIn"
+                                                v-model="modalDateIn"
+                                                :return-value.sync="userData.institutional.dateIn"
+                                                persistent
+                                                lazy
+                                                full-width
+                                                width="290px"
+                                            >
+                                                <v-text-field
+                                                    slot="activator"
+                                                    v-model="dateIn_Formatted"
+                                                    label="Fecha de Ingreso a la Institución"
+                                                    data-vv-as="Fecha de Ingreso a la Institución"
+                                                    prepend-icon="event"
+                                                    readonly
+                                                    key="endDate-study-input"
+                                                    name="dateIn"                                                                
+                                                    :error-messages="errors.collect('dateIn')"
+                                                    v-validate="'required'"
+                                                ></v-text-field>
+                                                <v-date-picker
+                                                    v-model="userData.institutional.dateIn"
+                                                    locale="es-VE"
+                                                    scrollable
+                                                    @input="dateFormat(5, userData.institutional.dateIn)"
+                                                >
+                                                    <v-spacer></v-spacer>
+                                                    <v-btn flat color="primary" @click.prevent="closeCalendars(7)">Cancel</v-btn>
+                                                    <v-btn flat color="primary" @click="$refs.dialogDateIn.save(userData.institutional.dateIn)">OK</v-btn>
+                                                </v-date-picker>
+                                            </v-dialog>
+                                        </v-flex>
+                                        <!-- <v-flex lg6 md6 xs12 pr-4>
                                             <v-text-field
                                                 v-model="userData.institutional.dateIn"
                                                 name="dateIn"
@@ -528,7 +522,7 @@
                                                 v-validate="'required'"
                                                 key="dateIn-input"
                                             ></v-text-field>
-                                        </v-flex>
+                                        </v-flex> -->
                                         <v-flex lg6 md6 xs12 pr-4>
                                             <v-select
                                                 :items="conditionInt"
