@@ -28,13 +28,13 @@ class StudyUserDataSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StudyUserData
-        fields = ('pk', 'typeStudy', 'startDate', 'endDate', 'study')
+        fields = ('pk', 'typeStudy', 'startDate', 'endDate', 'study', 'universityOrigin', 'typeComponent')
 
-class TeachingComponentUserDataSerializer(serializers.ModelSerializer):
+class WorkExperienceUserDataSerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = TeachingComponentUserData
-        fields = ('pk', 'typeComponent', 'universityOrigin', 'startDate', 'endDate', 'observation')
+        model = WorkExperienceUserData
+        fields = ('pk', 'institution', 'startDate', 'endDate', 'appointment', 'observation')
 
 
 """
@@ -47,7 +47,7 @@ class UserDataSerializer(serializers.ModelSerializer):
     extra = ExtraUserDataSerializer(many=False)
     institutional = InstitutionalUserDataSerializer(many=False)
     study = StudyUserDataSerializer(many=True)
-    teaching = TeachingComponentUserDataSerializer(many=True)
+    workExperience = WorkExperienceUserDataSerializer(many=True)
     # user_id = serializers.IntegerField(required=False,allow_null=True)
     # user = UserProfileSerializer(many=False,required=False,allow_null=True)
     # permissions = PermissionsEmployerSerializer(many=False,read_only=True) #El read Only es para que este serializer no sea obligatorio mandarlo en los post
@@ -58,7 +58,7 @@ class UserDataSerializer(serializers.ModelSerializer):
         model = UserData
         fields = ('pk','identification','fName','sName','fSurname','sSurname',
          'birthDate','address','phone','license','extra', 'email',
-         'institutional','study','teaching','active',
+         'institutional','study','active','workExperience',
         #  'user','user_id'
         )
         depth = 1 
@@ -67,7 +67,7 @@ class UserDataSerializer(serializers.ModelSerializer):
         institutional = validated_data.pop('institutional')
         extra = validated_data.pop('extra')
         study = validated_data.pop('study')
-        teaching = validated_data.pop('teaching')
+        workExperience = validated_data.pop('workExperience')
         user = UserData.objects.create(**validated_data)
         #Asignacion del usuario a los modelos
         extra['userData'] = user
@@ -76,9 +76,9 @@ class UserDataSerializer(serializers.ModelSerializer):
             study_obj['userData'] = user
             StudyUserData.objects.create(**study_obj)
 
-        for teaching_obj in teaching:
-            teaching_obj['userData'] = user
-            TeachingComponentUserData.objects.create(**teaching_obj)
+        for workExperience_obj in workExperience:
+            workExperience_obj['userData'] = user
+            WorkExperienceUserData.objects.create(**workExperience_obj)
         ExtraUserData.objects.create(**extra)
         InstitutionalUserData.objects.create(**institutional)      
         return user
@@ -88,7 +88,7 @@ class UserDataSerializer(serializers.ModelSerializer):
         validated_data.pop('institutional') if "institutional" in validated_data else None
         validated_data.pop('extra') if "extra" in validated_data else None
         validated_data.pop('study') if "study" in validated_data else None
-        validated_data.pop('teaching') if "teaching" in validated_data else None
+        validated_data.pop('workExperience') if "workExperience" in validated_data else None
         instance = super().update(instance,validated_data)
         return instance
 

@@ -1,6 +1,6 @@
 import './axiosDeclared.js'
 //Aqui se modifica el puerto del servidor de development o quality
-let base = location.hostname === 'localhost' ? 'http://localhost:8000/api/' : 'http://$(location.hostname):8000/api'
+export let base = location.hostname === 'localhost' ? 'http://localhost:8000/api/' : 'http://$(location.hostname):8000/api'
 
 export default {
     //este estado es porque lo exige

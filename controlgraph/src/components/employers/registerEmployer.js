@@ -4,111 +4,76 @@ export default {
             dateIn_Formatted: "",
             modalDateIn: false,
             load: false,
-            modalTeahingStartDate: false,
-            modalTeahingEndDate: false,
+            modalWorkExperienceStartDate: false,
+            modalWorkExperienceEndDate: false,
+            workExperienceStartDate_Formatted: "",
+            workExperienceEndDate_Formatted: "",
             modalStudyStartDate: false,
             modalStudyEndDate: false,
             studyStartDate_Formatted: "",
             studyEndDate_Formatted: "",
             modalStudy: false,
+            modalWorkExperience: false,
             date_formatted: "",
             modalBD: false,
             mode: 0,
             departments: [],
-            typeSt: ['PREGRADO', 'POSTGRADO', 'OTRO'],
-            typeCmp: ['VIRTUAL', 'PRESENCIAL'],
+            typeSt: ['BACHILLERATO','TSU','PREGRADO', 'POSTGRADO', 'COMPONENTEDOCENTE', 'OTRO'],
+            typeCmp: ['NOAPLICA','VIRTUAL', 'PRESENCIAL'],
+            typeCmp2: ['VIRTUAL', 'PRESENCIAL'],
             conditionInt: ['ADMINISTRATIVO', 'OBRERO', 'DOCENTE'],
-            categoryInt: ['TV', 'MT', 'TC', 'DD'],
+            categoryInt: ['NOAPLICA','TIEMPOVARIABLE', 'MEDIOTIEMPO', 'TIEMPOCOMPLETO', 'DEDICACIONEXCLUSIVA'],
+            categoryInt2: ['TIEMPOVARIABLE', 'MEDIOTIEMPO', 'TIEMPOCOMPLETO', 'DEDICACIONEXCLUSIVA'],
             modalDate: false,
             text: 'En Construcciòn...',
             userData: {
-                // pk: "",
-                // identification: "",
-                // fName: "",
-                // sName: "",
-                // fSurname: "", 
-                // sSurname: "", 
-                // birthDate: "", //Este campo debe ser DATE
-                // email: "",
-                // address: "",
-                // phone: "",
-                // license: "", //Este campo debe ser un CHECKBOX
-                // extra: {
-                //     serCPatria: "",
-                //     codCPatria: "",
-                //     whatsapp: "",
-                //     facebook: "",
-                //     instagram: "",
-                //     twitter: ""
-                // },
-                // institutional: {
-                //     dateIn: "", //Este campo debe ser DATE
-                //     condition: "", //Este campo debe ser un SELECT
-                //     category: "",  //Este campo debe ser un SELECT
-                //     appointment: "",
-                //     positionOPSU: "",
-                //     department_id: ""
-                // },
-                // study: [],
-                // teaching: [],
-                // active: true
-
-                "pk": "",
-                "identification": "V-2222122",
-                    "fName": "Julian",
-                "sName": "Arkangel",
-                    "fSurname": "Avendaño",
-                "sSurname": "Rojas",
-                "birthDate": "1994-10-14",
-                "email": "alsgo@prueewewba.com",
-                "address": "El Mirador",
-                "phone": "04124275881",
-                "license": true,
-                "extra": {
-                        "codCPatria": "000200200",
-                        "serCPatria": "012302222",
-                        "whatsapp": "041223232",
-                        "facebook": "asdasdasdasd",
-                        "instagram": "asdasdasdasd",
-                        "twitter": "adsasdasdads"
-                    },
-                "institutional": {
-                    "dateIn": "2016-11-01",
-                    "condition": "ADMINISTRATIVO",
-                    "category": "TIEMPOVARIABLE",
-                    "appointment": "asdasdasd",
-                    "positionOPSU": "asdasdas",
-                    "department_id": 1
+                pk: "",
+                identification: "",
+                fName: "",
+                sName: "",
+                fSurname: "", 
+                sSurname: "", 
+                birthDate: "", 
+                email: "",
+                address: "",
+                phone: "",
+                license: "", 
+                extra: {
+                    serCPatria: "",
+                    codCPatria: "",
+                    whatsapp: "",
+                    facebook: "",
+                    instagram: "",
+                    twitter: ""
                 },
-                "study": [{
-                "typeStudy": "PREGRADO",
-                    "startDate": "1234-12-11",
-                    "endDate": "1234-12-12",
-                    "study": "Disenadora Grafica"
-                }],
-                "teaching": [
-                    {
-                    "typeComponent": "VIRTUAL",
-                            "universityOrigin": "ULA",
-                            "startDate": "2016-12-01",
-                            "endDate": "2018-12-01",
-                            "observation": "HECHO"
-                    }
-                ],
-                "active": true
+                institutional: {
+                    dateIn: "", 
+                    condition: "", 
+                    category: "",  
+                    appointment: "",
+                    positionOPSU: "",
+                    department_id: ""
+                },
+                study: [],
+                workExperience: [],
+                active: true
+
             },
             studys: -1,
             study: {
-                typeStudy: "", //Este campo debe ser un SELECT
-                startDate: "", //Este campo debe ser DATE y debe ser diferenciado en el key del input
-                endDate: "", //Este campo debe ser DATE y debe ser diferenciado en el key del input
+                typeStudy: "", 
+                typeComponent: "", 
+                universityOrigin: "",
+                startDate: "", 
+                endDate: "", 
                 study: ""
             },
-            teaching: {
-                typeComponent: "", //Este campo debe ser un SELECT
-                universityOrigin: "",
-                startDate: "", //Este campo debe ser DATE y debe ser diferenciado en el key del input
-                endDate: "", //Este campo debe ser DATE y debe ser diferenciado en el key del input
+            workExperiences: -1,
+            workExperience: {
+                institution: "", 
+                startDate: "", 
+                endDate: "", 
+                appointment: "", 
                 observation: ""
             },
             getUserData(){
@@ -117,6 +82,11 @@ export default {
         }
     },
     methods:{
+        //En esta funcion se recibe desde el padre (Tabla), los datos que  se cargaran en el formulario $ref.FormRegisterEmployer
+        editItem(val){
+            this.userData = JSON.parse(JSON.stringify(val))
+            this.dialog = true
+        },
         getDepartments(){
             axios.get(this.$store.getters.getDepartment())
             .then(response=>{
@@ -152,6 +122,12 @@ export default {
               if(mode == 5){
                 this.dateIn_Formatted = `${new_date[2]}/${new_date[1]}/${new_date[0]}`
               }
+              if(mode == 6){
+                this.workExperienceStartDate_Formatted = `${new_date[2]}/${new_date[1]}/${new_date[0]}`
+              }
+              if(mode == 7){
+                this.workExperienceEndDate_Formatted = `${new_date[2]}/${new_date[1]}/${new_date[0]}`
+              }
             }
         },
         closeCalendars(option){
@@ -165,10 +141,10 @@ export default {
               this.modalStudyEndDate = false
             }
             if(option == 4){
-                this.modalTeahingStartDate = false
+                this.modalWorkExperienceStartDate = false
             }
             if(option == 5){
-                this.modalTeahingEndDate = false
+                this.modalWorkExperienceEndDate = false
             }
             if(option == 6){
                 this.modalStudy = false
@@ -178,11 +154,45 @@ export default {
             if(option == 7){
                 this.modalDateIn = false
             }
+            if(option == 8){
+                this.modalWorkExperience = false
+                this.$validator.reset()
+                this.clearFields(3)
+            }
         },
         clearFields(mode){
-            // if (mode == 1) {
-                
-            // }
+            if (mode == 1) {
+                this.pk= "",
+                this.identification= "",
+                this.fName= "",
+                this.sName= "",
+                this.fSurname= "", 
+                this.sSurname= "", 
+                this.birthDate= "", 
+                this.email= "",
+                this.address= "",
+                this.phone= "",
+                this.license= "", 
+                this.extra= {
+                    serCPatria: "",
+                    codCPatria: "",
+                    whatsapp: "",
+                    facebook: "",
+                    instagram: "",
+                    twitter: ""
+                },
+                this.institutional= {
+                    dateIn: "", 
+                    condition: "", 
+                    category: "",  
+                    appointment: "",
+                    positionOPSU: "",
+                    department_id: ""
+                },
+                this.study= [],
+                this.workExperience= [],
+                this.active= true
+            }
             if (mode == 2) {
                 this.study= {
                     typeStudy: "",
@@ -194,15 +204,19 @@ export default {
                 this.studyEndDate_Formatted = ""
                 this.studys = -1
             }
-            // if (mode == 3) {
-            //     teaching= {
-            //         typeComponent: "", 
-            //         universityOrigin: "",
-            //         startDate: "",
-            //         endDate: "", 
-            //         observation: ""
-            //     }
-            // }
+            if (mode == 3) {
+                this.workExperience= {
+                    institution: "", 
+                    startDate: "", 
+                    endDate: "", 
+                    appointment: "", 
+                    observation: ""
+                },
+                this.workExperienceStartDate_Formatted = ""
+                this.workExperienceEndDate_Formatted = ""
+                this.workExperiences = -1
+            }
+            
         },
         validateChange(option){
             if (option == 1) {
@@ -215,7 +229,7 @@ export default {
             /* Con cada modo se anexan items a las listas que posteriormente se enviaran a la 
             base de datos. Se validan cada uno de los datos de forma especifica, para que el
             Vvalidator no cause conficto con los campos externos al modal de estudio. La
-            validación es hecha en base a un fracmento comun del nombre de los campos. */
+            validación es hecha en base a un fracmento comun del key de los campos. */
             if (mode == 1) {
                 let fieldsVal = []
                 for (var key in this.fields) {
@@ -244,6 +258,39 @@ export default {
                 console.log('En caso de que falle');
             }
         },
+        addWorkExperience(mode){
+            /* Con cada modo se anexan items a las listas que posteriormente se enviaran a la 
+            base de datos. Se validan cada uno de los datos de forma especifica, para que el
+            Vvalidator no cause conficto con los campos externos al modal de experiencia laboral. La
+            validación es hecha en base a un fracmento comun del key de los campos. */
+            if (mode == 1) {
+                let fieldsVal = []
+                for (var key in this.fields) {
+                    if (key.indexOf('workExperience-') != -1) {
+                        fieldsVal.push(this.$validator.validate(key))
+                    }
+                }
+                Promise.all(fieldsVal)
+                .then(()=>{
+                    if(!this.errors.any()){
+                        if(this.workExperiences > -1){
+                            this.userData.workExperience[this.workExperiences] = this.workExperience
+                          }
+                          else{
+                            this.userData.workExperience.push(this.workExperience)
+                        }
+                        console.log('Esto es lo que se le va agregando a los empleos del empleado:', this.userData.workExperience);  
+                        this.modalWorkExperience = false
+                        this.clearFields(3)
+                        this.$validator.reset()
+                    }
+                })
+            }
+            else{
+                this.load = false
+                console.log('En caso de que falle');
+            }
+        },
         editStudyOrTeaching(mode, item, index){
             console.log('Este es el item que llega al editar',item);
             if (mode == 1) {
@@ -253,8 +300,17 @@ export default {
                 this.studyEndDate_Formatted = this.dateFormat(4, this.study.endDate) 
                 console.log('Este es study que queda luego del parse',this.study);                
                 this.modalStudy = true
-                // this.getFormula2()
-                // this.calculatedVars()
+            }
+        },
+        editWorkExperience(mode, item, index){
+            console.log('Este es el item que llega al editar',item);
+            if (mode == 1) {
+                this.workExperiences = index
+                this.workExperience = JSON.parse(JSON.stringify(item))
+                this.workExperienceStartDate_Formatted = this.dateFormat(4, this.workExperience.startDate) 
+                this.workExperienceEndDate_Formatted = this.dateFormat(4, this.workExperience.endDate) 
+                console.log('Este es workExperience que queda luego del parse',this.workExperience);                
+                this.modalWorkExperience = true
             }
         },
         deleteStudyOrTeaching (mode, index, item_pk) {
@@ -269,6 +325,40 @@ export default {
                 }
                 this.userData.study.splice(index,1)
             }
+        },
+        deleteWorkExperience (mode, index, item_pk) {
+            if (mode == 1) {
+                console.log('Esto es lo que llega para Eliminar', item_pk);
+                if (item_pk != '') {
+                    // axios.delete(this.$store.getters.getExtracost(cost_pk))
+                        if(!('deleteWorkExperience' in this.userData.workExperience)){
+                            this.userData.workExperience['deleteWorkExperience'] = []
+                        }
+                        this.userData.workExperience['deleteWorkExperience'].push(item_pk)
+                }
+                this.userData.workExperience.splice(index,1)
+            }
+        },
+        validateChangeSelect(option){
+            if (option == 1) {
+            //   console.log('1', this.study.typeComponent);
+              this.study.typeComponent = "" 
+            }
+        },
+        validateCalendars(mode){
+            //Validacion general para prohibir seleccion de fechas mayores a la actual
+            let date = new Date().toISOString().substr(0, 10)
+            let new_date = date.split('-')
+            if (mode == 1) {
+                return (date)
+            }
+            //Validacion especifica para prohibir seleccion de fechas mayores a 15 a;os de antiguedad
+            if (mode == 2) {
+                let year = new_date[0] - 15
+                let date_finished = `${year}-${new_date[1]}-${new_date[2]}`
+                return (date_finished)
+            }
+            
         },
     },
     watch:{

@@ -42,16 +42,28 @@ export default {
           value: 'identification'
         },
         {
-          text: 'Nombre',
+          text: '1er Nombre',
           align: 'left',
           sortable: true,
           value: 'fName'
         },
+        {
+          text: '2do Nombre',
+          align: 'left',
+          sortable: true,
+          value: 'sName'
+        },
         { 
-          text: 'Apellido', 
+          text: '1er Apellido', 
           align: 'left',
             sortable: true,
             value: 'fSurname' 
+        },
+        { 
+          text: '2do Apellido', 
+          align: 'left',
+          sortable: true,
+          value: 'sSurname' 
         },
         {
           text: 'Condición',
@@ -66,12 +78,12 @@ export default {
             sortable: true,
             value: 'startDate' 
           },
-        { 
-          text: 'Finalización', 
-          align: 'left',
-          sortable: true,
-          value: 'endDate' 
-        },
+        // { 
+        //   text: 'Finalización', 
+        //   align: 'left',
+        //   sortable: true,
+        //   value: 'endDate' 
+        // },
         // { 
         //   text: 'Descripción', 
         //   align: 'left',
@@ -95,6 +107,8 @@ export default {
     watch: {
       dialog (val) {
         val || this.close()
+        this.$validator.reset()
+
       },
       searchUser(val) {
         if (val != undefined && val.length >= 2) {
@@ -106,10 +120,36 @@ export default {
       }
     },
     methods: {
-      // close(){
-      //   this.dialog = false
-      //   this.editFields = true
-      // },
+      validateChange(option){
+        if (option == 1) {
+          // console.log('1');
+          this.startdate_formatted = "" 
+          this.MedicalRest.startDate = ""
+        }
+        if (option == 2) {
+          // console.log('2');
+          this.endDate_formatted = "" 
+          this.PermissionsEmployer.endDate = ""
+        }
+      },
+      closeCalendars(option){
+        if (option == 1) {
+          this.modalDate = false
+        }
+        if(option == 2){
+          this.startDate = false
+        }
+        if(option == 3){
+          this.endDate = false
+        }
+      },
+      validateCalendars(target){
+        let date = new Date().toISOString().substr(0, 10)
+        if (target==1) {
+          // console.log('Este es la fecha', date);
+          return (date)       
+        }
+      },
       editMode(){
         this.editFields = !this.editFields
       },
@@ -143,6 +183,11 @@ export default {
           }
           if(mode == 3){
             this.endDate_formatted = `${new_date[2]}/${new_date[1]}/${new_date[0]}`
+          }
+          if(mode == 4){
+            let F = `${new_date[2]}/${new_date[1]}/${new_date[0]}`
+            // console.log('Esta es F ', F);
+            return (F)
           }
         }
       },

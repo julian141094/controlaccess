@@ -44,18 +44,29 @@ export default {
           value: 'identification'
         },
         {
-          text: 'Nombre',
+          text: '1er Nombre',
           align: 'left',
           sortable: true,
           value: 'fName'
         },
+        {
+          text: '2do Nombre',
+          align: 'left',
+          sortable: true,
+          value: 'sName'
+        },
         { 
-          text: 'Apellido', 
+          text: '1er Apellido', 
           align: 'left',
             sortable: true,
             value: 'fSurname' 
-          },
-        
+        },
+        { 
+          text: '2do Apellido', 
+          align: 'left',
+          sortable: true,
+          value: 'sSurname' 
+        },
         { 
           text: 'Inicio', 
             align: 'left',
@@ -74,24 +85,24 @@ export default {
         //     sortable: true,
         //     value: 'description' 
         //   },
-        { 
-          text: 'Jefe Directo', 
-            align: 'center',
-            sortable: false,
-            value: 'approvedBoss' 
-        },
-        { 
-          text: 'Jefe TH', 
-            align: 'center',
-            sortable: false,
-            value: 'approvedBossTH' 
-        },
-        { 
-          text: 'Jefe decano', 
-            align: 'center',
-            sortable: false,
-            value: 'approvedFinished' 
-        },
+        // { 
+        //   text: 'Jefe Directo', 
+        //     align: 'center',
+        //     sortable: false,
+        //     value: 'approvedBoss' 
+        // },
+        // { 
+        //   text: 'Jefe TH', 
+        //     align: 'center',
+        //     sortable: false,
+        //     value: 'approvedBossTH' 
+        // },
+        // { 
+        //   text: 'Jefe decano', 
+        //     align: 'center',
+        //     sortable: false,
+        //     value: 'approvedFinished' 
+        // },
         { 
           text: 'Acción', 
             align: 'center',
@@ -203,14 +214,18 @@ export default {
           var new_date = date_orig.split('-')
           if(mode == 1){
           this.date_formatted = `${new_date[2]}/${new_date[1]}/${new_date[0]}`
-          console.log(this.date_formatted);
+          // console.log(this.date_formatted);
           }
           if(mode == 2){
           this.startdate_formatted = `${new_date[2]}/${new_date[1]}/${new_date[0]}`
-          
           }
           if(mode == 3){
             this.endDate_formatted = `${new_date[2]}/${new_date[1]}/${new_date[0]}`
+          }
+          if(mode == 4){
+            let F = `${new_date[2]}/${new_date[1]}/${new_date[0]}`
+            // console.log('Esta es F ', F);
+            return (F)
           }
         }
       },

@@ -17,6 +17,9 @@
                 </v-dialog>
             </v-flex>
             <v-flex xs12>
+                <a :href="url+'generate/pdf'">Prueba de PDF</a>
+            </v-flex>
+            <v-flex xs12>
                 <v-card>
                     <v-card-title>
                     Gestionar Empleados
@@ -40,8 +43,10 @@
                     </template>
                     <template slot="items" slot-scope="props">
                         <td>{{ props.item.identification }}</td>
-                        <td class="text-xs-right">{{ props.item.user != null ? props.item.user.first_name : props.item.sName }}</td>
-                        <td class="text-xs-right">{{ props.item.user != null ? props.item.user.last_name : props.item.sSurname}}</td>
+                        <td class="text-xs-right">{{ props.item.fName }}</td>
+                        <td class="text-xs-right">{{ props.item.sName != '' ? props.item.sName : 'NO APLICA' }}</td>
+                        <td class="text-xs-right">{{ props.item.fSurname}}</td>
+                        <td class="text-xs-right">{{ props.item.sSurname != '' ? props.item.sSurname : 'NO APLICA' }}</td>
                         <td class="text-xs-right">{{ props.item.institutional.condition }}</td>
                         <td class="text-xs-right">{{ props.item.institutional.category }}</td>
                         <td class="text-xs-right">
@@ -52,7 +57,7 @@
                             <v-icon
                                 small
                                 class="mr-2"
-                                @click="editItem(props.item)"
+                                @click="$refs.FormRegisterEmployer.editItem(props.item), openDialogs()"
                             >
                                 search
                             </v-icon>

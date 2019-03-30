@@ -19,31 +19,33 @@ Constantes de Categorias de los Trabajadores
 TV = 'TIEMPOVARIABLE'
 MT = 'MEDIOTIEMPO'
 TC = 'TIEMPOCOMPLETO'
-DD = 'DEDICACIONEXCLUSIVA'
-
+DE = 'DEDICACIONEXCLUSIVA'
+NA = 'NOAPLICA'
 
 EmployerCategory = (
     (TV, 'Tiempo Variable'),
     (MT, 'Medio Tiempo'),
     (TC, 'Tiempo Completo'),
-    (DD, 'Dedicación Exclusiva')
+    (DE, 'Dedicación Exclusiva'),
+    (NA, 'No Aplica')
 )
-
 
 """
 Constantes de Estudios realizadados por los Trabajadores 
 """
-
+BACHILLERATO = 'BACHILLERATO'
+TSU = 'TECNICOSUPERIORUNIVERSITARIO'
 PREGRADO = 'PREGRADO'
 POSTGRADO = 'POSTGRADO'
-# COMPONENTEDOCENTE = 'COMPONENTEDOCENTE'
+COMPONENTEDOCENTE = 'COMPONENTEDOCENTE'
 OTROESTUDIO = 'OTROESTUDIO''DEDICACIONEXCLUSIVA'
 
-
 EmployerStudy = (
+    (BACHILLERATO, 'Bachillerato'),
+    (TSU, 'Tecnico Superior Universitario'),
     (PREGRADO, 'Pre Grado'),
     (POSTGRADO, 'Post Grado'),
-    # (COMPONENTEDOCENTE, 'Componente Docente'),
+    (COMPONENTEDOCENTE, 'Componente Docente'),
     (OTROESTUDIO, 'Otro Estudio')
 )
 
@@ -53,10 +55,11 @@ Constantes de Componentes Docentes realizadados por los Trabajadores
 
 VIRTUAL = 'VIRTUAL'
 PRESENCIAL = 'PRESENCIAL'
-
+NA = 'NOAPLICA'
 
 EmployerComponent = (
     (VIRTUAL, 'Virtual'),
-    (PRESENCIAL, 'Presencial')
+    (PRESENCIAL, 'Presencial'),
+    (NA, 'No Aplica')
 )
 

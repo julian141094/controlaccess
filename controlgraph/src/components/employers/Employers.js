@@ -1,10 +1,13 @@
-import FormEmployers from "./registerEmployer.vue"
+import FormEmployers from "./registerEmployer.vue" 
+import {base} from "@/plugins/backroutes.js";
+
 export default {
     components: {
       formemployers: FormEmployers
     },
     data () {
       return {
+        url: base,
         dialog: false,
         search: '',
         employers: [],
@@ -22,7 +25,9 @@ export default {
             value: 'identification'
           },
           { text: '1er Nombre', value: 'fName' },
+          { text: '2do Nombre', value: 'sName' },
           { text: '1er Apellido', value: 'fSurname' },
+          { text: '2do Apellido', value: 'sSurname' },
           { text: 'Tipo', value: 'institutional.condition' },
           { text: 'Cartegoria', value: 'institutional.category' },
           { text: 'Departamento', value: 'department.name' },
@@ -49,14 +54,11 @@ export default {
           console.log('Esta seria la parte de editar, y e objeto que llega es: ', userData);
           // this.editedIndex = this.desserts.indexOf(userData)
           this.userData = Object.assign({}, userData)
-          // if(this.userData.commentBoss == ''){
-          //   this.userData.commentBoss = 'No Aplica'
+          // if(this.userData.institutional.category == ''){
+          //   this.userData.institutional.category = 'NOAPLICA'
           // }
-          // if(this.userData.commentBossTH == ''){
-          //   this.userData.commentBossTH = 'No Aplica'
-          // }
-          // if(this.userData.commentFinished == ''){
-          //   this.userData.commentFinished = 'No Aplica'
+          // if(this.userData.workExperience == ''){
+          //   this.userData.workExperience = 'NOAPLICA'
           // }
           this.dialog = true
           this.edit = true
@@ -70,16 +72,13 @@ export default {
             if(!this.errors.any()){
               console.log('Entro en el If de !this.error.any');
               console.log('El pk del userData es: ', userData.pk);
+              // if(this.userData.institutional.category == ''){
+              //   this.userData.institutional.category = 'NOAPLICA'
+              // }
+              // if(this.userData.workExperience == ''){
+              //   this.userData.workExperience = 'NOAPLICA'
+              // }
               if(userData.pk == undefined || userData.pk == ''){
-                // if(this.userData.commentBoss == ''){
-                //   this.userData.commentBoss = 'No Aplica'
-                // }
-                // if(this.userData.commentBossTH == ''){
-                //   this.userData.commentBossTH = 'No Aplica'
-                // }
-                // if(this.userData.commentFinished == ''){
-                //   this.userData.commentFinished = 'No Aplica'
-                // }
                 axios.post(this.$store.getters.getEmployers(),userData)
                 .then(response =>{
                   this.load = false
@@ -93,6 +92,7 @@ export default {
                   this.close(),
                   this.getEmployers();
                   this.$emit('registered')
+                  this.$refs.FormRegisterEmployer.clearFields(1)
                 })
                 .catch(err=>{
                   this.load = false
@@ -105,19 +105,12 @@ export default {
               }
               else{
               console.log('En caso de que falle el registro entra a editar')
+              console.log('Esto es el user Data que se va a enviar en el edit ',userData);
                 axios.put(this.$store.getters.getEmployers(userData.pk),
-                      this.userData)
+                      userData)
                       .then(response =>{
                           this.getEmployers()
-                          this.userData.pk = ""
-                          this.userData.approvedBoss = ""
-                          this.userData.approvedFinished = ""
-                          this.userData.inDate = ""
-                          this.userData.startDate = ""
-                          this.userData.endDate = ""
-                          this.userData.commentBoss = ""
-                          this.userData.commentFinished = ""
-                          // userData_id: "",
+                          this.$refs.FormRegisterEmployer.clearFields(1)
                           this.load = false
                           this.dialog = false
                           this.editFields = false

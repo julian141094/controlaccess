@@ -52,18 +52,21 @@ class InstitutionalUserData(models.Model):
 class StudyUserData(models.Model):
 
     userData = models.ForeignKey(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='study')
-    typeStudy = models.CharField(verbose_name="Tipo de Estudio", max_length=15, choices=EmployerStudy)
+    typeStudy = models.CharField(verbose_name="Tipo de Estudio", max_length=30, choices=EmployerStudy)
+    typeComponent = models.CharField(verbose_name="Tipo: Virtual o Presencial", max_length=12, blank=True, null=True, choices=EmployerComponent)
     startDate = models.DateField(verbose_name='Fecha de inicio',null=True,blank=True)
     endDate = models.DateField(verbose_name='Fecha de culminacion',blank=True, null=True)
     study = models.CharField(verbose_name="Estudios del Trabajador",max_length=60)
-
-class TeachingComponentUserData(models.Model):
-
-    userData = models.ForeignKey(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='teaching')
-    typeComponent = models.CharField(verbose_name="Tipo: Virtual o Presencial", max_length=12, blank=True, null=True, choices=EmployerComponent)
     universityOrigin = models.CharField(verbose_name="Universidad de Origen", max_length=60, blank=True, null=True)
+
+
+class WorkExperienceUserData(models.Model):
+
+    userData = models.ForeignKey(UserData, verbose_name="Empleado", on_delete=models.CASCADE, related_name='workExperience')
+    institution = models.CharField(verbose_name="Institucion", max_length=60, blank=True, null=True)
     startDate = models.DateField(verbose_name='Fecha de inicio', blank=True, null=True)
     endDate = models.DateField(verbose_name='Fecha de culminacion',blank=True, null=True)
+    appointment = models.CharField(verbose_name="Nombramiento",max_length=120,null=True,blank=True)
     observation = models.CharField(verbose_name="Observacion", blank=True, null=True, max_length=60)
 
 """

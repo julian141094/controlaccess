@@ -41,7 +41,7 @@ urlpatterns = [
     path('api/inandout/',InAndOutApiView.as_view()),
     path('api/login/',LoginAPIView.as_view()),
     path('api/api-token-refresh/', refresh_jwt_token),
-    path('generate/pdf/', GenerateReport.as_view(), name='generate_pdf'),
+    path('api/generate/pdf/', GenerateReport.as_view(), name='generate_pdf'),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

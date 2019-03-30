@@ -31,9 +31,9 @@ class UserDataModelView(viewsets.ModelViewSet):
         institutional = request.data["institutional"]
         extra = request.data["extra"]
         study = request.data["study"]
-        teaching = request.data["teaching"]
+        workExperience = request.data["workExperience"]
         deleteStudy = request.data.pop("deleteStudy") if "deleteStudy" in request.data else None
-        deleteTeaching = request.data.pop("deleteTeaching") if "deleteTeaching" in request.data else None 
+        deleteWorkExperience = request.data.pop("deleteWorkExperience") if "deleteWorkExperience" in request.data else None 
 
         #Section extra
         if(extra != None):
@@ -53,18 +53,18 @@ class UserDataModelView(viewsets.ModelViewSet):
             user.institutional.appointment = institutional['appointment']
             user.institutional.positionOPSU = institutional['positionOPSU']
             user.institutional.save()
-        #Section teaching
-        if(deleteTeaching != None):
-            TeachingComponentUserData.objects.filter(pk__in = deleteTeaching).delete()
+        #Section workExperience
+        if(deleteWorkExperience != None):
+            WorkExperienceUserData.objects.filter(pk__in = deleteWorkExperience).delete()
 
-        if(teaching != None):
-            for attr in teaching:
+        if(workExperience != None):
+            for attr in workExperience:
                 pkVals = attr.pop('pk') if "pk" in attr and attr["pk"] != '' else None
-                user.teaching.update_or_create(pk=pkVals,defaults={
-                    "typeComponent": attr["typeComponent"],
-                    "universityOrigin": attr["universityOrigin"],
+                user.workExperience.update_or_create(pk=pkVals,defaults={
+                    "institution": attr["institution"],
                     "startDate": attr["startDate"],
                     "endDate": attr["endDate"],
+                    "appointment": attr["appointment"],
                     "observation": attr["observation"]
                 })
         #Section study
@@ -76,6 +76,8 @@ class UserDataModelView(viewsets.ModelViewSet):
                 pkVals = attr.pop('pk') if "pk" in attr and attr["pk"] != '' else None
                 user.study.update_or_create(pk=pkVals,defaults={
                     "typeStudy": attr["typeStudy"],
+                    "typeComponent": attr["typeComponent"],
+                    "universityOrigin": attr["universityOrigin"],
                     "startDate": attr["startDate"],
                     "endDate": attr["endDate"],
                     "study": attr["study"],

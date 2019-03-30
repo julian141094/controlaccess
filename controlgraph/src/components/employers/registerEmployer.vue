@@ -66,7 +66,7 @@
                         <v-icon>fa-graduation-cap</v-icon>
                         </v-tab>
                         <v-tab href="#tab-3">
-                        Componente Docente
+                        Experiencia Laboral
                         <v-icon>fa-university</v-icon>
                         </v-tab>
                         <v-tab href="#tab-4">
@@ -118,6 +118,7 @@
                                                     v-validate="'required'"
                                                 ></v-text-field>
                                                 <v-date-picker
+                                                    :max="validateCalendars(2)"
                                                     v-model="userData.birthDate"
                                                     locale="es-VE"
                                                     scrollable
@@ -234,12 +235,24 @@
                                 <v-card-text>
                                     <v-layout column >
                                         <v-layout xs12 pr-4>
-                                            <v-btn color="primary" dark @click="modalStudy = true">Nuevo</v-btn>
+                                            <v-btn color="primary" dark @click="modalStudy = true">Nuevo Estudio</v-btn>
                                             <v-dialog v-model="modalStudy" persistent max-width="75%">
                                                 <v-card>
                                                     <v-card-title class="headline">Suministre los datos del estudio a cargar:</v-card-title>
                                                     <v-card-text></v-card-text>
                                                     <v-layout row wrap mx-5>
+                                                        <v-flex lg6 md6 xs12 pr-4>
+                                                            <v-text-field
+                                                                v-model="study.universityOrigin"
+                                                                name="study-universityOrigin"
+                                                                :error-messages="errors.collect('study-universityOrigin')"
+                                                                label="Institución de Origen"
+                                                                class=""
+                                                                data-vv-as="Institución de Origen"
+                                                                v-validate="'required'"
+                                                                key="universityOrigin-input"
+                                                            ></v-text-field>
+                                                        </v-flex>
                                                         <v-flex lg6 md6 xs12 pr-4>
                                                             <v-select
                                                                 :items="typeSt"
@@ -249,6 +262,20 @@
                                                                 key="typeStudy-input"
                                                                 name="study-type"
                                                                 :error-messages="errors.collect('study-type')"
+                                                                v-validate="'required'"
+                                                                @change="validateChangeSelect(1)"
+                                                            ></v-select>
+                                                        </v-flex>
+                                                        <v-flex lg6 md6 xs12 pr-4>
+                                                        <!-- <v-flex v-if="study.typeStudy == 'COMPONENTEDOCENTE'" lg6 md6 xs12 pr-4> -->
+                                                            <v-select
+                                                                :items="study.typeStudy == 'COMPONENTEDOCENTE' ? typeCmp2 : typeCmp"
+                                                                v-model="study.typeComponent"
+                                                                name="study-typeComponent"
+                                                                :error-messages="errors.collect('study-typeComponent')"
+                                                                label="Tipo de Componente Docente"
+                                                                data-vv-as="Tipo de Componente Docente"
+                                                                key="typeComponent-input"
                                                                 v-validate="'required'"
                                                             ></v-select>
                                                         </v-flex>
@@ -280,9 +307,10 @@
                                                                     scrollable
                                                                     @input="dateFormat(2, study.startDate)"
                                                                     @change="validateChange(1)"
+                                                                    :max="validateCalendars(1)"
                                                                 >
                                                                     <v-spacer></v-spacer>
-                                                                    <v-btn flat color="primary" @click.prevent="">Cancel</v-btn>
+                                                                    <v-btn flat color="primary" @click.prevent="closeCalendars(2)">Cancel</v-btn>
                                                                     <v-btn flat color="primary" @click="$refs.dialogStudyStart.save(study.startDate)">OK</v-btn>
                                                                 </v-date-picker>
                                                             </v-dialog>
@@ -311,13 +339,14 @@
                                                                 ></v-text-field>
                                                                 <v-date-picker
                                                                     :min="study.startDate"
+                                                                    :max="validateCalendars(1)"
                                                                     v-model="study.endDate"
                                                                     locale="es-VE"
                                                                     scrollable
                                                                     @input="dateFormat(3, study.endDate)"
                                                                 >
                                                                     <v-spacer></v-spacer>
-                                                                    <v-btn flat color="primary" @click="this.modalDate = false">Cancel</v-btn>
+                                                                    <v-btn flat color="primary" @click.prevent="closeCalendars(3)">Cancel</v-btn>
                                                                     <v-btn flat color="primary" @click="$refs.dialogStudyEnd.save(study.endDate)">OK</v-btn>
                                                                 </v-date-picker>
                                                             </v-dialog>
@@ -349,9 +378,11 @@
                                                         <div>
                                                             <h3 class="headline mb-0">{{item.study}}</h3>
                                                             <div> Tipo de Estudio: {{item.typeStudy}}</div>
+                                                            <div v-if="study.typeComponent != 'NOAPLICA'"> Tipo de Componente: {{item.typeComponent}}</div>
                                                             <div> Fecha de Inicio: {{dateFormat(4, item.startDate)}}</div>
                                                             <div> Fecha de Finalización: {{dateFormat(4, item.endDate)}}</div>
-                                                            {{index}}
+                                                            <div> Nombre de la Institución: {{item.universityOrigin}}</div>
+                                                            <!-- {{index}} -->
                                                         </div>
                                                     </v-card-title>
                                                     <v-card-actions>
@@ -372,104 +403,154 @@
                         >
                             <v-card >
                                 <v-card-text>
-                                    <v-layout row wrap>
-                                        <v-flex lg6 md6 xs12 pr-4>
-                                            <v-select
-                                                :items="typeCmp"
-                                                v-model="userData.teaching.typeComponent"
-                                                label="Tipo de Componente Docente"
-                                                key="typeComponent-input"
-                                                v-validate="'required'"
-                                            ></v-select>
-                                        </v-flex>
-                                        <v-flex lg6 md6 xs12 pr-4>
-                                            <v-text-field
-                                                v-model="userData.teaching.universityOrigin"
-                                                name="universityOrigin"
-                                                :error-messages="errors.collect('universityOrigin')"
-                                                label="Universidad de Origen"
-                                                class=""
-                                                data-vv-as="Universidad de Origen"
-                                                v-validate="'required'"
-                                                key="universityOrigin-input"
-                                            ></v-text-field>
-                                        </v-flex>
-                                        <v-flex lg6 md6 xs12 pr-4>
-                                            <v-dialog
-                                                ref="dialog"
-                                                v-model="modalDate"
-                                                :return-value.sync="userData.teaching.startDate"
-                                                persistent
-                                                lazy
-                                                full-width
-                                                width="290px"
-                                            >
-                                                <v-text-field
-                                                    slot="activator"
-                                                    v-model="userData.teaching.startDate"
-                                                    label="Fecha de Inicio del Componente Docente"
-                                                    prepend-icon="event"
-                                                    readonly
-                                                    key="startDate-teaching-input"
-                                                ></v-text-field>
-                                                <v-date-picker
-                                                    v-model="userData.teaching.startDate"
-                                                    locale="es-VE"
-                                                    scrollable
-                                                >
+                                    <v-layout column >
+                                        <v-layout xs12 pr-4>
+                                            <v-btn color="primary" dark @click="modalWorkExperience = true">Nuevo Empleo</v-btn>
+                                            <v-dialog v-model="modalWorkExperience" persistent max-width="75%">
+                                                <v-card>
+                                                    <v-card-title class="headline">Suministre los datos del empleo a cargar:</v-card-title>
+                                                    <v-card-text></v-card-text>
+                                                    <v-layout row wrap mx-5>
+                                                        <v-flex lg6 md6 xs12 pr-4>
+                                                            <v-text-field
+                                                                v-model="workExperience.institution"
+                                                                name="workExperience-institution"
+                                                                :error-messages="errors.collect('workExperience-institution')"
+                                                                label="Nombre de la Institución"
+                                                                class=""
+                                                                data-vv-as="Nombre de la Institución"
+                                                                v-validate="'required'"
+                                                                key="institution-input"
+                                                            ></v-text-field>
+                                                        </v-flex>
+                                                        <v-flex lg6 md6 xs12 pr-4>
+                                                            <v-dialog
+                                                                ref="dialogWorkExperienceStart"
+                                                                v-model="modalWorkExperienceStartDate"
+                                                                :return-value.sync="workExperience.startDate"
+                                                                persistent
+                                                                lazy
+                                                                full-width
+                                                                width="290px"
+                                                            >
+                                                                <v-text-field
+                                                                    slot="activator"
+                                                                    v-model="workExperienceStartDate_Formatted"
+                                                                    label="Fecha de Inicio del Empleo"
+                                                                    data-vv-as="Fecha de Inicio del Empleo"
+                                                                    prepend-icon="event"
+                                                                    readonly
+                                                                    key="startDate-workExperience-input"
+                                                                    name="workExperience-startdate"
+                                                                    :error-messages="errors.collect('workExperience-startdate')"
+                                                                    v-validate="'required'"
+                                                                ></v-text-field>
+                                                                <v-date-picker
+                                                                    v-model="workExperience.startDate"
+                                                                    locale="es-VE"
+                                                                    scrollable
+                                                                    @input="dateFormat(6, workExperience.startDate)"
+                                                                    @change="validateChange(1)"
+                                                                    :max="validateCalendars(1)"
+                                                                >
+                                                                    <v-spacer></v-spacer>
+                                                                    <v-btn flat color="primary" @click.prevent="closeCalendars(4)">Cancel</v-btn>
+                                                                    <v-btn flat color="primary" @click="$refs.dialogWorkExperienceStart.save(workExperience.startDate)">OK</v-btn>
+                                                                </v-date-picker>
+                                                            </v-dialog>
+                                                        </v-flex>
+                                                        <v-flex v-if="workExperienceStartDate_Formatted" lg6 md6 xs12 pr-4>
+                                                            <v-dialog
+                                                                ref="dialogWorkExperienceEnd"
+                                                                v-model="modalWorkExperienceEndDate"
+                                                                :return-value.sync="workExperience.endDate"
+                                                                persistent
+                                                                lazy
+                                                                full-width
+                                                                width="290px"
+                                                            >
+                                                                <v-text-field
+                                                                    slot="activator"
+                                                                    v-model="workExperienceEndDate_Formatted"
+                                                                    label="Fecha de Finalización del Empleo"
+                                                                    data-vv-as="Fecha de Finalización del Empleo"
+                                                                    prepend-icon="event"
+                                                                    readonly
+                                                                    key="endDate-workExperience-input"
+                                                                    name="workExperience-endDate"                                                                
+                                                                    :error-messages="errors.collect('workExperience-endDate')"
+                                                                    v-validate="'required'"
+                                                                ></v-text-field>
+                                                                <v-date-picker
+                                                                    :min="workExperience.startDate"
+                                                                    :max="validateCalendars(1)"
+                                                                    v-model="workExperience.endDate"
+                                                                    locale="es-VE"
+                                                                    scrollable
+                                                                    @input="dateFormat(7, workExperience.endDate)"
+                                                                >
+                                                                    <v-spacer></v-spacer>
+                                                                    <v-btn flat color="primary" @click.prevent="closeCalendars(5)">Cancel</v-btn>
+                                                                    <v-btn flat color="primary" @click="$refs.dialogWorkExperienceEnd.save(workExperience.endDate)">OK</v-btn>
+                                                                </v-date-picker>
+                                                            </v-dialog>
+                                                        </v-flex>
+                                                        <v-flex lg6 md6 xs12 pr-4>
+                                                            <v-text-field
+                                                                v-model="workExperience.appointment"
+                                                                label="Cargo que desempeñó"
+                                                                data-vv-as="Cargo que desempeñó"                                                                
+                                                                name="workExperience-appointment"                                                                
+                                                                :error-messages="errors.collect('workExperience-appointment')"
+                                                                v-validate="'required'"
+                                                                key="workExperience-appointment-input"
+                                                            ></v-text-field>
+                                                        </v-flex>
+                                                        <v-flex lg6 md6 xs12 pr-4>
+                                                            <v-text-field
+                                                                v-model="workExperience.observation"
+                                                                label="Observación"
+                                                                data-vv-as="Observación"                                                                
+                                                                name="workExperience-observation"                                                                
+                                                                :error-messages="errors.collect('workExperience-observation')"
+                                                                v-validate=""
+                                                                key="workExperience-observation-input"
+                                                            ></v-text-field>
+                                                        </v-flex>
+                                                    </v-layout>
+                                                    <v-card-actions>
                                                     <v-spacer></v-spacer>
-                                                    <v-btn flat color="primary" @click="this.modalDate = false">Cancel</v-btn>
-                                                    <v-btn flat color="primary" @click="$refs.dialog.save(userData.teaching.startDate)">OK</v-btn>
-                                                </v-date-picker>
+                                                    <v-btn color="green darken-1" flat @click.prevent="closeCalendars(8)">Cancelar</v-btn>
+                                                    <v-btn color="green darken-1" flat @click="addWorkExperience(1)">Guardar</v-btn>
+                                                    </v-card-actions>
+                                                </v-card>
                                             </v-dialog>
-                                        </v-flex>
-                                        <v-flex lg6 md6 xs12 pr-4>
-                                            <v-dialog
-                                                ref="dialog"
-                                                v-model="modalDate"
-                                                :return-value.sync="userData.teaching.endDate"
-                                                persistent
-                                                lazy
-                                                full-width
-                                                width="290px"
-                                            >
-                                                <v-text-field
-                                                    slot="activator"
-                                                    v-model="userData.teaching.endDate"
-                                                    label="Fecha de Finalización del Componente Docente"
-                                                    prepend-icon="event"
-                                                    readonly
-                                                    key="endDate-teaching-input"
-                                                ></v-text-field>
-                                                <v-date-picker
-                                                    v-model="userData.teaching.endDate"
-                                                    locale="es-VE"
-                                                    scrollable
-                                                >
-                                                    <v-spacer></v-spacer>
-                                                    <v-btn flat color="primary" @click="this.modalDate = false">Cancel</v-btn>
-                                                    <v-btn flat color="primary" @click="$refs.dialog.save(userData.teaching.endDate)">OK</v-btn>
-                                                </v-date-picker>
-                                            </v-dialog>
-
-                                        </v-flex>
-                                        <v-flex lg6 md6 xs12 pr-4>
-                                            <v-text-field
-                                                v-model="userData.teaching.observation"
-                                                name="observation"
-                                                :error-messages="errors.collect('observation')"
-                                                label="Observación Sobre el Componente Docente"
-                                                class=""
-                                                data-vv-as="Observación Sobre el Componente Docente"
-                                                v-validate="'required'"
-                                                key="observation-input"
-                                            ></v-text-field>
-                                        </v-flex>
+                                        </v-layout>
+                                        <v-layout row wrap pa-3>
+                                            <v-flex v-for="(item, index) in userData.workExperience" :key="index" lg4 md6 xs12 pr-2>
+                                                <v-card>
+                                                    <v-card-title primary-title>
+                                                        <div>
+                                                            <h3 class="headline mb-0">{{item.appointment}}</h3>
+                                                            <div> Institución: {{item.institution}}</div>
+                                                            <div> Fecha de Inicio: {{dateFormat(4, item.startDate)}}</div>
+                                                            <div> Fecha de Finalización: {{dateFormat(4, item.endDate)}}</div>
+                                                            <div> Observación: {{item.observation ? item.observation : 'No Aplica'}}</div>
+                                                            <!-- {{index}} -->
+                                                        </div>
+                                                    </v-card-title>
+                                                    <v-card-actions>
+                                                    <v-btn flat color="green darken-1" @click="editWorkExperience(1, item, index)">Modificar</v-btn>
+                                                    <v-btn flat color="green darken-1" @click.prevent="deleteWorkExperience(1, item.pk)">Eliminar</v-btn>
+                                                    </v-card-actions>
+                                                </v-card>
+                                            </v-flex>
+                                        </v-layout>
                                     </v-layout>
 
                                 </v-card-text>
                             </v-card>
-                        </v-tab-item>
+                        </v-tab-item> 
                         <v-tab-item
                         value="tab-4"
                         key="4"
@@ -511,18 +592,6 @@
                                                 </v-date-picker>
                                             </v-dialog>
                                         </v-flex>
-                                        <!-- <v-flex lg6 md6 xs12 pr-4>
-                                            <v-text-field
-                                                v-model="userData.institutional.dateIn"
-                                                name="dateIn"
-                                                :error-messages="errors.collect('dateIn')"
-                                                label="Fecha de Ingreso a la Institución"
-                                                class=""
-                                                data-vv-as="Fecha de Ingreso a la Institución"
-                                                v-validate="'required'"
-                                                key="dateIn-input"
-                                            ></v-text-field>
-                                        </v-flex> -->
                                         <v-flex lg6 md6 xs12 pr-4>
                                             <v-select
                                                 :items="conditionInt"
@@ -532,9 +601,10 @@
                                                 v-validate="'required'"
                                             ></v-select>
                                         </v-flex>
-                                        <v-flex v-if="userData.institutional.condition == 'DOCENTE'" lg6 md6 xs12 pr-4>
+                                        <v-flex lg6 md6 xs12 pr-4>
+                                        <!-- <v-flex v-if="userData.institutional.condition == 'DOCENTE'" lg6 md6 xs12 pr-4> -->
                                             <v-select
-                                                :items="categoryInt"
+                                                :items="userData.institutional.condition != 'DOCENTE' ? categoryInt : categoryInt2 "
                                                 v-model="userData.institutional.category"
                                                 label="Categoria o Nivel del Trabajador"
                                                 key="category-input"
@@ -579,7 +649,6 @@
                                             </v-select>
                                         </v-flex>
                                     </v-layout>
-
                                 </v-card-text>
                             </v-card>
                         </v-tab-item>

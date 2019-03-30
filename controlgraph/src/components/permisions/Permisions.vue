@@ -24,9 +24,7 @@
                         <v-card-title>
                             <span class="headline">{{ formTitle }}</span>
                             <v-spacer></v-spacer>
-                            
                                 <v-btn v-if="this.edit" slot="activator" color="primary" dark class="mb-2" @click="editMode">Editar</v-btn>
-                            
                         </v-card-title>
                         <v-card-text>
                             <v-container grid-list-xs>
@@ -54,11 +52,11 @@
                                             <template 
                                                 slot="item" slot-scope="data">
                                                 <v-list-tile-content>
-                                                <v-list-tile-title v-html="data.item.sName+' '+data.item.sSurname"></v-list-tile-title>
+                                                <v-list-tile-title v-html="data.item.fName+' '+data.item.sName+' '+data.item.fSurname+' '+data.item.sSurname"></v-list-tile-title>
                                                 </v-list-tile-content>
                                             </template>
                                             <template slot="selection" slot-scope="data">
-                                                {{data.item.sName+' '+data.item.sSurname}}
+                                                {{data.item.fName+' '+data.item.sName+' '+data.item.fSurname+' '+data.item.sSurname}}
                                             </template>
                                         </v-autocomplete>
                                     </v-flex>
@@ -274,16 +272,18 @@
                         class="elevation-1"
                         >
                             <template slot="items" slot-scope="props">
-                                <td class="justify-center">{{ props.item.inDate }}</td>
+                                <td class="justify-center">{{ dateFormat(4, props.item.inDate) }}</td>
                                 <td class="justify-center">{{ props.item.userData.identification }}</td>
+                                <td class="justify-center">{{ props.item.userData.fName }}</td>
                                 <td class="justify-center">{{ props.item.userData.sName }}</td>
+                                <td class="justify-center">{{ props.item.userData.fSurname }}</td>
                                 <td class="justify-center">{{ props.item.userData.sSurname }}</td>
-                                <td class="justify-center">{{ props.item.startDate }}</td>
-                                <td class="justify-center">{{ props.item.endDate }}</td>
+                                <td class="justify-center">{{ dateFormat(4, props.item.startDate) }}</td>
+                                <td class="justify-center">{{ dateFormat(4, props.item.endDate) }}</td>
                                 <!-- <td class="justify-center">{{ props.item.description }}</td> -->
-                                <td class="justify-center"><v-icon>{{props.item.approvedBoss ? 'fa-check' : 'fa-times'}}</v-icon></td>
+                                <!-- <td class="justify-center"><v-icon>{{props.item.approvedBoss ? 'fa-check' : 'fa-times'}}</v-icon></td>
                                 <td class="justify-center"><v-icon>{{props.item.approvedBossTH ? 'fa-check' : 'fa-times'}}</v-icon></td>
-                                <td class="justify-center"><v-icon>{{props.item.approvedFinished ? 'fa-check' : 'fa-times'}}</v-icon></td>
+                                <td class="justify-center"><v-icon>{{props.item.approvedFinished ? 'fa-check' : 'fa-times'}}</v-icon></td> -->
                                 <td class="justify-center layout px-0">
                                 <v-icon
                                     small
