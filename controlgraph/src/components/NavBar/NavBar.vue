@@ -5,7 +5,6 @@
         stateless
         fixed
         app
-        X_clipped
         class="pt-0 bg-cme--blue "
         width="260"
         >
@@ -14,7 +13,7 @@
                     <v-list-tile class="title" style="display: flex; justify-content: center; align-items: center;">
                         <!-- <v-list-tile-title class="title text-md-center" style="border: 1px solid red; display: flex; justify-content: center;"> -->
                           <img src="/unefa.png" alt="unefa" width="40px" height="40px" class="mr-1">
-                          <h3 class="blue-text-unefa">UNEFANB</h3>
+                          <h3 class="white--text">UNEFANB</h3>
                         <!-- </v-list-tile-title> -->
                     </v-list-tile>
                 </v-list>
@@ -25,12 +24,12 @@
     </v-navigation-drawer>
 
     <!-- Toolbar -->
-    <v-toolbar app fixed X_clipped-left dense color="white" class="py-2 grey--text text--darken-2 text-uppercase body-2">
+    <v-toolbar app fixed dense color="white" class="py-2 grey--text text--darken-2 text-uppercase body-2" style="background-image: linear-gradient(to bottom, rgba(255,200,34,0.4), rgba(0,33,99,1) 24%, rgba(0,33,99,0.9) 74%, rgba(228,34,34,0.88) 99%);
+">
       <div>
       <!-- <div v-if="this.$store.getters.isAuth">       -->
         <v-btn icon @click.stop="drawer = !drawer">
-          <v-icon class="blue-text-unefa">menu</v-icon>
-
+          <v-icon class="white--text font-weight-bold">menu</v-icon>
         </v-btn>
         <!-- <v-btn icon @click.stop="miniVariant = !miniVariant" v-if="$vuetify.breakpoint.name === 'xs' ? false : true">
           <v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>
@@ -52,8 +51,8 @@
       <v-spacer></v-spacer>
       <v-tooltip bottom>
         <template  v-slot:activator="{ on }">
-              <v-btn fab dark large right depressed color="transparent" @click.prevent="logout" class="grey--text text--darken-2 hidden-xs-only" v-on="on">
-                <v-icon icon>power_settings_new</v-icon>
+              <v-btn fab dark large right depressed color="transparent" @click.prevent="logout" class="white--text hidden-xs-only" v-on="on">
+                <v-icon icon class="font-weight-bold">power_settings_new</v-icon>
               </v-btn>
         </template>
         <span>Salir</span>
