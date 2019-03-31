@@ -58,11 +58,11 @@
                     >
                         <v-tabs-slider color="yellow"></v-tabs-slider>
                         <v-tab href="#tab-1">
-                        Información Personal
+                        Personal
                         <v-icon>fa-edit</v-icon>
                         </v-tab>
                         <v-tab href="#tab-2">
-                        Estudios Realizados
+                        Académica
                         <v-icon>fa-graduation-cap</v-icon>
                         </v-tab>
                         <v-tab href="#tab-3">
@@ -70,11 +70,15 @@
                         <v-icon>fa-university</v-icon>
                         </v-tab>
                         <v-tab href="#tab-4">
-                        Información Institucional
+                        Institucional
                         <v-icon>fa-briefcase</v-icon>
                         </v-tab>
                         <v-tab href="#tab-5">
-                        Información Extra
+                        Extra
+                        <v-icon>fa-clipboard-list</v-icon>
+                        </v-tab>
+                        <v-tab href="#tab-6">
+                        Seguridad
                         <v-icon>fa-clipboard-list</v-icon>
                         </v-tab>
                         <v-tab-item
@@ -735,6 +739,38 @@
                                 </v-layout>
 
 
+                            </v-card-text>
+                        </v-card>
+                        </v-tab-item>
+                        <v-tab-item
+                        value="tab-6"
+                        key="6"
+                        >
+                        <v-card>
+                            <v-card-text>
+                                <v-layout row wrap>
+                                    <v-flex lg6 md6 xs12 pr-4>
+                                        <v-text-field
+                                            v-model="userData.key.key"
+                                            name="key"
+                                            :error-messages="errors.collect('key')"
+                                            label="Clave de Marcación de Entrada y Salida"
+                                            class=""
+                                            data-vv-as="Clave de Marcación de Entrada y Salida"
+                                            v-validate="'required'"
+                                            key="key-input"
+                                        ></v-text-field>
+                                    </v-flex>
+                                     <v-flex lg3 md6 xs12 pr-4>
+                                        <v-checkbox
+                                            v-model="userData.active"
+                                            v-validate="'required'"
+                                            label="Empleado Activo?"
+                                            required
+                                            key="active-input"
+                                        ></v-checkbox>
+                                    </v-flex>
+                                </v-layout>
                             </v-card-text>
                         </v-card>
                         </v-tab-item>

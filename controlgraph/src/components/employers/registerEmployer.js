@@ -56,6 +56,9 @@ export default {
                 },
                 study: [],
                 workExperience: [],
+                key: {
+                    key: ""
+                },
                 active: true
 
             },
@@ -191,6 +194,9 @@ export default {
                 },
                 this.study= [],
                 this.workExperience= [],
+                this.key= {
+                    key: ""
+                },
                 this.active= true
             }
             if (mode == 2) {

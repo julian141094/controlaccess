@@ -5,7 +5,7 @@ from django.utils import timezone
 # importamos UserData del modelo de Employer (App)
 from employer.models import UserData
 from django.core import serializers
-from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ValidationError
 
 #Esta es la vista para el crud Normal
@@ -39,7 +39,7 @@ class InAndOutApiView(views.APIView):
             if(data['mode'] != 'cam'):
                 try:
                     password = data['password']
-                    validate_password(password, user)
+                    check_password(password = password, encoded = user.key.key)
                 except ValidationError as e:
                     return Response({'detail':'Error de contraseña'},status=400)
             entry = Inandout.objects.create(userData=user,timeIn=timezone.now(), date=timezone.now())         
@@ -51,7 +51,7 @@ class InAndOutApiView(views.APIView):
                 try:
                     user = UserData.objects.get(identification__icontains=data['identification'])            
                     password = data['password']
-                    validate_password(password, user)
+                    check_password(password = password, encoded = user.key.key)
                 except ValidationError as e:
                     return Response({'detail':'Error de contraseña'},status=400)
                     

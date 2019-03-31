@@ -116,5 +116,16 @@ class ServicesCommissionEmployer(models.Model):
     approvedFinished = models.BooleanField(verbose_name="Aprobado por el Decano", null=True,blank=True)
     observation = models.CharField(verbose_name='Observación', max_length=200, null=True,blank=True)
 
+"""
+Modelo para la Llave del Empleado
+"""
+
+class KeyEmployer(models.Model):
+
+    userData = models.OneToOneField(UserData, verbose_name="KEY de Empleado", on_delete=models.CASCADE, related_name='key')
+    key = models.CharField(verbose_name='Llave del Empleado ', max_length=256)
+
+
+
 
 

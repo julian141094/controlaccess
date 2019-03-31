@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from .models import *
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 from user_profile.serializers import UserProfileSerializer
 
 class ExtraUserDataSerializer(serializers.ModelSerializer):
@@ -36,6 +37,12 @@ class WorkExperienceUserDataSerializer(serializers.ModelSerializer):
         model = WorkExperienceUserData
         fields = ('pk', 'institution', 'startDate', 'endDate', 'appointment', 'observation')
 
+class KeyEmployerSerializer(serializers.ModelSerializer):
+  
+    class Meta:
+        model = KeyEmployer
+        fields = ('pk', 'key')
+
 
 """
     Este serialicer esta de ultimo porque todos los otros concluyen dentro de este y debe conocerlos.
@@ -48,6 +55,8 @@ class UserDataSerializer(serializers.ModelSerializer):
     institutional = InstitutionalUserDataSerializer(many=False)
     study = StudyUserDataSerializer(many=True)
     workExperience = WorkExperienceUserDataSerializer(many=True)
+    key = KeyEmployerSerializer(many=False)
+
     # user_id = serializers.IntegerField(required=False,allow_null=True)
     # user = UserProfileSerializer(many=False,required=False,allow_null=True)
     # permissions = PermissionsEmployerSerializer(many=False,read_only=True) #El read Only es para que este serializer no sea obligatorio mandarlo en los post
@@ -58,7 +67,7 @@ class UserDataSerializer(serializers.ModelSerializer):
         model = UserData
         fields = ('pk','identification','fName','sName','fSurname','sSurname',
          'birthDate','address','phone','license','extra', 'email',
-         'institutional','study','active','workExperience',
+         'institutional','study','active','workExperience', 'key',
         #  'user','user_id'
         )
         depth = 1 
@@ -68,17 +77,20 @@ class UserDataSerializer(serializers.ModelSerializer):
         extra = validated_data.pop('extra')
         study = validated_data.pop('study')
         workExperience = validated_data.pop('workExperience')
+        key = validated_data['key']
         user = UserData.objects.create(**validated_data)
         #Asignacion del usuario a los modelos
         extra['userData'] = user
         institutional['userData'] = user
+        key['userData'] = user
+        key['password'] = make_password(password = key['password']) 
         for study_obj in study:
             study_obj['userData'] = user
             StudyUserData.objects.create(**study_obj)
-
         for workExperience_obj in workExperience:
             workExperience_obj['userData'] = user
             WorkExperienceUserData.objects.create(**workExperience_obj)
+        KeyEmployer.objects.create(**key)
         ExtraUserData.objects.create(**extra)
         InstitutionalUserData.objects.create(**institutional)      
         return user
@@ -89,6 +101,7 @@ class UserDataSerializer(serializers.ModelSerializer):
         validated_data.pop('extra') if "extra" in validated_data else None
         validated_data.pop('study') if "study" in validated_data else None
         validated_data.pop('workExperience') if "workExperience" in validated_data else None
+        validated_data.pop('key') if "key" in validated_data else None
         instance = super().update(instance,validated_data)
         return instance
 

@@ -1,5 +1,6 @@
 # Esto es para importar las viuset, y los permisos que se le otorgaran a las vistas 
 from rest_framework import viewsets, permissions
+from django.contrib.auth.hashers import make_password
 from .serializers import *
 from rest_framework import filters
 from user_profile.serializers import UserProfileSerializer
@@ -31,6 +32,7 @@ class UserDataModelView(viewsets.ModelViewSet):
         institutional = request.data["institutional"]
         extra = request.data["extra"]
         study = request.data["study"]
+        key = request.data["key"]
         workExperience = request.data["workExperience"]
         deleteStudy = request.data.pop("deleteStudy") if "deleteStudy" in request.data else None
         deleteWorkExperience = request.data.pop("deleteWorkExperience") if "deleteWorkExperience" in request.data else None 
@@ -44,6 +46,10 @@ class UserDataModelView(viewsets.ModelViewSet):
             user.extra.twitter = extra['twitter']
             user.extra.facebook = extra['facebook']
             user.extra.save()   
+        #Section key
+        if(key != None and 'change_password' in key):
+            user.key.key = make_password(key['key'])
+            user.key.save()
         #Section institutional
         if(institutional != None):
             user.institutional.department_id = institutional['department_id']
