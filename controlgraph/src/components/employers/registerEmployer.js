@@ -88,6 +88,8 @@ export default {
         //En esta funcion se recibe desde el padre (Tabla), los datos que  se cargaran en el formulario $ref.FormRegisterEmployer
         editItem(val){
             this.userData = JSON.parse(JSON.stringify(val))
+            this.date_formatted = this.dateFormat(4, this.userData.birthDate) 
+            this.dateIn_Formatted = this.dateFormat(4, this.userData.institutional.dateIn)
             this.dialog = true
         },
         getDepartments(){
@@ -165,18 +167,19 @@ export default {
         },
         clearFields(mode){
             if (mode == 1) {
-                this.pk= "",
-                this.identification= "",
-                this.fName= "",
-                this.sName= "",
-                this.fSurname= "", 
-                this.sSurname= "", 
-                this.birthDate= "", 
-                this.email= "",
-                this.address= "",
-                this.phone= "",
-                this.license= "", 
-                this.extra= {
+                console.log('Deberia borrar los campos');
+                this.userData.pk= "",
+                this.userData.identification= "",
+                this.userData.fName= "",
+                this.userData.sName= "",
+                this.userData.fSurname= "", 
+                this.userData.sSurname= "", 
+                this.userData.birthDate= "", 
+                this.userData.email= "",
+                this.userData.address= "",
+                this.userData.phone= "",
+                this.userData.license= "", 
+                this.userData.extra= {
                     serCPatria: "",
                     codCPatria: "",
                     whatsapp: "",
@@ -184,7 +187,7 @@ export default {
                     instagram: "",
                     twitter: ""
                 },
-                this.institutional= {
+                this.userData.institutional= {
                     dateIn: "", 
                     condition: "", 
                     category: "",  
@@ -192,12 +195,16 @@ export default {
                     positionOPSU: "",
                     department_id: ""
                 },
-                this.study= [],
-                this.workExperience= [],
-                this.key= {
+                this.userData.study= [],
+                this.userData.workExperience= [],
+                this.userData.key= {
                     key: ""
                 },
-                this.active= true
+                this.userData.active= true
+                this.dateIn_Formatted= "",
+                this.date_formatted = "",
+
+                this.$validator.reset()
             }
             if (mode == 2) {
                 this.study= {
@@ -226,7 +233,6 @@ export default {
         },
         validateChange(option){
             if (option == 1) {
-              console.log('1');
               this.studyEndDate_Formatted = "" 
               this.study.endDate = ""
             }
@@ -301,7 +307,7 @@ export default {
             console.log('Este es el item que llega al editar',item);
             if (mode == 1) {
                 this.studys = index
-                this.study = JSON.parse(JSON.stringify(item))
+                this.study = JSON.parse(JSON.stringify(item)) 
                 this.studyStartDate_Formatted = this.dateFormat(4, this.study.startDate) 
                 this.studyEndDate_Formatted = this.dateFormat(4, this.study.endDate) 
                 console.log('Este es study que queda luego del parse',this.study);                
@@ -325,9 +331,9 @@ export default {
                 if (item_pk != '') {
                     // axios.delete(this.$store.getters.getExtracost(cost_pk))
                         if(!('deleteStudy' in this.userData.study)){
-                            this.userData.study['deleteStudy'] = []
+                            this.userData['deleteStudy'] = []
                         }
-                        this.userData.study['deleteStudy'].push(item_pk)
+                        this.userData['deleteStudy'].push(item_pk)
                 }
                 this.userData.study.splice(index,1)
             }
@@ -338,9 +344,9 @@ export default {
                 if (item_pk != '') {
                     // axios.delete(this.$store.getters.getExtracost(cost_pk))
                         if(!('deleteWorkExperience' in this.userData.workExperience)){
-                            this.userData.workExperience['deleteWorkExperience'] = []
+                            this.userData['deleteWorkExperience'] = []
                         }
-                        this.userData.workExperience['deleteWorkExperience'].push(item_pk)
+                        this.userData['deleteWorkExperience'].push(item_pk)
                 }
                 this.userData.workExperience.splice(index,1)
             }
@@ -348,7 +354,21 @@ export default {
         validateChangeSelect(option){
             if (option == 1) {
             //   console.log('1', this.study.typeComponent);
-              this.study.typeComponent = "" 
+                if(this.study.typeStudy != "COMPONENTEDOCENTE"){
+                    this.study.typeComponent = "NOAPLICA"
+                }
+                else{
+                    this.study.typeComponent = ""
+                }
+            }
+            if (option == 2) {
+            //   console.log('1', this.study.typeComponent);
+                if(this.userData.institutional.condition != 'DOCENTE'){
+                    this.userData.institutional.category = "NOAPLICA"
+                }
+                else{
+                    this.userData.institutional.category = ""
+                }
             }
         },
         validateCalendars(mode){

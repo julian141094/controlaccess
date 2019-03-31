@@ -77,19 +77,20 @@ class UserDataSerializer(serializers.ModelSerializer):
         extra = validated_data.pop('extra')
         study = validated_data.pop('study')
         workExperience = validated_data.pop('workExperience')
-        key = validated_data['key']
+        key = validated_data.pop('key')
         user = UserData.objects.create(**validated_data)
         #Asignacion del usuario a los modelos
         extra['userData'] = user
         institutional['userData'] = user
         key['userData'] = user
-        key['password'] = make_password(password = key['password']) 
+        key['key'] = make_password(password = key['key']) 
         for study_obj in study:
             study_obj['userData'] = user
             StudyUserData.objects.create(**study_obj)
         for workExperience_obj in workExperience:
             workExperience_obj['userData'] = user
             WorkExperienceUserData.objects.create(**workExperience_obj)
+        print(key,"dsadas")
         KeyEmployer.objects.create(**key)
         ExtraUserData.objects.create(**extra)
         InstitutionalUserData.objects.create(**institutional)      

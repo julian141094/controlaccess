@@ -270,10 +270,10 @@
                                                                 @change="validateChangeSelect(1)"
                                                             ></v-select>
                                                         </v-flex>
-                                                        <v-flex lg6 md6 xs12 pr-4>
-                                                        <!-- <v-flex v-if="study.typeStudy == 'COMPONENTEDOCENTE'" lg6 md6 xs12 pr-4> -->
+                                                        <!-- <v-flex lg6 md6 xs12 pr-4> -->
+                                                        <v-flex v-if="study.typeStudy == 'COMPONENTEDOCENTE' ? true : false" lg6 md6 xs12 pr-4>
                                                             <v-select
-                                                                :items="study.typeStudy == 'COMPONENTEDOCENTE' ? typeCmp2 : typeCmp"
+                                                                :items="typeCmp2"
                                                                 v-model="study.typeComponent"
                                                                 name="study-typeComponent"
                                                                 :error-messages="errors.collect('study-typeComponent')"
@@ -391,7 +391,7 @@
                                                     </v-card-title>
                                                     <v-card-actions>
                                                     <v-btn flat color="green darken-1" @click="editStudyOrTeaching(1, item, index)">Modificar</v-btn>
-                                                    <v-btn flat color="green darken-1" @click.prevent="deleteStudyOrTeaching(1, item.pk)">Eliminar</v-btn>
+                                                    <v-btn flat color="green darken-1" @click.prevent="deleteStudyOrTeaching(1, index, item.pk)">Eliminar</v-btn>
                                                     </v-card-actions>
                                                 </v-card>
                                             </v-flex>
@@ -545,7 +545,7 @@
                                                     </v-card-title>
                                                     <v-card-actions>
                                                     <v-btn flat color="green darken-1" @click="editWorkExperience(1, item, index)">Modificar</v-btn>
-                                                    <v-btn flat color="green darken-1" @click.prevent="deleteWorkExperience(1, item.pk)">Eliminar</v-btn>
+                                                    <v-btn flat color="green darken-1" @click.prevent="deleteWorkExperience(1, index, item.pk)">Eliminar</v-btn>
                                                     </v-card-actions>
                                                 </v-card>
                                             </v-flex>
@@ -603,12 +603,13 @@
                                                 label="Tipo de Trabajador"
                                                 key="condition-input"
                                                 v-validate="'required'"
+                                                @change="validateChangeSelect(2)"
                                             ></v-select>
                                         </v-flex>
-                                        <v-flex lg6 md6 xs12 pr-4>
-                                        <!-- <v-flex v-if="userData.institutional.condition == 'DOCENTE'" lg6 md6 xs12 pr-4> -->
+                                        <!-- <v-flex lg6 md6 xs12 pr-4> -->
+                                        <v-flex v-if="userData.institutional.condition == 'DOCENTE'" lg6 md6 xs12 pr-4>
                                             <v-select
-                                                :items="userData.institutional.condition != 'DOCENTE' ? categoryInt : categoryInt2 "
+                                                :items="categoryInt2"
                                                 v-model="userData.institutional.category"
                                                 label="Categoria o Nivel del Trabajador"
                                                 key="category-input"
@@ -749,7 +750,7 @@
                         <v-card>
                             <v-card-text>
                                 <v-layout row wrap>
-                                    <v-flex lg6 md6 xs12 pr-4>
+                                    <v-flex v-if="userData.pk == ''" lg6 md6 xs12 pr-4>
                                         <v-text-field
                                             v-model="userData.key.key"
                                             name="key"
@@ -760,6 +761,9 @@
                                             v-validate="'required'"
                                             key="key-input"
                                         ></v-text-field>
+                                    </v-flex>
+                                    <v-flex lg6 md6 xs12 pr-4>
+                                        <v-btn @click.prevent="openDialogs()" color="primary" dark>Cambiar Contraseña</v-btn>
                                     </v-flex>
                                      <v-flex lg3 md6 xs12 pr-4>
                                         <v-checkbox

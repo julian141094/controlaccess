@@ -10,7 +10,7 @@
                         <formemployers ref="FormRegisterEmployer"/>
                     <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="green darken-1" flat @click="dialog = false">Cancelar</v-btn>
+                    <v-btn color="green darken-1" flat @click="$refs.FormRegisterEmployer.clearFields(1), dialog = false">Cancelar</v-btn>
                     <v-btn color="green darken-1" flat @click="saveOrUpdate(1, $refs.FormRegisterEmployer.getUserData())">Guardar</v-btn>
                     </v-card-actions>
                 </v-card>

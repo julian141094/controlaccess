@@ -44,8 +44,8 @@ export default {
       },
       openDialogs(){
         this.dialog = true
-        console.log('Esta es la referencia', this.$refs.FormRegisterEmployer.getUserData());
-        
+        // this.$refs.FormRegisterEmployer.clearFields(1)
+        // console.log('Esta es la referencia', this.$refs.FormRegisterEmployer.getUserData());
       },
       saveOrUpdate (mode, userData) {
         console.log('Este es userData: ',userData);
@@ -125,6 +125,16 @@ export default {
             }
           })
         }
+      },
+      deleteItem (item) {
+        console.log('Esto es lo que llega para Eliminar', item);
+        console.log('lo que quiero eliminar tiene este pk', item.pk);
+        axios.delete(this.$store.getters.getEmployers(item.pk))
+        .then(response =>{
+          console.log('Debio Eliminar');
+          this.getEmployers();
+        })
+        console.log('Debio Ejecutar la Actualizacion');
       },
     },
     mounted(){

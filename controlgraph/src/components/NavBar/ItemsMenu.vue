@@ -103,11 +103,11 @@ export default {
           icon: 'fa-dashboard', 
           url: '/medicalrest'
         },  
-        { 
-          title: 'Comisión de Servicios', 
-          icon: 'fa-dashboard', 
-          url: '/servicescommission'
-        },
+        // { 
+        //   title: 'Comisión de Servicios', 
+        //   icon: 'fa-dashboard', 
+        //   url: '/servicescommission'
+        // },
         { 
           title: 'Control E&S', 
           icon: 'fa-people', 
