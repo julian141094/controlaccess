@@ -762,8 +762,72 @@
                                             key="key-input"
                                         ></v-text-field>
                                     </v-flex>
-                                    <v-flex lg6 md6 xs12 pr-4>
-                                        <v-btn @click.prevent="openDialogs()" color="primary" dark>Cambiar Contraseña</v-btn>
+                                    <v-flex v-if="userData.pk != ''" lg6 md6 xs12 pr-4>
+                                        <v-btn @click.prevent="openDialogPassword()" color="primary" dark>Resetear Contraseña</v-btn>
+                                        <v-layout row wrap>
+                                            <v-flex xs12>
+                                                <v-dialog v-model="dialogPassword" persistent max-width="25%">
+                                                <v-card>
+                                                    <v-card-title class="headline">Restaurar Contraseña</v-card-title>
+                                                    <v-card-text>Por favor introduzca la nueva clave</v-card-text>
+                                                    <v-flex px-3 xs12>
+                                                        <v-text-field
+                                                        v-model="changedPassword"
+                                                        :data-vv-as="'Nueva Clave'"
+                                                        v-validate="'required|min:8'"
+                                                        name="key"
+                                                        ref="key"
+                                                        :label="'Nueva Clave'"
+                                                        :error-messages="errors.first('key')"
+                                                        prepend-icon="vpn_key"
+                                                        :type="showPass ? 'text' : 'password'"
+                                                        @click:append="showPass = !showPass"
+                                                        :append-icon="showPass ? 'visibility' : 'visibility_off'"
+                                                        ></v-text-field>
+                                                        <!-- <v-text-field
+                                                            v-model="userData.key.key"
+                                                            name="key"
+                                                            :error-messages="errors.collect('key')"
+                                                            label="Nueva Clave"
+                                                            class=""
+                                                            data-vv-as="Nueva Clave"
+                                                            v-validate="'required'"
+                                                            key="key-input"
+                                                        ></v-text-field> -->
+                                                    </v-flex>
+                                                    <v-flex px-3 xs12>
+                                                        <v-text-field
+                                                        v-model="confirmPassword"
+                                                        :data-vv-as="'Confirme Nueva Clave'"
+                                                        v-validate="'required|confirmed:key'"
+                                                        name="confirmkey"
+                                                        :label="'Confirme Nueva Clave'"
+                                                        :error-messages="errors.first('confirmkey')"
+                                                        prepend-icon="vpn_key"
+                                                        :type="showPass2 ? 'text' : 'password'"
+                                                        @click:append="showPass2 = !showPass2"
+                                                        :append-icon="showPass2 ? 'visibility' : 'visibility_off'"
+                                                        ></v-text-field>
+                                                        <!--<v-text-field
+                                                            v-model="confirmPassword"
+                                                            name="confirmkey"
+                                                            :error-messages="errors.collect('confirmkey')"
+                                                            label="Confirme Nueva Clave"
+                                                            class=""
+                                                            data-vv-as="Confirme Nueva Clave"
+                                                            v-validate="'required'"
+                                                            key="key-input"
+                                                        ></v-text-field> -->
+                                                    </v-flex>
+                                                    <v-card-actions>
+                                                    <v-spacer></v-spacer>
+                                                    <v-btn color="green darken-1" flat @click="dialogPassword = false">Cancelar</v-btn>
+                                                    <v-btn color="green darken-1" flat @click="saveChangePassword()">Guardar</v-btn>
+                                                    </v-card-actions>
+                                                </v-card>
+                                                </v-dialog>
+                                            </v-flex>
+                                        </v-layout>
                                     </v-flex>
                                      <v-flex lg3 md6 xs12 pr-4>
                                         <v-checkbox

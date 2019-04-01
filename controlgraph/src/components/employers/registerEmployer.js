@@ -1,6 +1,11 @@
 export default {
     data(){
         return {
+            showPass: false,
+            showPass2: false,
+            changedPassword: '',
+            confirmPassword: '',
+            dialogPassword: false,
             dateIn_Formatted: "",
             modalDateIn: false,
             load: false,
@@ -85,6 +90,16 @@ export default {
         }
     },
     methods:{
+        saveChangePassword(){
+            this.userData.key.key = this.changedPassword
+            this.userData.key['changePassword'] = true  
+            this.dialogPassword = false
+        },
+        openDialogPassword(){
+            this.dialogPassword = true
+            // this.userData.key.key = ''
+            this.$validator.reset()
+        },
         //En esta funcion se recibe desde el padre (Tabla), los datos que  se cargaran en el formulario $ref.FormRegisterEmployer
         editItem(val){
             this.userData = JSON.parse(JSON.stringify(val))
