@@ -2,8 +2,20 @@ import './axiosDeclared.js'
 export default{
   state:{
     token: localStorage.getItem("token") || '',
+    active:false,
+    type:"success",
+    text:""
   },
   getters:{
+    alerttype: (state) => {
+      return state.type
+    },
+    alertactive: (state) => {
+      return state.active
+    },
+    alerttext: (state) => {
+      return state.text
+    },
     isAuth: (state) => !!state.token    
   },
   mutations:{
@@ -13,8 +25,17 @@ export default{
     logouToken: (state) => {
         state.token = ""
     },
+    alert: (state,value) => {
+      state.active = false
+      state.type = value.type
+      state.text = value.text
+      state.active = value.active
+    }
   },
   actions:{
+    alert:({commit}, alert) => {
+      commit('alert',alert)
+    },
     verifyToken:({dispatch}) =>{
         if(localStorage.getItem('token')){
             let fragment = JSON.parse(atob(localStorage.getItem('token').split(".")[1]))

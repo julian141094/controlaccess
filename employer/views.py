@@ -10,7 +10,7 @@ import json
 
 class UserDataModelView(viewsets.ModelViewSet):
     
-    queryset                    = UserData.objects.all()
+    queryset                    = UserData.objects.order_by('-identification').all()
     permission_classes = (permissions.AllowAny,)
     serializer_class            = UserDataSerializer
     search_fields = {
@@ -96,10 +96,26 @@ class UserDataModelView(viewsets.ModelViewSet):
 
 class DepartmentsModelView(viewsets.ModelViewSet):
     
-    queryset                    = Departments.objects.all()
-    permission_classes = (permissions.AllowAny,)
+  queryset                    = Departments.objects.all()
+  permission_classes = (permissions.AllowAny,)
+  serializer_class            = DepartmentsSerializer
 
-    serializer_class            = DepartmentsSerializer
+  def destroy(self, request, pk=None):
+    """
+    Method of the request by delete to destroy the deparment data for pk
+
+    @param self Object which instantiates the method
+    @param request Object with the request
+    @param pk Get the pk of the url
+    @return Returns the data and stores in database
+    """
+    deparment = self.get_object()
+    if(deparment.departments.count() == 0):
+      deparment.delete()
+      return Response(status=status.HTTP_204_NO_CONTENT)
+    return Response({'non_field_errors':
+      ['No se puede eliminar este departamento,\
+         tiene empleados asignados a el']},status=400)
 
 class PermissionsEmployerModelView(viewsets.ModelViewSet):
     
@@ -109,7 +125,7 @@ class PermissionsEmployerModelView(viewsets.ModelViewSet):
 class MedicalRestEmployerModelView(viewsets.ModelViewSet):
     
     queryset                    = MedicalRestEmployer.objects.all()
-    permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.AllowAny,)
     serializer_class            = MedicalRestEmployerSerializer
 
 class ServicesCommissionEmployerModelView(viewsets.ModelViewSet):

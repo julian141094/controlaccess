@@ -32,6 +32,7 @@
                                     <v-flex xs12 >
                                         <v-autocomplete
                                         v-model="PermissionsEmployer.userData_id"
+                                        @change="getIsActive"
                                         name="fName"
                                         :error-messages="errors.collect('fName')"
                                         v-validate="'required'"
@@ -60,7 +61,8 @@
                                             </template>
                                         </v-autocomplete>
                                     </v-flex>
-                                        <v-layout row wrap >
+                                        <v-layout row wrap v-if="PermissionsEmployer.pk != '' || PermissionsEmployer.userData != null && 
+                                          !PermissionsEmployer.userData.statusEmployer.withpermission">
                                         <!-- <v-flex v-if="PermissionsEmployer.userData.active" > -->
                                             <v-flex lg4 md6 xs12 pr-4>
                                                 <v-checkbox
@@ -249,16 +251,37 @@
                                                 </v-dialog>
                                             </v-flex>
                                         </v-layout>
-                                        <v-layout v-if="activateC" pt-4 >
-                                            <span> <v-icon>fa-exclamation-triangle</v-icon> El empleado que ha seleccionado está inactivo, verifique su estatus</span>                                            
-                                        </v-layout>
+                                        <v-flex v-else>
+                                          <v-alert type="info" outline :value="true"
+                                          class="font-weight-black title">
+                                            <span v-if="PermissionsEmployer.userData == null"> 
+                                              Seleccione a un empleado al cual realizará el permiso
+                                            </span>
+                                            <span v-else>
+                                              <h3>
+                                                Tiene activo un {{ PermissionsEmployer.userData.statusEmployer.status }}
+                                              </h3>
+                                              <p>
+                                                Fecha Inicio: {{ dateFormat(4,PermissionsEmployer.userData.statusEmployer.startDate) }} /
+                                                Fecha Culminación: {{ dateFormat(4,PermissionsEmployer.userData.statusEmployer.endDate) }}
+                                              </p>
+                                              <p>
+                                                Razón: {{ PermissionsEmployer.userData.statusEmployer.context }}
+                                              </p>
+                                            </span>
+                                          </v-alert>                                            
+                                        </v-flex>
                                 </v-layout>
                             </v-container>
                         </v-card-text>
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="blue darken-1" flat @click="close">Cancelar</v-btn>
-                            <v-btn color="blue darken-1" flat @click="saveOrUpdate(1)">Guardar</v-btn>
+                            <v-btn color="blue darken-1" flat @click="saveOrUpdate(1)"
+                             v-if="PermissionsEmployer.userData != null && 
+                                !PermissionsEmployer.userData.statusEmployer.withpermission">
+                              Guardar
+                            </v-btn>
                         </v-card-actions>
                         </v-card>
                     </v-dialog>

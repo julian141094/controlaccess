@@ -33,6 +33,7 @@
                                     <v-autocomplete
                                     v-model="MedicalRest.userData_id"
                                     name="name"
+                                    @change="getIsActive"
                                     :error-messages="errors.collect('name')"
                                     label="Nombre de Trabajador"
                                     data-vv-as="Nombre de Trabajador"
@@ -62,6 +63,7 @@
                                     </template>
                                     </v-autocomplete>
                                 </v-flex>
+                              <v-layout row wrap v-if="MedicalRest.pk != '' || MedicalRest.userData != null && !MedicalRest.userData.statusEmployer.withpermission">
                                 <v-flex lg3 md6 xs12 pr-4>
                                     <v-checkbox
                                         name="approvedBoss"
@@ -71,7 +73,7 @@
                                         v-validate="'required'"
                                         v-model="MedicalRest.approvedBoss"
                                         required
-                                       :disabled='editFields'
+                                      :disabled='editFields'
                                         key="license-input"
                                     ></v-checkbox>
                                 </v-flex>
@@ -122,7 +124,7 @@
                                         lazy
                                         full-width
                                         width="290px"
-                                       :disabled='editFields'
+                                      :disabled='editFields'
                                     >
                                         <v-text-field
                                             name="startDate"
@@ -213,6 +215,27 @@
                                     :disabled='editFields'
                                     ></v-textarea>
                                 </v-flex>
+                              </v-layout>
+                              <v-flex v-else>
+                                <v-alert type="info" outline :value="true"
+                                class="font-weight-black title">
+                                  <span v-if="MedicalRest.userData == null"> 
+                                    Seleccione a un empleado al cual realizará el permiso
+                                  </span>
+                                  <span v-else>
+                                    <h3>
+                                      Tiene activo un {{ MedicalRest.userData.statusEmployer.status }}
+                                    </h3>
+                                    <p>
+                                      Fecha Inicio: {{ dateFormat(4,MedicalRest.userData.statusEmployer.startDate) }} /
+                                      Fecha Culminación: {{ dateFormat(4,MedicalRest.userData.statusEmployer.endDate) }}
+                                    </p>
+                                    <p>
+                                      Razón: {{ MedicalRest.userData.statusEmployer.context }}
+                                    </p>
+                                  </span>
+                                </v-alert>                                            
+                              </v-flex>
                             </v-layout>
                             </v-container>
                         </v-card-text>

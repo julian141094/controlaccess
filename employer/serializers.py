@@ -3,7 +3,7 @@ from .models import *
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password
 from user_profile.serializers import UserProfileSerializer
-
+from django.utils import timezone
 class ExtraUserDataSerializer(serializers.ModelSerializer):
     
     class Meta:
@@ -56,21 +56,40 @@ class UserDataSerializer(serializers.ModelSerializer):
     study = StudyUserDataSerializer(many=True)
     workExperience = WorkExperienceUserDataSerializer(many=True)
     key = KeyEmployerSerializer(many=False)
-
-    # user_id = serializers.IntegerField(required=False,allow_null=True)
-    # user = UserProfileSerializer(many=False,required=False,allow_null=True)
-    # permissions = PermissionsEmployerSerializer(many=False,read_only=True) #El read Only es para que este serializer no sea obligatorio mandarlo en los post
-    # medicalrest = MedicalRestEmployerSerializer(many=False,read_only=True)
-    # servicescomission = ServicesCommissionEmployerSerializer(many=False,read_only=True)
-
+    statusEmployer = serializers.SerializerMethodField('get_status')
     class Meta:
         model = UserData
         fields = ('pk','identification','fName','sName','fSurname','sSurname',
          'birthDate','address','phone','license','extra', 'email',
          'institutional','study','active','workExperience', 'key',
+         'statusEmployer'
         #  'user','user_id'
         )
         depth = 1 
+
+    def get_status(self,obj):
+      status = {
+        'context':'Sin irregularidad',
+        'status': "",
+        'startDate':'--',
+        'endDate':'--',
+        'withpermission': False
+      }
+      perm = obj.permissions.filter(endDate__gte=timezone.now())
+      medical = obj.medicalrest.filter(endDate__gte=timezone.now())      
+      if(perm.count() > 0):
+        status['context'] = perm[0].description
+        status['status'] = "Permiso"
+        status['startDate'] = str(perm[0].startDate)
+        status['endDate'] = str(perm[0].endDate)
+        status['withpermission'] = True
+      elif(medical.count() > 0):
+        status['context'] = medical[0].description
+        status['status'] = "Reposo medico"
+        status['startDate'] = str(medical[0].startDate)
+        status['endDate'] = str(medical[0].endDate)
+        status['withpermission'] = True
+      return status
 
     def create(self, validated_data):
         institutional = validated_data.pop('institutional')

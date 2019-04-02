@@ -128,27 +128,14 @@ export default {
         } else {
           this.getSearch();
         }
-      },
-      // date_formatted(val){
-      //   console.log('holis',val)
-      //     this.startdate_formatted = ""  
-      // },
-      // startdate_formatted(val) {
-      //     this.endDate_formatted = ""
-      // }
-      'PermissionsEmployer.userData.active':{
-        handler(val){
-          console.log('Debio cambiar de Valor del active a: ', val);
-          if (val == false) {
-            this.activateC = true
-          }
-          else {
-            this.activateC = false
-          }
-        }
       }
     },
     methods: {
+      getIsActive(){
+        if(this.PermissionsEmployer.userData_id != '' && this.PermissionsEmployer.userData_id != undefined){
+          this.PermissionsEmployer.userData = this.UserData.find(o => o.pk == this.PermissionsEmployer.userData_id)
+        }
+      },
       closeCalendars(option){
         if (option == 1) {
           this.modalDate = false

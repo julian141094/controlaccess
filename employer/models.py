@@ -124,8 +124,3 @@ class KeyEmployer(models.Model):
 
     userData = models.OneToOneField(UserData, verbose_name="KEY de Empleado", on_delete=models.CASCADE, related_name='key')
     key = models.CharField(verbose_name='Llave del Empleado ', max_length=256)
-
-
-
-
-

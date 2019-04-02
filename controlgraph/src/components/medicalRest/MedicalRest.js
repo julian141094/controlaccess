@@ -1,5 +1,3 @@
-import Axios from "axios";
-
 export default {
     data: () => ({
       edit: false,
@@ -120,6 +118,11 @@ export default {
       }
     },
     methods: {
+      getIsActive(){
+        if(this.MedicalRest.userData_id != '' && this.MedicalRest.userData_id != undefined){
+          this.MedicalRest.userData = this.UserData.find(o => o.pk == this.MedicalRest.userData_id)
+        }
+      },
       validateChange(option){
         if (option == 1) {
           // console.log('1');

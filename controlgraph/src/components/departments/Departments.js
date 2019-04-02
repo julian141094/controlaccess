@@ -66,17 +66,17 @@ export default {
           })
       },
       deleteItem (item) {
-        console.log('Esto es lo que llega para Eliminar', item);
-        console.log('lo que quiero eliminar tiene este pk', item.pk);
         axios.delete(this.$store.getters.getDepartment(item.pk))
         .then(response =>{
-          // this.alert.type = "success"
-          // this.alert.text = `${this.$tc("level",1)} ${this.$tc("removed",1)}`
-          // this.alert.active = true
-          console.log('Debio Eliminar');
           this.getDepartments();
         })
-        console.log('Debio Ejecutar la Actualizacion');
+        .catch(err => {
+          this.$store.dispatch('alert',{
+            active:true,
+            type:"error",
+            text:err.response.data['non_field_errors'][0]
+          })
+        })
       },
       close () {
         this.dialog = false
@@ -88,15 +88,11 @@ export default {
       },
       saveOrUpdate (mode, departmentsUNEFANB) {
         if(mode == 2 && departmentsUNEFANB.pk != undefined){
-          console.log('Esta seria la parte de editar, y e objeto que llega es: ', departmentsUNEFANB);
-          // this.editedIndex = this.desserts.indexOf(departmentsUNEFANB)
           this.departmentsUNEFANB = Object.assign({}, departmentsUNEFANB)
-          // console.log('Los datos del Departamento que se va a editar son: ', this.departmentsUNEFANB);
           this.dialog = true
           this.edit = true
         }
         else{
-          console.log('guardar Nuevo');
           this.$validator.validateAll()
           .then(()=>{
             this.load = true
@@ -117,8 +113,7 @@ export default {
                   this.$emit('registered')
                 })
                 .catch(err=>{
-                  this.load = false
-                  
+                  this.load = false     
                   this.$emit('show_message',{
                     type : "error",
                     text : err.response.data.non_field_errors[0],
@@ -128,17 +123,17 @@ export default {
               }
               else{
                 axios.put(this.$store.getters.getDepartment(this.departmentsUNEFANB.pk),
-                      this.departmentsUNEFANB)
-                      .then(response =>{
-                          this.getDepartments()
-                          this.departmentsUNEFANB.pk = ""
-                          this.departmentsUNEFANB.name = ""
-                          this.departmentsUNEFANB.description = ""
-                          this.load = false
-                          this.dialog = false
-                          this.editFields = false
-                          this.$validator.reset()
-                      })
+                this.departmentsUNEFANB)
+                .then(response =>{
+                    this.getDepartments()
+                    this.departmentsUNEFANB.pk = ""
+                    this.departmentsUNEFANB.name = ""
+                    this.departmentsUNEFANB.description = ""
+                    this.load = false
+                    this.dialog = false
+                    this.editFields = false
+                    this.$validator.reset()
+                })
               }
             }
             else{

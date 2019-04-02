@@ -1,58 +1,45 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>Reporte en PDF</title>
-  </head>
-  <body>
-    <!-- <div id="header" class="header" style="break-after: avoid">  
-        <div>
-          <img src="{% static '/img/logoFA.jpg' %}" class="imgHeader" alt="Logo de la UNEFANB">
-        </div>
-        <div class="membrete">
-          <p>
-            República Bolivariana de Venezuela <br>
-            Ministerio del Poder Popular para la Defensa <br> 
-            Universidad Nacional Experimental Politécnica de la Fuerza Armada Nacional Bolivariana <br>
-            Extensión Mérida
-          </p>
-        </div>
-        <div>
-            <img src="{% static 'img/logoUnefa.png' %}" class="imgHeader" alt="Logo de la UNEFANB">
-        </div>
-    </div> -->
-    <div class="content">
-        <div class="card" style="border: 0px !important">
-            <div class="card-body">
-              <h5 class="card-title">Card title</h5>
-              <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-              <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="#" class="card-link">Card link</a>
-              <a href="#" class="card-link">Another link</a> -->
-              <table class="table">
-                <thead>
-                  <tr>
-                    {% for head in headers %}
-                      <th>
-                        {{head}}
-                      </th>
-                    {% endfor %}
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for worker in employer %}
-                    <tr>
-                      <td>
-                        {{ worker.identification }}
-                      </td>
-                    </tr>
-                  {% endfor %}
-                </tbody>
-              </table>
-            </div>
-          </div>
+{% extends 'base.report.html' %}
+
+{% block content %}
+  <div class="card" style="border: 0px !important">
+    <div class="card-body">
+      <h5 class="card-title">Listado de empleados</h5>
+      <!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
+      <table class="table">
+        <thead>
+          <tr>
+            {% for head in headers %}
+              <th>
+                {{head}}
+              </th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody style="font-family: Arial, Helvetica, sans-serif;font-size: 12px;">
+          {% for worker in employer %}
+            <tr>
+              <td>
+                {{ worker.identification }}
+              </td>
+              <td>
+                {{ worker.fName }} {{ worker.sName }} {{ worker.fSurname }} {{ worker.sSurname }} 
+              </td>
+              <td>
+                {{ worker.institutional.condition }}
+              </td>
+              <td>
+                {{ worker.institutional.category }}
+              </td>
+              <td>
+                {{ worker.institutional.department.name }}
+              </td>
+              <td>
+                {{ worker.institutional.dateIn }}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
     </div>
-  </body>
-</html>
+  </div>
+{% endblock content %}

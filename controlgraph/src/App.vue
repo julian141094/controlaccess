@@ -5,6 +5,15 @@
     <v-content>
       <!-- Se cambia de HelloWord al router-view para que tome las vistas del router -->
       <router-view/>
+      <v-snackbar
+        v-model="$store.getters.alertactive"
+        :dismissible="true"
+        :color="$store.getters.alerttype"
+        right
+        :timeout="6000"
+      >
+        {{ $store.getters.alerttext }}
+      </v-snackbar>
     </v-content>
   </v-app>
 </template>
