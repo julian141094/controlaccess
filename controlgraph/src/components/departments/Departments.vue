@@ -19,27 +19,38 @@
                         ></v-text-field>
                         <v-spacer></v-spacer>
                         <v-btn v-if="this.edit" slot="activator" color="primary" dark class="mb-2" @click="editMode">Editar</v-btn>                    
-                        
                     <v-dialog v-model="dialog" max-width="500px">
                         <v-btn slot="activator" color="primary" dark class="mb-2" @click="clearFields">Nuevo</v-btn>
                         <v-card>
                         <v-card-title>
                             <span class="headline">{{ formTitle }}</span>
                         </v-card-title>
-
                         <v-card-text>
                             <v-container grid-list-xs>
                             <v-layout wrap>
                                 <v-flex xs12 sm6 md4 pr-3>
-                                <v-text-field v-model="departmentsUNEFANB.name" label="Nombre"></v-text-field>
+                                    <v-text-field 
+                                    v-model="departmentsUNEFANB.name" 
+                                    label="Nombre del Departamento"
+                                    data-vv-as="Nombre del Departamento"
+                                    name="Nombre"
+                                    :error-messages="errors.collect('Nombre')"
+                                    v-validate="'required|max:50'"
+                                    ></v-text-field>
                                 </v-flex>
                                 <v-flex xs12 sm6 md4>
-                                <v-text-field v-model="departmentsUNEFANB.description" label="Descripción"></v-text-field>
+                                    <v-text-field 
+                                    v-model="departmentsUNEFANB.description" 
+                                    label="Descripción"
+                                    data-vv-as="Descripción"
+                                    name="description"
+                                    :error-messages="errors.collect('description')"
+                                    v-validate="'required|max:50'"
+                                    ></v-text-field>
                                 </v-flex>
                             </v-layout>
                             </v-container>
                         </v-card-text>
-
                         <v-card-actions>
                             <v-spacer></v-spacer>
                             <v-btn color="blue darken-1" flat @click="close">Cancelar</v-btn>

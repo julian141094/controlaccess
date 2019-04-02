@@ -1,12 +1,14 @@
 import './axiosDeclared.js'
 export default{
   state:{
+    is_superuser: localStorage.getItem("is_superuser") || '',
     token: localStorage.getItem("token") || '',
     active:false,
     type:"success",
     text:""
   },
   getters:{
+    isSuperUser: (state) => state.is_superuser,
     alerttype: (state) => {
       return state.type
     },
@@ -19,6 +21,12 @@ export default{
     isAuth: (state) => !!state.token    
   },
   mutations:{
+    loginIsSU: (state, isSuperUser) => {
+        state.is_superuser = isSuperUser
+    },
+    logoutIsSU: (state) => {
+        state.is_superuser = ""
+    },
     loginToken: (state, token) => { 
         state.token = token 
     },
@@ -86,8 +94,10 @@ export default{
     logouToken: ({commit}) =>{
         return new Promise((resolve) => {
             commit("logouToken")
+            commit("logoutIsSU")
             delete window.axios.defaults.headers['Authorization']
             localStorage.removeItem('token')
+            localStorage.removeItem('is_superuser')
             location.href = "/";
             resolve()
         })
@@ -102,9 +112,11 @@ export default{
                 console.log('Esto es lo que trae el console log del loginToken', response);
                 
                 localStorage.setItem('token', response.data.token)
+                localStorage.setItem('is_superuser', response.data.is_superuser)
                 window.axios.defaults.headers['Authorization'] = 'JWT ' + 
                     localStorage.getItem('token');    
                 commit("loginToken", response.data.token)
+                commit("loginIsSU", response.data.is_superuserS)
                 resolve(response)
             })
             .catch((err) => {

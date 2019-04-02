@@ -241,7 +241,6 @@ export default {
               if (this.UserData.findIndex(m => m.pk == element.pk) == -1) {
                 this.UserData.push(element);
                 // console.log('esto es lo que esta en e UserData ', this.UserData);
-                
               }
             });
           })

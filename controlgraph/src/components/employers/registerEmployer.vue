@@ -96,7 +96,7 @@
                                                 label="Cédula de Identidad"
                                                 class=""
                                                 data-vv-as="Cédula"
-                                                v-validate="'required'"
+                                                v-validate="'required|min:4|max:12'"
                                                 key="identification-input"
                                             ></v-text-field>
                                         </v-flex>
@@ -142,7 +142,7 @@
                                                 label="Número de Teléfono"
                                                 class=""
                                                 data-vv-as="Número de Teléfono"
-                                                v-validate="'required'"
+                                                v-validate="'required|max:12'"
                                                 key="phone-input"
                                             ></v-text-field>
                                         </v-flex>
@@ -175,7 +175,7 @@
                                                 label="Segundo Nombre"
                                                 class=""
                                                 data-vv-as="Segundo Nombre"
-                                                v-validate="'required'"
+                                                v-validate="'min:3|max:32'"
                                                 key="sName-input"
                                             ></v-text-field>
                                         </v-flex>
@@ -187,7 +187,7 @@
                                                 label="Primer Apellido"
                                                 class=""
                                                 data-vv-as="Primer Apellido"
-                                                v-validate="'required'"
+                                                v-validate="'required|min:3|max:32'"
                                                 key="fSurname-input"
                                             ></v-text-field>
                                         </v-flex>
@@ -199,7 +199,7 @@
                                                 label="Segundo Apellido"
                                                 class=""
                                                 data-vv-as="Segundo Apellido"
-                                                v-validate="'required'"
+                                                v-validate="'min:3|max:32'"
                                                 key="sSurname-input"
                                             ></v-text-field>
                                         </v-flex>
@@ -211,7 +211,7 @@
                                                 label="Correo Electronico"
                                                 class=""
                                                 data-vv-as="Correo Electronico"
-                                                v-validate="'required'"
+                                                v-validate="'required|max:128|email'"
                                                 key="email-input"
                                             ></v-text-field>
                                         </v-flex>
@@ -223,7 +223,7 @@
                                                 label="Direcciòn de Habitaciòn"
                                                 class=""
                                                 data-vv-as="Direcciòn de Habitaciòn"
-                                                v-validate="'required'"
+                                                v-validate="'required|max:128'"
                                                 key="address-input"
                                             ></v-text-field>
                                         </v-flex>
@@ -253,7 +253,7 @@
                                                                 label="Institución de Origen"
                                                                 class=""
                                                                 data-vv-as="Institución de Origen"
-                                                                v-validate="'required'"
+                                                                v-validate="'required|max:60'"
                                                                 key="universityOrigin-input"
                                                             ></v-text-field>
                                                         </v-flex>
@@ -362,7 +362,7 @@
                                                                 data-vv-as="Nombre del Estudio"                                                                
                                                                 name="study-name"                                                                
                                                                 :error-messages="errors.collect('study-name')"
-                                                                v-validate="'required'"
+                                                                v-validate="'required|max:60'"
                                                                 key="study-name-input"
                                                             ></v-text-field>
                                                         </v-flex>
@@ -423,7 +423,7 @@
                                                                 label="Nombre de la Institución"
                                                                 class=""
                                                                 data-vv-as="Nombre de la Institución"
-                                                                v-validate="'required'"
+                                                                v-validate="'required|max:60'"
                                                                 key="institution-input"
                                                             ></v-text-field>
                                                         </v-flex>
@@ -506,7 +506,7 @@
                                                                 data-vv-as="Cargo que desempeñó"                                                                
                                                                 name="workExperience-appointment"                                                                
                                                                 :error-messages="errors.collect('workExperience-appointment')"
-                                                                v-validate="'required'"
+                                                                v-validate="'required|max:120'"
                                                                 key="workExperience-appointment-input"
                                                             ></v-text-field>
                                                         </v-flex>
@@ -517,7 +517,7 @@
                                                                 data-vv-as="Observación"                                                                
                                                                 name="workExperience-observation"                                                                
                                                                 :error-messages="errors.collect('workExperience-observation')"
-                                                                v-validate=""
+                                                                v-validate="'max:120'"
                                                                 key="workExperience-observation-input"
                                                             ></v-text-field>
                                                         </v-flex>
@@ -625,7 +625,7 @@
                                                 label="Nombramiento UNEFANB"
                                                 class=""
                                                 data-vv-as="Nombramiento UNEFANB"
-                                                v-validate="'required'"
+                                                v-validate="'required|max:120'"
                                                 key="appointment-input"
                                             ></v-text-field>
                                         </v-flex>
@@ -637,7 +637,7 @@
                                                 label="Cargo OPSU"
                                                 class=""
                                                 data-vv-as="Cargo OPSU"
-                                                v-validate="'required'"
+                                                v-validate="'required|max:60'"
                                                 key="positionOPSU-input"
                                             ></v-text-field>
                                         </v-flex>
@@ -672,7 +672,7 @@
                                             label="Serial del Carnet de la Patria"
                                             class=""
                                             data-vv-as="Serial del Carnet de la Patria"
-                                            v-validate="'required'"
+                                            v-validate="'required|max:10'"
                                             key="serCPatria-input"
                                         ></v-text-field>
                                     </v-flex>
@@ -684,7 +684,7 @@
                                             label="Código del Carnet de la Patria"
                                             class=""
                                             data-vv-as="Código del Carnet de la Patria"
-                                            v-validate="'required'"
+                                            v-validate="'required|max:10'"
                                             key="codCPatria-input"
                                         ></v-text-field>
                                     </v-flex>
@@ -696,7 +696,7 @@
                                             label="Número de Teléfono con Whatsapp"
                                             class=""
                                             data-vv-as="Número de Teléfono con Whatsapp"
-                                            v-validate="'required'"
+                                            v-validate="'required|max:14'"
                                             key="whatsapp-input"
                                         ></v-text-field>
                                     </v-flex>
@@ -708,7 +708,7 @@
                                             label="Usuario de Facebook"
                                             class=""
                                             data-vv-as="Usuario de Facebook"
-                                            v-validate="'required'"
+                                            v-validate="'required|max:64'"
                                             key="facebook-input"
                                         ></v-text-field>
                                     </v-flex>
@@ -720,7 +720,7 @@
                                             label="Usuario de Instagram"
                                             class=""
                                             data-vv-as="Usuario de Instagram"
-                                            v-validate="'required'"
+                                            v-validate="'required|max:32'"
                                             key="instagram-input"
                                         ></v-text-field>
                                     </v-flex>
@@ -732,14 +732,11 @@
                                             label="Usuario de Twitter"
                                             class=""
                                             data-vv-as="Usuario de Twitter"
-                                            v-validate="'required'"
+                                            v-validate="'required|max:32'"
                                             key="twitter-input"
                                         ></v-text-field>
                                     </v-flex>
-
                                 </v-layout>
-
-
                             </v-card-text>
                         </v-card>
                         </v-tab-item>

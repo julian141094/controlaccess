@@ -52,7 +52,7 @@
       <v-tooltip bottom>
         <template  v-slot:activator="{ on }">
               <v-btn fab dark large right depressed color="transparent" @click.prevent="logout" class="white--text hidden-xs-only" v-on="on">
-                <v-icon icon class="font-weight-bold">power_settings_new</v-icon>
+                <v-icon icon class="font-weight-bold">fa-sign-out-alt</v-icon>
               </v-btn>
         </template>
         <span>Salir</span>

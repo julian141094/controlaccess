@@ -195,7 +195,7 @@
                                     :error-messages="errors.collect('Description')"
                                     label="Descripción"
                                     data-vv-as="Descripción"
-                                    v-validate="'required'"
+                                    v-validate="'required|max:200'"
                                     v-model="MedicalRest.description" 
                                     value=""
                                     hint=""
@@ -208,7 +208,7 @@
                                     :error-messages="errors.collect('Observation')"
                                     label="Observación"
                                     data-vv-as="Observación"
-                                    v-validate="''"
+                                    v-validate="'max:200'"
                                     v-model="MedicalRest.observation" 
                                     value=""
                                     hint=""
@@ -259,9 +259,9 @@
                                 <td class="justify-center">{{ dateFormat(4, props.item.reportDate) }}</td>
                                 <td class="justify-center">{{ props.item.userData.identification }}</td>
                                 <td class="justify-center">{{ props.item.userData.fName }}</td>
-                                <td class="justify-center">{{ props.item.userData.sName }}</td>
+                                <td class="justify-center">{{ props.item.userData.sName ? props.item.userData.sName : 'NO APLICA' }}</td>
                                 <td class="justify-center">{{ props.item.userData.fSurname }}</td>
-                                <td class="justify-center">{{ props.item.userData.sSurname }}</td>
+                                <td class="justify-center">{{ props.item.userData.sSurname ? props.item.userData.sSurname : 'NO APLICA'}}</td>
                                 <!-- <td class="justify-center">{{ props.item.userData.institutional.condition }}</td> -->
                                 <td class="justify-center">{{ dateFormat(4, props.item.startDate) }}</td>
                                 <td class="justify-center">{{ dateFormat(4, props.item.endDate) }}</td>
@@ -278,6 +278,7 @@
                                 <v-icon
                                     small
                                     @click="deleteItem(props.item)"
+                                    v-if="$store.getters.isSuperUser"
                                 >
                                     delete
                                 </v-icon>
@@ -285,7 +286,6 @@
                             </template>
                         </v-data-table>
                     </v-card>
-                    
                 </v-flex>
             </v-flex>
         </v-layout>

@@ -264,12 +264,15 @@ export default {
             .then(()=>{
               this.load = true
               if(!this.errors.any()){
-                console.log('Entro en el If de !this.error.any');
-                console.log('El pk del MedicalRest es: ', this.MedicalRest);
-                console.log('El userData_id del MedicalRest es: ', this.MedicalRest.userData_id);
+                // console.log('Entro en el If de !this.error.any');
+                // console.log('El pk del MedicalRest es: ', this.MedicalRest);
+                // console.log('El userData_id del MedicalRest es: ', this.MedicalRest.userData_id);
 
-                
+          
                 if(this.MedicalRest.pk == ''){
+                  if (this.MedicalRest.observation == '') {
+                    this.MedicalRest.observation == 'NO APLICA'
+                  }
                   axios.post(this.$store.getters.getMedicalRest(),this.MedicalRest)
                   .then(response =>{
                     this.load = false

@@ -64,6 +64,7 @@
                             <v-icon
                                 small
                                 @click="deleteItem(props.item)"
+                                v-if="$store.getters.isSuperUser"
                             >
                                 delete
                             </v-icon>

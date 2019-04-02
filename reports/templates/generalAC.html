@@ -1,0 +1,54 @@
+{% extends 'base.report.html' %}
+
+{% block content %}
+  <div class="card" style="border: 0px !important">
+    <div class="card-body">
+      <h5 class="card-title" style="text-align:center; font-family: Arial, Helvetica, sans-serif;">
+        Listado de entrada y salida de <b>{{ start }}</b> hasta <b>{{ end }}</b>
+      </h5>
+      <!-- <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6> -->
+      <table class="table">
+        <thead>
+          <tr>
+            {% for head in headers %}
+              <th>
+                {{head}}
+              </th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody style="font-family: Arial, Helvetica, sans-serif;font-size: 12px;">
+          {% for worker in entries %}
+            <tr>
+              <td>
+                {{ worker.userData.identification }}
+              </td>
+              <td>
+                {{ worker.userData.fName }} {{ worker.userData.sName }} {{ worker.userData.fSurname }} {{ worker.userData.sSurname }} 
+              </td>
+              <td>
+                {{ worker.userData.institutional.condition }}
+              </td>
+              <td>
+                {{ worker.date }}
+              </td>
+              <td>
+                {{ worker.timeIn }}
+              </td>
+              <td>
+                {% if worker.timeOut != None %}
+                  {{ worker.timeOut }}
+                {% else %}
+                  No Aplica
+                {% endif %}
+              </td>
+              <td>
+                {{ worker.get_hours }}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% endblock content %}

@@ -33,8 +33,19 @@ export default {
                 'password':this.password
             })
             .then(response => {
-                console.log(response.data)
-                this.message = response.data.detail
+              this.dialog2 = false
+              this.$store.dispatch('alert',{
+                active:true,
+                type:"success",
+                text: response.data.detail
+              })
+            })
+            .catch(err => {
+              this.$store.dispatch('alert',{
+                active:true,
+                type:"error",
+                text: err.response.data.detail
+              })
             })
         },
         onCode(decodedString){
@@ -45,8 +56,18 @@ export default {
                 'identification':this.code
             })
             .then(response => {
-                console.log(response.data)
-                this.message = response.data.detail
+              this.$store.dispatch('alert',{
+                active:true,
+                type:"success",
+                text: response.data.detail
+              })
+            })
+            .catch(err => {
+              this.$store.dispatch('alert',{
+                active:true,
+                type:"error",
+                text: err.response.data.detail
+              })
             })
         },
         activeCamera(){

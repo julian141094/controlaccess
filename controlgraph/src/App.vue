@@ -6,7 +6,7 @@
       <!-- Se cambia de HelloWord al router-view para que tome las vistas del router -->
       <router-view/>
       <v-snackbar
-        v-model="$store.getters.alertactive"
+        v-model="active"
         :dismissible="true"
         :color="$store.getters.alerttype"
         right
@@ -27,6 +27,29 @@ export default {
   name: 'App',
   components:{
     headmain:head,
+  },
+  data(){
+    return {
+      active:false
+    }
+  },
+  watch:{
+    '$store.getters.alerttext': {
+      handler(val){
+        if(val != ""){
+          this.active = true
+        }
+      }
+    },
+    active(val){
+      if(!val){
+        this.$store.dispatch('alert',{
+          active:false,
+          type:"success",
+          text:""
+        })
+      }
+    }
   }
 }
 </script>

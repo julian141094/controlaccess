@@ -71,6 +71,7 @@
                                                     :error-messages="errors.collect('Aprobado por Jefe Inmediato')"
                                                     v-validate="'required'"
                                                     label="Aprobado por Jefe Inmediato"
+                                                    data-vv-as="Aprobado por Jefe Inmediato"
                                                     key="AprovedBoss"
                                                     :disabled='editFields'
                                                 ></v-checkbox>
@@ -79,8 +80,9 @@
                                                 <v-checkbox
                                                     v-model="PermissionsEmployer.approvedBossTH"
                                                     name="Aprobado por Jefe de Talento Humano"
-                                                    v-validate="'required'"
                                                     :error-messages="errors.collect('Aprobado por Jefe de Talento Humano')"
+                                                    v-validate="'required'"
+                                                    data-vv-as="Aprobado por Jefe de Talento Humano"
                                                     label="Aprobado por Jefe de Talento Humano"
                                                     key="license-input"
                                                     :disabled='editFields'
@@ -91,6 +93,7 @@
                                                     v-model="PermissionsEmployer.approvedFinished"
                                                     name="Aprobado por Decano de Núcleo"
                                                     v-validate="'required'"
+                                                    data-vv-as="Aprobado por Decano de Núcleo"
                                                     :error-messages="errors.collect('Aprobado por Decano de Núcleo')"
                                                     label="Aprobado por Decano de Núcleo"
                                                     key="aprovedFinished-input"
@@ -101,7 +104,10 @@
                                                 <v-textarea
                                                 v-model="PermissionsEmployer.commentBoss" 
                                                 name="Comentario Jefe Inmediato"
+                                                :error-messages="errors.collect('Comentario Jefe Inmediato')"
                                                 label="Comentario Jefe Inmediato"
+                                                data-vv-as="Comentario Jefe Inmediato"
+                                                v-validate="'max:100'"                                                
                                                 value=""
                                                 hint=""
                                                 :disabled='editFields'
@@ -111,7 +117,10 @@
                                                 <v-textarea
                                                 v-model="PermissionsEmployer.commentBossTH" 
                                                 name="Comentario Jefe de Talento Humano"
+                                                :error-messages="errors.collect('Comentario Jefe de Talento Humano')"
                                                 label="Comentario Jefe de Talento Humano"
+                                                data-vv-as="Comentario Jefe de Talento Humano"
+                                                v-validate="'max:100'"                                                
                                                 value=""
                                                 hint=""
                                                 :disabled='editFields'
@@ -121,7 +130,10 @@
                                                 <v-textarea
                                                 v-model="PermissionsEmployer.commentFinished" 
                                                 name="Comentario Decano de Núcleo"
+                                                :error-messages="errors.collect('Comentario Decano de Núcleo')"
                                                 label="Comentario Decano de Núcleo"
+                                                data-vv-as="Comentario Decano de Núcleo"
+                                                v-validate="'max:100'"                                                
                                                 value=""
                                                 hint=""
                                                 :disabled='editFields'
@@ -132,7 +144,7 @@
                                                 v-model="PermissionsEmployer.description" 
                                                 name="Descripción"
                                                 :error-messages="errors.collect('Descripción')"    
-                                                v-validate="'required'"
+                                                v-validate="'required|max:100'"
                                                 label="Descripción"
                                                 value=""
                                                 hint=""
@@ -172,7 +184,6 @@
                                                     >
                                                         <v-spacer></v-spacer>
                                                         <v-btn flat color="primary" @click.prevent="closeCalendars(1)">Cancel</v-btn>
-                                                        {{modalDate}}
                                                         <v-btn flat color="primary" @click="$refs.reportDialog.save(PermissionsEmployer.inDate)">OK</v-btn>
                                                     </v-date-picker>
                                                 </v-dialog>
@@ -298,9 +309,9 @@
                                 <td class="justify-center">{{ dateFormat(4, props.item.inDate) }}</td>
                                 <td class="justify-center">{{ props.item.userData.identification }}</td>
                                 <td class="justify-center">{{ props.item.userData.fName }}</td>
-                                <td class="justify-center">{{ props.item.userData.sName }}</td>
+                                <td class="justify-center">{{ props.item.userData.sName ? props.item.userData.sName : 'NO APLICA' }}</td>
                                 <td class="justify-center">{{ props.item.userData.fSurname }}</td>
-                                <td class="justify-center">{{ props.item.userData.sSurname }}</td>
+                                <td class="justify-center">{{ props.item.userData.sSurname ? props.item.userData.sSurname : 'NO APLICA' }}</td>
                                 <td class="justify-center">{{ dateFormat(4, props.item.startDate) }}</td>
                                 <td class="justify-center">{{ dateFormat(4, props.item.endDate) }}</td>
                                 <!-- <td class="justify-center">{{ props.item.description }}</td> -->
@@ -318,6 +329,7 @@
                                 <v-icon
                                     small
                                     @click="deleteItem(props.item)"
+                                    v-if="$store.getters.isSuperUser"
                                 >
                                     delete
                                 </v-icon>

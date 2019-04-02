@@ -12,6 +12,7 @@ import InternalControl from './components/internalControl/InternalControl.vue'
 import Userss from './components/users/userss.vue'
 import usersystem from './components/usersystem/userSystem.vue'
 import store from './store.js'
+import report from './components/reports/report.vue'
 
 Vue.use(Router)
 
@@ -89,6 +90,12 @@ export default new Router({
       path: '/internalcontrol',
       name: 'InternalControl',
       component: InternalControl,
+      beforeEnter: ifAuthenticated
+    },
+    {
+      path: '/reports',
+      name: 'reports',
+      component: report,
       beforeEnter: ifAuthenticated
     }
   ]

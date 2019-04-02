@@ -24,7 +24,7 @@
                         <v-card-title>
                             <span class="headline">{{ formTitle }}</span>
                             <v-spacer></v-spacer>
-                            <v-btn v-if="this.edit" slot="activator" color="primary" dark class="mb-2" @click="editMode">Editar</v-btn>
+                            <v-btn v-if="this.edit && $store.getters.isSuperUser" slot="activator" color="primary" dark class="mb-2" @click="editMode">Editar</v-btn>
                         </v-card-title>
                         <v-card-text>
                             <v-container grid-list-xs>
@@ -229,7 +229,7 @@
                                     label="Observación"
                                     value=""
                                     hint=""
-                                    :disabled='editFields'
+                                    
                                     ></v-textarea>
                                 </v-flex>
                             </v-layout>
@@ -272,6 +272,8 @@
                                 <v-icon
                                     small
                                     @click="deleteItem(props.item)"
+                                    v-if="$store.getters.isSuperUser"
+
                                 >
                                     delete
                                 </v-icon>

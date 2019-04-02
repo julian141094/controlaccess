@@ -22,11 +22,7 @@ export default {
           .then(response =>{
             this.load = false
             this.$validator.reset()
-            this.show_msg({
-              type : "success",
-              text : `${this.$tc("welcome",1)}`,
-              active : true
-            })
+            this.$emit('joined')
             this.$router.push('/') 
           })
           .catch(err => {

@@ -19,7 +19,7 @@ from rest_framework import routers
 from employer.views import (UserDataModelView,
     DepartmentsModelView,PermissionsEmployerModelView,MedicalRestEmployerModelView,ServicesCommissionEmployerModelView
 )
-from reports.views import GenerateReport
+from reports.views import *
 from control.views import (InAndOutModelView,InAndOutApiView)
 from user_profile.views import (UserAPIView, LoginAPIView)
 from rest_framework_jwt.views import refresh_jwt_token
@@ -43,6 +43,8 @@ urlpatterns = [
     path('api/api-token-refresh/', refresh_jwt_token),
     path('api/generate/pdf/', GenerateReport.as_view(), name='generate_pdf'),
     path('api/generate/pdf/(?P<type>[a-z])/', GenerateReport.as_view(), name='filter_type'),
+    path('api/generalAC/',
+      GeneralAccessControlReport.as_view())
 ]
 
 urlpatterns += staticfiles_urlpatterns()

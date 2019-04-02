@@ -8,13 +8,11 @@
             <img src="@/assets/img/logoUnefa.png">
           </v-flex>
           <v-flex xs12 sm8 md9 class="px-1">
-            <h1 pa-3 class="text-sm-center">Sistema de Control de Entrada y Salida del Personal de la UNEFANB</h1>
+            <h1 pa-3 class="text-sm-center">Sistema de Información para la Gestión del Área de Talento Humano de la UNEFANB</h1>
             <br>
             <h4 class="text-sm-center">Por favor, escané su código qr o suministre sus datos para reportar su llegada a la institución</h4>
           </v-flex>
           <v-flex xs12 class="text-xs-right" style="border-top: 1px solid #E42222">
-            <h1>{{code}}</h1>
-            <h2>{{message}}</h2>
             <v-btn color="success" @click="activeCamera">
               <span v-if="paused">Activar camara</span>
               <span v-else>Pausar camara</span>
@@ -89,7 +87,7 @@
                 <v-card-text>Por favor suministre los datos del usuario para ingresar al sistema.</v-card-text>
                 
                 <!-- Formulario del Login -->
-                  <login/>
+                  <login @joined="dialog = false" />
                 <v-card-actions>
                   <v-spacer></v-spacer>
                   <!-- <v-btn color="success" flat @click="dialog = false">Cancelar</v-btn> -->

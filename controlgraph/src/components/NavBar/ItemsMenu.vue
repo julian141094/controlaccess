@@ -1,9 +1,9 @@
 <template>
 <v-list class="menu-iprint">
-<div v-for="item in items" :key="item.title" 
+<div v-for="item in itemsComputed" :key="item.title" 
   :class="item.title === 'logout' ? 'logout' : false">
   <!-- Item menu -->
-  <v-list-tile v-if="!item.sub" :class="$route.fullPath === item.url ? 'active-list' : false" >
+  <v-list-tile v-if='item.show' :class="$route.fullPath === item.url ? 'active-list' : false" >
       <v-list-tile-content>
           <v-list-tile-title v-on="item.click != undefined ? {'click':item.click} : {}">
               <router-link :to="item.url" class="blue-text-unefa">
@@ -72,135 +72,54 @@
 export default {
   data () {
     return {
-        // imageUrl:'',
-        // username: '',
-        // groups: "",
         items: [
         { 
           title: 'Tablero', 
           icon: 'fa-dashboard', 
-          url: '/home'
+          url: '/home',
+          show: false
         },
-        // { 
-        //   title: 'Trabajadores', 
-        //   icon: 'fa-poll-people',
-        //   sub:[
-            { 
-              title: 'Empleados', 
-              icon: 'fa-people', 
-              url: '/employers'
-            },
-            
-        //   ]
-        // },  
+        { 
+          title: 'Empleados', 
+          icon: 'fa-people', 
+          show: true,
+          url: '/employers'
+        },
+        { 
+          title: 'Departamentos', 
+          icon: 'fa-dashboard', 
+          show: true,
+          url: '/departments'
+        },  
         { 
           title: 'Permisos Laborales', 
           icon: 'fa-dashboard', 
-          url: '/permisions'
+          url: '/permisions',
+          show: true
         },  
         { 
           title: 'Reposos Medicos', 
           icon: 'fa-dashboard', 
+          show: true,
           url: '/medicalrest'
         },  
-        // { 
-        //   title: 'Comisión de Servicios', 
-        //   icon: 'fa-dashboard', 
-        //   url: '/servicescommission'
-        // },
         { 
           title: 'Control E&S', 
           icon: 'fa-people', 
+          show: true,
           url: '/internalcontrol'
         }, 
-        // { 
-        //   title: 'Entrada y Salida', 
-        //   icon: 'fa-poll-people',
-        //   sub:[
-            // { 
-            //   title: 'Departamentos', 
-            //   icon: 'fa-dashboard', 
-            //   url: '/departments'
-            // },   
-            // { 
-            //   title: 'Permisos Laborales', 
-            //   icon: 'fa-dashboard', 
-            //   url: '/permisions'
-            // },  
-            // { 
-            //   title: 'Reposos Medicos', 
-            //   icon: 'fa-dashboard', 
-            //   url: '/medicalrest'
-            // },  
-            // { 
-            //   title: 'Comisión de Servicios', 
-            //   icon: 'fa-dashboard', 
-            //   url: '/servicescommission'
-            // }, 
-        //   ]
-        // },
         { 
           title: 'Reportes', 
-          icon: 'fa-poll-people',
-          sub:[
-            // { 
-            //   title: 'Empleados', 
-            //   icon: 'fa-dashboard', 
-            //   url: '/home'
-            // },
-            // { 
-            //   title: 'Entradas y Salidas', 
-            //   icon: 'fa-dashboard', 
-            //   url: '/home'
-            // },
-            // { 
-            //   title: 'Permisos Personales', 
-            //   icon: 'fa-dashboard', 
-            //   url: '/home'
-            // },
-            // { 
-            //   title: 'Reposos Médicos', 
-            //   icon: 'fa-dashboard', 
-            //   url: '/home'
-            // },
-            // { 
-            //   title: 'Comisiones de Servicios', 
-            //   icon: 'fa-dashboard', 
-            //   url: '/home'
-            // },
-          ]
+          icon: 'fa-people', 
+          url: '/reports',
+          show: true
         },
         { 
-          title: 'Usuaios', 
-          icon: 'fa-poll-people',
-          sub:[
-            // { 
-            //   title: 'Usuarios de Empleados', 
-            //   icon: 'fa-dashboard', 
-            //   url: '/home'
-            // },
-            { 
-              title: 'Usuarios del sistema', 
-              icon: 'fa-people', 
-              url: '/usersystem'
-            },
-          ]
-        },
-        { 
-          title: 'Configuraciones', 
-          icon: 'fa-poll-people',
-          sub:[
-            { 
-              title: 'Departamentos', 
-              icon: 'fa-dashboard', 
-              url: '/departments'
-            }, 
-            { 
-              title: 'Cargos y Nombramientos', 
-              icon: 'fa-dashboard', 
-              url: '/departments'
-            }, 
-          ]
+          title: 'Usuarios del sistema', 
+          icon: 'fa-people', 
+          url: '/usersystem',
+          show: this.$store.getters.isSuperUser
         },
       ],
     }
@@ -210,6 +129,12 @@ export default {
   },
   methods:{
     
+  },
+  computed:{
+    itemsComputed(){
+      console.log(this.items)
+      return this.items.filter(o => o.show === true)
+    }
   }
 };
 </script>

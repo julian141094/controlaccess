@@ -49,20 +49,12 @@ export default {
       },
       saveOrUpdate (mode, userData) {
         console.log('Este es userData: ',userData);
-        
         if(mode == 2 && userData.pk != undefined){
           console.log('Esta seria la parte de editar, y e objeto que llega es: ', userData);
           // this.editedIndex = this.desserts.indexOf(userData)
           this.userData = Object.assign({}, userData)
-          // if(this.userData.institutional.category == ''){
-          //   this.userData.institutional.category = 'NOAPLICA'
-          // }
-          // if(this.userData.workExperience == ''){
-          //   this.userData.workExperience = 'NOAPLICA'
-          // }
           this.dialog = true
           this.edit = true
-          
         }
         else{
           console.log('guardar Nuevo');
